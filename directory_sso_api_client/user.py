@@ -10,5 +10,5 @@ class UserAPIClient(BaseAPIClient):
     def get_session_user(self, session_id):
         return self.get(
             url=self.endpoints['session_user'],
-            headers={'USER-SESSION-KEY': session_id}
+            params={'session_key': session_id}
         )
