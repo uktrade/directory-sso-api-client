@@ -4,7 +4,7 @@ from directory_sso_api_client.base import BaseAPIClient
 class UserAPIClient(BaseAPIClient):
 
     endpoints = {
-        'session_user': '/session-user/'
+        'session_user': 'session-user/'
     }
 
     def get_session_user(self, session_id):
