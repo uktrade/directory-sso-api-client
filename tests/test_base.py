@@ -59,7 +59,6 @@ class BaseAPIClientTest(TestCase):
 
         self.client.sign_request(
             api_key='test',
-            url=url,
             prepared_request=prepared_request,
         ),
 
