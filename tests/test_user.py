@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from tests import stub_request
 
@@ -15,3 +15,23 @@ class UserAPIClientTest(TestCase):
     @stub_request('https://example.com/session-user/', 'get')
     def test_get_session_user(self, stub):
         self.client.get_session_user(session_id=1)
+
+    @stub_request('https://example.com/last-login/', 'get')
+    def test_get_last_login(self, stub):
+        self.client.get_last_login()
+
+    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    def test_get_last_login_with_params(self, mocked_request):
+        params = {'start': '2016-11-01', 'end': '2016-11-11'}
+
+        self.client.get_last_login(**params)
+
+        mocked_request.assert_called_once_with(
+            method='GET', params=params, url='last-login/')
+
+    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    def test_get_last_login_without_params(self, mocked_request):
+        self.client.get_last_login()
+
+        mocked_request.assert_called_once_with(
+            method='GET', params=None, url='last-login/')
