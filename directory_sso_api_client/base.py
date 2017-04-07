@@ -1,4 +1,3 @@
-from hashlib import sha256
 import json
 import logging
 import urllib.parse as urlparse
@@ -7,6 +6,7 @@ from monotonic import monotonic
 import requests
 
 from directory_sso_api_client.version import __version__
+from sigauth.utils import RequestSigner
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ class BaseAPIClient:
         assert base_url, "Missing base url"
         assert api_key, "Missing API key"
         self.base_url = base_url
-        self.api_key = api_key
+        self.request_signer = RequestSigner(secret=api_key)
 
     def put(self, url, data, headers=None):
         return self.request(
@@ -81,7 +81,6 @@ class BaseAPIClient:
 
         try:
             return self.send(
-                api_key=self.api_key,
                 method=method,
                 url=url,
                 headers=headers,
@@ -97,32 +96,17 @@ class BaseAPIClient:
                 )
             )
 
-    def sign_request(self, api_key, prepared_request):
-        url = urlparse.urlsplit(prepared_request.path_url)
-        path = bytes(url.path, "utf-8")
-
-        if url.query:
-            path += bytes("?{}".format(url.query), "utf-8")
-
-        salt = bytes(api_key, "utf-8")
-        body = prepared_request.body or b""
-
-        if isinstance(body, str):
-            body = bytes(body, "utf-8")
-
-        signature = sha256(path + body + salt).hexdigest()
-        prepared_request.headers["X-Signature"] = signature
-
+    def sign_request(self, prepared_request):
+        headers = self.request_signer.get_signature_headers(
+            url=prepared_request.path_url, body=prepared_request.body
+        )
+        prepared_request.headers.update(headers)
         return prepared_request
 
-    def send(self, api_key, method, url, request=None, *args, **kwargs):
-
+    def send(self, method, url, request=None, *args, **kwargs):
         prepared_request = requests.Request(
             method, url, *args, **kwargs
         ).prepare()
 
-        signed_request = self.sign_request(
-            api_key=api_key,
-            prepared_request=prepared_request,
-        )
+        signed_request = self.sign_request(prepared_request=prepared_request)
         return requests.Session().send(signed_request)
