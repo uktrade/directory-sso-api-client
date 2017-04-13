@@ -57,21 +57,18 @@ class BaseAPIClientTest(TestCase):
             "POST", url, data='data'
         ).prepare()
 
-        self.client.sign_request(
-            api_key='test',
-            prepared_request=prepared_request,
-        ),
+        self.client.sign_request(prepared_request=prepared_request)
 
     @stub_request('https://example.com', 'post')
     def test_send_response_ok(self, stub):
         response = self.client.send(
-            api_key="test", method="POST", url="https://example.com",
+            method="POST", url="https://example.com",
         )
         assert response.status_code == http.client.OK
 
     @stub_request('https://example.com', 'post', http.client.BAD_REQUEST)
     def test_send_response_not_ok(self, stub):
         response = self.client.send(
-            api_key="test", method="POST", url="https://example.com",
+            method="POST", url="https://example.com",
         )
         assert response.status_code == http.client.BAD_REQUEST
