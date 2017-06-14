@@ -5,6 +5,10 @@
 
 [![CircleCI](https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master.svg?style=svg)](https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master)
 
+## Coverage
+
+[![codecov](https://codecov.io/gh/uktrade/directory-sso-api-client/branch/master/graph/badge.svg)](https://codecov.io/gh/uktrade/directory-sso-api-client)
+
 ## Requirements
 
 ## Installation
