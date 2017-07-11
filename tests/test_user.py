@@ -12,11 +12,18 @@ class UserAPIClientTest(TestCase):
             base_url='https://example.com', api_key='test'
         )
 
-    @stub_request('https://example.com/session-user/', 'get')
+    @stub_request('https://example.com/api/v1/session-user/', 'get')
     def test_get_session_user(self, stub):
         self.client.get_session_user(session_id=1)
 
-    @stub_request('https://example.com/last-login/', 'get')
+    @stub_request('https://example.com/oauth2/user-profile/v1/', 'get')
+    def test_get_oauth2_user_profile(self, stub):
+        self.client.get_oauth2_user_profile('123')
+
+        request = stub.request_history[0]
+        assert request.headers['Authorization'] == 'Bearer 123'
+
+    @stub_request('https://example.com/api/v1/last-login/', 'get')
     def test_get_last_login(self, stub):
         self.client.get_last_login()
 
@@ -26,12 +33,16 @@ class UserAPIClientTest(TestCase):
 
         self.client.get_last_login(**params)
 
-        mocked_request.assert_called_once_with(
-            method='GET', params=params, url='last-login/')
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET', params=params, url='api/v1/last-login/', headers=None
+        )
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_get_last_login_without_params(self, mocked_request):
         self.client.get_last_login()
 
-        mocked_request.assert_called_once_with(
-            method='GET', params=None, url='last-login/')
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET', params=None, url='api/v1/last-login/', headers=None,
+        )
