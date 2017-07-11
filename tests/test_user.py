@@ -12,7 +12,7 @@ class UserAPIClientTest(TestCase):
             base_url='https://example.com', api_key='test'
         )
 
-    @stub_request('https://example.com/session-user/', 'get')
+    @stub_request('https://example.com/api/v1/session-user/', 'get')
     def test_get_session_user(self, stub):
         self.client.get_session_user(session_id=1)
 
@@ -23,7 +23,7 @@ class UserAPIClientTest(TestCase):
         request = stub.request_history[0]
         assert request.headers['Authorization'] == 'Bearer 123'
 
-    @stub_request('https://example.com/last-login/', 'get')
+    @stub_request('https://example.com/api/v1/last-login/', 'get')
     def test_get_last_login(self, stub):
         self.client.get_last_login()
 
@@ -35,7 +35,7 @@ class UserAPIClientTest(TestCase):
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=params, url='last-login/', headers=None
+            method='GET', params=params, url='api/v1/last-login/', headers=None
         )
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
@@ -44,5 +44,5 @@ class UserAPIClientTest(TestCase):
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=None, url='last-login/', headers=None,
+            method='GET', params=None, url='api/v1/last-login/', headers=None,
         )
