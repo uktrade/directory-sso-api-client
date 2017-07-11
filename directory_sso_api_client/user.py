@@ -5,6 +5,7 @@ class UserAPIClient(BaseAPIClient):
 
     endpoints = {
         'session_user': 'session-user/',
+        'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'last-login/',
     }
 
@@ -12,6 +13,13 @@ class UserAPIClient(BaseAPIClient):
         return self.get(
             url=self.endpoints['session_user'],
             params={'session_key': session_id}
+        )
+
+    def get_oauth2_user_profile(self, bearer_token):
+        headers = {'Authorization': 'Bearer {}'.format(bearer_token)}
+        return self.get(
+            url=self.endpoints['oauth2_user_profile'],
+            headers=headers
         )
 
     def get_last_login(self, start=None, end=None):

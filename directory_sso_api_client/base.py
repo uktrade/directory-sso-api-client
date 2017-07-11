@@ -47,7 +47,9 @@ class BaseAPIClient:
         return response
 
     def get(self, url, params=None, headers=None):
-        return self.request(url=url, method="GET", params=params)
+        return self.request(
+            url=url, method="GET", params=params, headers=headers
+        )
 
     def post(self, url, data):
         return self.request(
