@@ -46,3 +46,17 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_args == mock.call(
             method='GET', params=None, url='api/v1/last-login/', headers=None,
         )
+
+    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    def test_check_password(self, mocked_request):
+        self.client.check_password(
+            session_id=123, password='my password'
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"session_key": 123, "password": "my password"}',
+            method='POST',
+            url='api/v1/password-check/',
+        )
