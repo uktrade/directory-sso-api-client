@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from directory_sso_api_client.base import BaseAPIClient
 
 
@@ -7,6 +9,7 @@ class UserAPIClient(BaseAPIClient):
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'api/v1/last-login/',
+        'check_password': 'api/v1/password-check/'
     }
 
     def get_session_user(self, session_id):
@@ -21,6 +24,13 @@ class UserAPIClient(BaseAPIClient):
             url=self.endpoints['oauth2_user_profile'],
             headers=headers
         )
+
+    def check_password(self, session_id, password):
+        url = self.endpoints['check_password']
+        data = OrderedDict(
+            [('session_key', session_id), ('password', password)]
+        )
+        return self.post(url, data)
 
     def get_last_login(self, start=None, end=None):
         params = {}
