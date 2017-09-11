@@ -14,7 +14,7 @@ class DirectorySSOAPIClientTest(TestCase):
     def test_user(self):
         assert isinstance(self.client.user, UserAPIClient)
         assert self.client.user.base_url == self.base_url
-        assert self.client.user.request_signer.signer.secret == self.api_key
+        assert self.client.user.request_signer.secret == self.api_key
 
     def test_endpoints_urljoin(self):
         """urljoin replaces base_url's path if endpoints start with with / """

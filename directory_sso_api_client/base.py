@@ -100,7 +100,10 @@ class BaseAPIClient:
 
     def sign_request(self, prepared_request):
         headers = self.request_signer.get_signature_headers(
-            url=prepared_request.path_url, body=prepared_request.body
+            url=prepared_request.path_url,
+            body=prepared_request.body,
+            method=prepared_request.method,
+            content_type=prepared_request.headers.get('Content-Type'),
         )
         prepared_request.headers.update(headers)
         return prepared_request
