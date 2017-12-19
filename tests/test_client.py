@@ -23,7 +23,7 @@ class DirectorySSOAPIClientTest(TestCase):
         for endpoint in self.client.user.endpoints.values():
             assert not endpoint.startswith('/')
 
-    @stub_request('https://example.com/ping/', 'get')
+    @stub_request('https://example.com/api/v1/ping/', 'get')
     def test_health_check(self, stub):
         self.client.ping()
 
