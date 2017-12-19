@@ -3,6 +3,8 @@ from unittest import TestCase
 from directory_sso_api_client.client import DirectorySSOAPIClient
 from directory_sso_api_client.user import UserAPIClient
 
+from tests import stub_request
+
 
 class DirectorySSOAPIClientTest(TestCase):
 
@@ -20,3 +22,10 @@ class DirectorySSOAPIClientTest(TestCase):
         """urljoin replaces base_url's path if endpoints start with with / """
         for endpoint in self.client.user.endpoints.values():
             assert not endpoint.startswith('/')
+
+    @stub_request('https://example.com/ping/', 'get')
+    def test_health_check(self, stub):
+        self.client.ping()
+
+        request = stub.request_history[0]
+        assert request
