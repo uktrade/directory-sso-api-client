@@ -5,7 +5,7 @@ from directory_sso_api_client.user import UserAPIClient
 class DirectorySSOAPIClient(BaseAPIClient):
 
     endpoints = {
-        'ping': 'api/v1/ping/',
+        'ping': 'api/v1/healthcheck/ping/',
     }
 
     def __init__(self, base_url=None, api_key=None):
