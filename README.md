@@ -14,7 +14,18 @@
 ## Installation
 
 ```shell
-pip install -e git+https://git@github.com/alphagov/directory-sso-api-client.git@0.0.1#egg=directory-sso-api-client
+pip install -e git+https://github.com/uktrade/directory-sso-api-client.git@v2.2.0#egg=directory-sso-api-client
+```
+
+### Missing sigauth
+If `pip` will complain about missing `sigauth`:
+```
+  Could not find a version that satisfies the requirement sigauth (from directory-sso-api-client) (from versions: )
+No matching distribution found for sigauth (from directory-sso-api-client)
+```
+Then you can install it manually:
+```shell
+pip install -e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.1#egg=sigauth
 ```
 
 ## Usage
