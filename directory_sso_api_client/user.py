@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from collections import OrderedDict
 
 from directory_sso_api_client.base import BaseAPIClient
@@ -9,7 +11,8 @@ class UserAPIClient(BaseAPIClient):
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'api/v1/last-login/',
-        'check_password': 'api/v1/password-check/'
+        'check_password': 'api/v1/password-check/',
+        'user_by_email': 'api/v1/user-by-email/'
     }
 
     def get_session_user(self, session_id):
@@ -43,4 +46,9 @@ class UserAPIClient(BaseAPIClient):
         return self.get(
             url=self.endpoints['last_login'],
             params=params
+        )
+
+    def get_user_by_email(self, email):
+        return self.get(
+            url=urljoin(self.endpoints['user_by_email'], email + "/")
         )
