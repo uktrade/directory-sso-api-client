@@ -9,7 +9,7 @@ class UserAPIClient(BaseAPIClient):
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'api/v1/last-login/',
-        'check_password': 'api/v1/password-check/',
+        'check_password': 'api/v1/password-check/'
     }
 
     def get_session_user(self, session_id):
