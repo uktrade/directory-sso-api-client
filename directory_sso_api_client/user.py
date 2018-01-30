@@ -1,5 +1,3 @@
-from urllib.parse import urljoin
-
 from collections import OrderedDict
 
 from directory_sso_api_client.base import BaseAPIClient
