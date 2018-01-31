@@ -12,6 +12,7 @@ class DirectoryTestAPIClient(BaseAPIClient):
         super(DirectoryTestAPIClient, self).__init__(base_url, api_key)
         self.user = UserAPIClient(base_url, api_key)
 
-    def get_user_by_email(self, email):
+    def get_user_by_email(self, email, token):
         url = self.endpoints['user_by_email'] % email
-        return self.get(url=url)
+        params = {"token": token}
+        return self.get(url=url, params=params)
