@@ -1,5 +1,4 @@
 from directory_sso_api_client.base import BaseAPIClient
-from directory_sso_api_client.user import UserAPIClient
 
 
 class DirectoryTestAPIClient(BaseAPIClient):
@@ -10,7 +9,6 @@ class DirectoryTestAPIClient(BaseAPIClient):
 
     def __init__(self, base_url=None, api_key=None):
         super(DirectoryTestAPIClient, self).__init__(base_url, api_key)
-        self.user = UserAPIClient(base_url, api_key)
 
     def get_user_by_email(self, email, token):
         url = self.endpoints['user_by_email'] % email
