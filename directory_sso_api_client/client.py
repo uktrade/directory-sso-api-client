@@ -6,7 +6,6 @@ class DirectorySSOAPIClient(BaseAPIClient):
 
     endpoints = {
         'ping': 'api/v1/healthcheck/ping/',
-        'user_by_email': 'testapi/user-by-email/%s/'
     }
 
     def __init__(self, base_url=None, api_key=None):
@@ -15,7 +14,3 @@ class DirectorySSOAPIClient(BaseAPIClient):
 
     def ping(self):
         return self.get(url=self.endpoints['ping'])
-
-    def get_user_by_email(self, email):
-        url = self.endpoints['user_by_email'] % email
-        return self.get(url=url)
