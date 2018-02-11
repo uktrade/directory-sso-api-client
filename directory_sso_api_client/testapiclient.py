@@ -13,3 +13,10 @@ class DirectoryTestAPIClient(BaseAPIClient):
             url = self.endpoints['user_by_email'].format(email=email)
             result = self.get(url=url)
         return result
+
+    def delete_user_by_email(self, email: str):
+        result = None
+        if email:
+            url = self.endpoints['user_by_email'].format(email=email)
+            result = self.delete(url=url)
+        return result
