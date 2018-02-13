@@ -26,23 +26,23 @@ class DirectoryTestAPIClientTest(TestCase):
         request = stub.request_history[0]
         assert request.url == response.url
 
-    def test_should_return_none_on_missing_email(self):
+    def test_get_user_should_return_404_on_missing_email(self):
         response = self.client.get_user_by_email(email=None)
-        assert response is None
+        assert response.status_code == 404
 
-    def test_should_return_none_on_empty_email(self):
+    def test_get_user_should_return_404_on_empty_email(self):
         response = self.client.get_user_by_email(email="")
-        assert response is None
+        assert response.status_code == 404
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
-    def test_should_not_make_any_request_on_empty_email(self, mocked_request):
+    def test_get_user_should_make_request_on_empty_email(self, mocked_request):
         self.client.get_user_by_email(email="")
-        assert mocked_request.call_count == 0
+        assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
-    def test_should_not_make_any_request_on_no_email(self, mocked_request):
+    def test_get_user_should_make_request_on_no_email(self, mocked_request):
         self.client.get_user_by_email(email=None)
-        assert mocked_request.call_count == 0
+        assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_get_user_by_mail_check_request_parameters(self, mocked_request):
@@ -62,25 +62,25 @@ class DirectoryTestAPIClientTest(TestCase):
         request = stub.request_history[0]
         assert request.url == response.url
 
-    def test_delete_user_should_return_none_on_missing_email(self):
+    def test_delete_user_should_return_404_on_missing_email(self):
         response = self.client.delete_user_by_email(email=None)
-        assert response is None
+        assert response.status_code == 404
 
-    def test_delete_user_should_return_none_on_empty_email(self):
+    def test_delete_user_should_return_404_on_empty_email(self):
         response = self.client.delete_user_by_email(email="")
-        assert response is None
+        assert response.status_code == 404
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
-    def test_delete_user_should_not_make_any_request_on_empty_email(
+    def test_delete_user_should_make_request_on_empty_email(
             self, mocked_request):
         self.client.delete_user_by_email(email="")
-        assert mocked_request.call_count == 0
+        assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
-    def test_delete_user_should_not_make_any_request_on_no_email(
+    def test_delete_user_should_make_request_on_no_email(
             self, mocked_request):
         self.client.delete_user_by_email(email=None)
-        assert mocked_request.call_count == 0
+        assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_delete_user_check_request_arguments(self, mocked_request):
