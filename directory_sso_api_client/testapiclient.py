@@ -8,8 +8,9 @@ class DirectoryTestAPIClient(BaseAPIClient):
     }
 
     def get_user_by_email(self, email: str):
-        result = None
-        if email:
-            url = self.endpoints['user_by_email'].format(email=email)
-            result = self.get(url=url)
-        return result
+        url = self.endpoints['user_by_email'].format(email=email)
+        return self.get(url=url)
+
+    def delete_user_by_email(self, email: str):
+        url = self.endpoints['user_by_email'].format(email=email)
+        return self.delete(url=url)
