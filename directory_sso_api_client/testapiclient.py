@@ -7,10 +7,10 @@ class DirectoryTestAPIClient(BaseAPIClient):
         'user_by_email': 'testapi/user-by-email/{email}/'
     }
 
-    def get_user_by_email(self, email: str):
+    def get_user_by_email(self, email):
         url = self.endpoints['user_by_email'].format(email=email)
         return self.get(url=url)
 
-    def delete_user_by_email(self, email: str):
+    def delete_user_by_email(self, email):
         url = self.endpoints['user_by_email'].format(email=email)
         return self.delete(url=url)
