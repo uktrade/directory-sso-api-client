@@ -106,30 +106,35 @@ class DirectoryTestAPIClientTest(TestCase):
 
     @stub_request(url + 'None/', 'patch', 404)
     def test_flag_user_should_return_404_on_no_email(self, stub):
-        response = self.client.flag_user_email_as_verified_or_not(email=None, verified=True)
+        response = self.client.flag_user_email_as_verified_or_not(
+            email=None, verified=True)
         assert response.status_code == 404
 
     @stub_request(url, 'patch', 404)
     def test_flag_user_should_return_404_on_empty_email(self, stub):
-        response = self.client.flag_user_email_as_verified_or_not(email='', verified=False)
+        response = self.client.flag_user_email_as_verified_or_not(
+            email='', verified=False)
         assert response.status_code == 404
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_flag_user_should_make_request_on_empty_email(
             self, mocked_request):
-        self.client.flag_user_email_as_verified_or_not(email='', verified=True)
+        self.client.flag_user_email_as_verified_or_not(
+            email='', verified=True)
         assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_flag_user_should_make_request_on_no_email(
             self, mocked_request):
-        self.client.flag_user_email_as_verified_or_not(email=None, verified=True)
+        self.client.flag_user_email_as_verified_or_not(
+            email=None, verified=True)
         assert mocked_request.call_count == 1
 
     @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
     def test_flag_user_check_request_arguments(self, mocked_request):
         email = 'test@user.com'
-        self.client.flag_user_email_as_verified_or_not(email=email, verified=True)
+        self.client.flag_user_email_as_verified_or_not(
+            email=email, verified=True)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             method='PATCH',
