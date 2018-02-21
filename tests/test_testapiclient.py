@@ -1,18 +1,18 @@
 from unittest import TestCase, mock
 
-from directory_sso_api_client.testapiclient import DirectoryTestAPIClient
+from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
 from tests import stub_request
 
 
-class DirectoryTestAPIClientTest(TestCase):
+class DirectorySSOTestAPIClientTest(TestCase):
 
     url = 'https://example.com/testapi/user-by-email/'
 
     def setUp(self):
         self.base_url = 'https://example.com'
         self.api_key = 'test'
-        self.client = DirectoryTestAPIClient(self.base_url, self.api_key)
+        self.client = DirectorySSOTestAPIClient(self.base_url, self.api_key)
 
     def test_endpoints_urljoin(self):
         """urljoin replaces base_url's path if endpoints start with with / """
