@@ -1,7 +1,7 @@
 from directory_sso_api_client.base import BaseAPIClient
 
 
-class DirectoryTestAPIClient(BaseAPIClient):
+class DirectorySSOTestAPIClient(BaseAPIClient):
 
     endpoints = {
         'user_by_email': 'testapi/user-by-email/{email}/'
