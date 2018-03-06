@@ -4,20 +4,4 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-certifi==2018.1.18        # via directory-client-core, requests, sigauth
-chardet==3.0.4            # via directory-client-core, requests, sigauth
-directory_client_core==0.1.0
-django==1.11.5
-djangorestframework==3.4.7  # via directory-client-core, sigauth
-idna==2.6                 # via directory-client-core, requests, sigauth
-mohawk==0.3.4             # via directory-client-core, sigauth
-monotonic==1.2
-pkginfo==1.4.1            # via directory-client-core, sigauth, twine
-pytz==2017.2              # via directory-client-core, django, sigauth
-requests-toolbelt==0.8.0  # via directory-client-core, sigauth, twine
-requests==2.18.4
-sigauth==2.1.0            # via directory-client-core
-six==1.11.0               # via directory-client-core, mohawk, sigauth
-tqdm==4.19.6              # via directory-client-core, sigauth, twine
-twine==1.9.1              # via directory-client-core, sigauth
-urllib3==1.22             # via directory-client-core, requests, sigauth
+directory_client_core>=0.2.0,<1.0.0
