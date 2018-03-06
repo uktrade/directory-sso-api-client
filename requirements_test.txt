@@ -29,5 +29,6 @@ requests_mock==1.1.0
 sigauth==2.1.0            # via directory-client-core
 six==1.11.0               # via directory-client-core, mohawk, requests-mock, sigauth
 tqdm==4.19.6              # via directory-client-core, sigauth, twine
-twine==1.9.1              # via directory-client-core, sigauth
+twine==1.9.1
 urllib3==1.22             # via directory-client-core, requests, sigauth
+wheel==0.30.0
