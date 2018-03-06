@@ -11,7 +11,7 @@ flake8:
 	flake8 . --exclude=.venv
 
 pytest:
-	pytest . --cov=. $(pytest_args)
+	pytest . --cov=. $(pytest_args) --capture=no
 
 CODECOV := \
 	if [ "$$CODECOV_REPO_TOKEN" != "" ]; then \
@@ -29,4 +29,9 @@ compile_test_requirements:
 
 compile_all_requirements: compile_requirements compile_test_requirements
 
-.PHONY: build clean test_requirements flake8 pytest test
+publish:
+	rm -rf build dist; \
+	python setup.py bdist_wheel; \
+	twine upload --username $$DIRECTORY_PYPI_USERNAME --password $$DIRECTORY_PYPI_PASSWORD dist/*
+
+.PHONY: build clean test_requirements flake8 pytest test publish

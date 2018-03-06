@@ -1,4 +1,4 @@
-from directory_sso_api_client.base import BaseAPIClient
+from directory_client_core.base import BaseAPIClient
 
 
 class DirectorySSOTestAPIClient(BaseAPIClient):

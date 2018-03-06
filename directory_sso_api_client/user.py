@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
-from directory_sso_api_client.base import BaseAPIClient
+from directory_client_core.base import BaseAPIClient
+from directory_client_core.authentication import BearerAuthenticator
 
 
 class UserAPIClient(BaseAPIClient):
@@ -19,10 +20,9 @@ class UserAPIClient(BaseAPIClient):
         )
 
     def get_oauth2_user_profile(self, bearer_token):
-        headers = {'Authorization': 'Bearer {}'.format(bearer_token)}
         return self.get(
             url=self.endpoints['oauth2_user_profile'],
-            headers=headers
+            authenticator=BearerAuthenticator(bearer_token)
         )
 
     def check_password(self, session_id, password):

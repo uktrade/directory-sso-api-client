@@ -27,7 +27,7 @@ class UserAPIClientTest(TestCase):
     def test_get_last_login(self, stub):
         self.client.get_last_login()
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_get_last_login_with_params(self, mocked_request):
         params = {'start': '2016-11-01', 'end': '2016-11-11'}
 
@@ -35,19 +35,25 @@ class UserAPIClientTest(TestCase):
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=params, url='api/v1/last-login/', headers=None
+            method='GET',
+            params=params,
+            url='api/v1/last-login/',
+            authenticator=None
         )
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_get_last_login_without_params(self, mocked_request):
         self.client.get_last_login()
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=None, url='api/v1/last-login/', headers=None,
+            method='GET',
+            params=None,
+            url='api/v1/last-login/',
+            authenticator=None,
         )
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_check_password(self, mocked_request):
         self.client.check_password(
             session_id=123, password='my password'
@@ -59,4 +65,5 @@ class UserAPIClientTest(TestCase):
             data='{"session_key": 123, "password": "my password"}',
             method='POST',
             url='api/v1/password-check/',
+            authenticator=None,
         )
