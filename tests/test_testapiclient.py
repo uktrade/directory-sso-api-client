@@ -36,25 +36,27 @@ class DirectorySSOTestAPIClientTest(TestCase):
         response = self.client.get_user_by_email(email='')
         assert response.status_code == 404
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_get_user_should_make_request_on_empty_email(self, mocked_request):
         self.client.get_user_by_email(email='')
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_get_user_should_make_request_on_no_email(self, mocked_request):
         self.client.get_user_by_email(email=None)
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_get_user_by_mail_check_request_parameters(self, mocked_request):
         email = 'test@user.com'
         self.client.get_user_by_email(email=email)
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=None,
-            url='testapi/user-by-email/{}/'.format(email), headers=None,
+            method='GET',
+            params=None,
+            url='testapi/user-by-email/{}/'.format(email),
+            authenticator=None,
         )
 
     @stub_request(url + 'test@example.com/', 'delete')
@@ -74,19 +76,19 @@ class DirectorySSOTestAPIClientTest(TestCase):
         response = self.client.delete_user_by_email(email='')
         assert response.status_code == 404
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_delete_user_should_make_request_on_empty_email(
             self, mocked_request):
         self.client.delete_user_by_email(email='')
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_delete_user_should_make_request_on_no_email(
             self, mocked_request):
         self.client.delete_user_by_email(email=None)
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_delete_user_check_request_arguments(self, mocked_request):
         email = 'test@user.com'
         self.client.delete_user_by_email(email=email)
@@ -94,7 +96,8 @@ class DirectorySSOTestAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             method='DELETE',
-            url='testapi/user-by-email/{}/'.format(email)
+            url='testapi/user-by-email/{}/'.format(email),
+            authenticator=None,
         )
 
     @stub_request(url + 'test@example.com/', 'patch')
@@ -116,21 +119,21 @@ class DirectorySSOTestAPIClientTest(TestCase):
             email='', verified=False)
         assert response.status_code == 404
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_flag_user_should_make_request_on_empty_email(
             self, mocked_request):
         self.client.flag_user_email_as_verified_or_not(
             email='', verified=True)
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_flag_user_should_make_request_on_no_email(
             self, mocked_request):
         self.client.flag_user_email_as_verified_or_not(
             email=None, verified=True)
         assert mocked_request.call_count == 1
 
-    @mock.patch('directory_sso_api_client.base.BaseAPIClient.request')
+    @mock.patch('directory_client_core.base.BaseAPIClient.request')
     def test_flag_user_check_request_arguments(self, mocked_request):
         email = 'test@user.com'
         self.client.flag_user_email_as_verified_or_not(
@@ -140,5 +143,6 @@ class DirectorySSOTestAPIClientTest(TestCase):
             method='PATCH',
             url='testapi/user-by-email/{}/'.format(email),
             data='{"is_verified": true}',
-            content_type='application/json'
+            content_type='application/json',
+            authenticator=None,
         )
