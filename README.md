@@ -4,6 +4,7 @@
 [![circle-ci-image]][circle-ci]
 [![codecov-image]][codecov]
 [![gemnasium-image]][gemnasium]
+[![pypi-image]][pypi]
 
 **[Export Directory SSO API client](https://www.directory.exportingisgreat.gov.uk/)**
 
@@ -64,14 +65,11 @@ Then run the following command:
     make publish
 
 
-[code-climate-image]: https://codeclimate.com/github/uktrade/directory-sso-api-client/badges/issue_count.svg
-[code-climate]: https://codeclimate.com/github/uktrade/directory-sso-api-client
-
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master
 
 [codecov-image]: https://codecov.io/gh/uktrade/directory-sso-api-client/branch/master/graph/badge.svg
 [codecov]: https://codecov.io/gh/uktrade/directory-sso-api-client
 
-[gemnasium-image]: https://gemnasium.com/badges/github.com/uktrade/directory-sso-api-client.svg
-[gemnasium]: https://gemnasium.com/github.com/uktrade/directory-sso-api-client
+[pypi-image]: https://badge.fury.io/py/directory-sso-api-client.svg
+[pypi]: https://badge.fury.io/py/directory-sso-api-client
