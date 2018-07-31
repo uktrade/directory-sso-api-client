@@ -1,9 +1,7 @@
 # directory-sso-api-client
 
-[![code-climate-image]][code-climate]
 [![circle-ci-image]][circle-ci]
 [![codecov-image]][codecov]
-[![gemnasium-image]][gemnasium]
 [![pypi-image]][pypi]
 
 **[Export Directory SSO API client](https://www.directory.exportingisgreat.gov.uk/)**
