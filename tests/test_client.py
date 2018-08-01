@@ -11,7 +11,12 @@ class DirectorySSOAPIClientTest(TestCase):
     def setUp(self):
         self.base_url = 'https://example.com'
         self.api_key = 'test'
-        self.client = DirectorySSOAPIClient(self.base_url, self.api_key)
+        self.client = DirectorySSOAPIClient(
+            base_url=self.base_url,
+            api_key=self.api_key,
+            sender_id='test',
+            timeout=5,
+        )
 
     def test_user(self):
         assert isinstance(self.client.user, UserAPIClient)

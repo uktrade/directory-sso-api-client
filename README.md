@@ -4,50 +4,39 @@
 [![codecov-image]][codecov]
 [![pypi-image]][pypi]
 
-**[Export Directory SSO API client](https://www.directory.exportingisgreat.gov.uk/)**
+**[Directory SSO API client](https://great.gov.uk/)**
 
 ---
 
-## Requirements
-
 ## Installation
 
-```shell
-pip install -e git+https://github.com/uktrade/directory-sso-api-client.git@v2.2.0#egg=directory-sso-api-client
+```sh
+    $ pip install directory-sso-api-client
 ```
 
-### Can't import package in PyCharm
-In case `PyCharm` compains about missing `directory-sso-api-client` requirements after installing it to your virtualenv, then you have to re-install it but without `-e` parameter.
-```shell
-pip uninstall directory-sso-api-client
-pip install git+https://github.com/uktrade/directory-sso-api-client.git@v2.2.0#egg=directory-sso-api-client
-```
+The api client expects the following settings:
 
+| Setting                                  | Notes                                                       |
+| ---------------------------------------- | ----------------------------------------------------------- |
+| DIRECTORY_SSO_API_CLIENT_BASE_URL        |                                                             |
+| DIRECTORY_SSO_API_CLIENT_API_KEY         | Unique to client. Retrieved during the on-boarding process. |
+| DIRECTORY_SSO_API_CLIENT_SENDER_ID       | Unique to client. Retrieved during the on-boarding process. |
+| DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT |                                                             |
 
-## Usage
+Once that is done the API client can be used:
 
-```python
-from directory_sso_api_client.client import DirectorySSOAPIClient
-
-directory_sso_client = DirectorySSOAPIClient(
-    base_url="https://account.trade.great.gov.uk/api",
-    api_key=api_key
-)
-```
-
-### Get user by session ID
-
-```python
-directory_sso_client.user.get(
-    session_id=session_id
-)
+```py
+from directory_sso_api_client.client import sso_api_client
 ```
 
 ## Development
 
-    $ git clone https://github.com/uktrade/directory-sso-api-client
-    $ cd directory-ui
-    $ make
+```shell
+$ git clone https://github.com/uktrade/directory-sso-api-client
+$ cd directory-sso-api-client
+$ [create virtual environment and activate]
+$ pip install -r requirements_test.txt
+```
 
 ## Publish to PyPI
 
@@ -59,8 +48,9 @@ The package should be published to PyPI on merge to master. If you need to do it
 | DIRECTORY_PYPI_PASSWORD     |
 
 Then run the following command:
-
+```sh
     make publish
+```
 
 
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master.svg?style=svg
