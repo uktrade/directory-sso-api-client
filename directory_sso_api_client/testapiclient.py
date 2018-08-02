@@ -1,11 +1,14 @@
-from directory_client_core.base import BaseAPIClient
+from directory_client_core.base import AbstractAPIClient
+
+from directory_sso_api_client.version import __version__
 
 
-class DirectorySSOTestAPIClient(BaseAPIClient):
+class DirectorySSOTestAPIClient(AbstractAPIClient):
 
     endpoints = {
         'user_by_email': 'testapi/user-by-email/{email}/'
     }
+    version = __version__
 
     def get_user_by_email(self, email):
         url = self.endpoints['user_by_email'].format(email=email)

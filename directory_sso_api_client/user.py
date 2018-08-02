@@ -1,10 +1,12 @@
 from collections import OrderedDict
 
-from directory_client_core.base import BaseAPIClient
+from directory_client_core.base import AbstractAPIClient
 from directory_client_core.authentication import BearerAuthenticator
 
+from directory_sso_api_client.version import __version__
 
-class UserAPIClient(BaseAPIClient):
+
+class UserAPIClient(AbstractAPIClient):
 
     endpoints = {
         'session_user': 'api/v1/session-user/',
@@ -12,6 +14,7 @@ class UserAPIClient(BaseAPIClient):
         'last_login': 'api/v1/last-login/',
         'check_password': 'api/v1/password-check/'
     }
+    version = __version__
 
     def get_session_user(self, session_id):
         return self.get(
