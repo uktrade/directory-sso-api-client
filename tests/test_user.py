@@ -83,3 +83,30 @@ class UserAPIClientTest(TestCase):
 
         request = stub.request_history[0]
         assert request.headers['Cookie'] == 'which_cookie=tasty_cookie'
+
+    @stub_request('https://example.com/api/v1/password-check/', 'post')
+    def test_check_password_w_cookies(self, stub):
+        cookies = {'which_cookie': 'tasty_cookie'}
+        self.client.check_password(
+            session_id=123, password='my password', cookies=cookies
+        )
+
+        request = stub.request_history[0]
+        assert request.headers['Cookie'] == 'which_cookie=tasty_cookie'
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_check_password_call_w_cookies(self, mocked_request):
+        cookies = {'which_cookie': 'tasty_cookie'}
+        self.client.check_password(
+            session_id=123, password='my password', cookies=cookies
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"session_key": 123, "password": "my password"}',
+            method='POST',
+            url='api/v1/password-check/',
+            authenticator=None,
+            cookies=cookies,
+        )
