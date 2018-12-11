@@ -16,26 +16,28 @@ class UserAPIClient(AbstractAPIClient):
     }
     version = __version__
 
-    def get_session_user(self, session_id):
+    def get_session_user(self, session_id, cookies=None):
         return self.get(
             url=self.endpoints['session_user'],
-            params={'session_key': session_id}
+            params={'session_key': session_id},
+            cookies=cookies,
         )
 
-    def get_oauth2_user_profile(self, bearer_token):
+    def get_oauth2_user_profile(self, bearer_token, cookies=None):
         return self.get(
             url=self.endpoints['oauth2_user_profile'],
-            authenticator=BearerAuthenticator(bearer_token)
+            authenticator=BearerAuthenticator(bearer_token),
+            cookies=cookies,
         )
 
-    def check_password(self, session_id, password):
+    def check_password(self, session_id, password, cookies=None):
         url = self.endpoints['check_password']
         data = OrderedDict(
             [('session_key', session_id), ('password', password)]
         )
-        return self.post(url, data)
+        return self.post(url, data, cookies=cookies)
 
-    def get_last_login(self, start=None, end=None):
+    def get_last_login(self, start=None, end=None, cookies=None):
         params = {}
         if start is not None:
             params['start'] = start
@@ -45,5 +47,6 @@ class UserAPIClient(AbstractAPIClient):
 
         return self.get(
             url=self.endpoints['last_login'],
-            params=params
+            params=params,
+            cookies=cookies,
         )
