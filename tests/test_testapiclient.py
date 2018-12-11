@@ -62,6 +62,8 @@ class DirectorySSOTestAPIClientTest(TestCase):
             params=None,
             url='testapi/user-by-email/{}/'.format(email),
             authenticator=None,
+            cache_control=None,
+            cookies=None,
         )
 
     @stub_request(url + 'test@example.com/', 'delete')
@@ -103,6 +105,7 @@ class DirectorySSOTestAPIClientTest(TestCase):
             method='DELETE',
             url='testapi/user-by-email/{}/'.format(email),
             authenticator=None,
+            cookies=None,
         )
 
     @stub_request(url + 'test@example.com/', 'patch')
@@ -150,4 +153,5 @@ class DirectorySSOTestAPIClientTest(TestCase):
             data='{"is_verified": true}',
             content_type='application/json',
             authenticator=None,
+            cookies=None,
         )

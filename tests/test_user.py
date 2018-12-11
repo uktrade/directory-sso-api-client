@@ -41,7 +41,9 @@ class UserAPIClientTest(TestCase):
             method='GET',
             params=params,
             url='api/v1/last-login/',
-            authenticator=None
+            authenticator=None,
+            cache_control=None,
+            cookies=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -54,6 +56,8 @@ class UserAPIClientTest(TestCase):
             params=None,
             url='api/v1/last-login/',
             authenticator=None,
+            cache_control=None,
+            cookies=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -69,4 +73,13 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/password-check/',
             authenticator=None,
+            cookies=None,
         )
+
+    @stub_request('https://example.com/api/v1/session-user/', 'get')
+    def test_get_session_user_w_cookies(self, stub):
+        cookies = {'which_cookie': 'tasty_cookie'}
+        self.client.get_session_user(session_id=1, cookies=cookies)
+
+        request = stub.request_history[0]
+        assert request.headers['Cookie'] == 'which_cookie=tasty_cookie'
