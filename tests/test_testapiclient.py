@@ -62,6 +62,7 @@ class DirectorySSOTestAPIClientTest(TestCase):
             params=None,
             url='testapi/user-by-email/{}/'.format(email),
             authenticator=None,
+            cache_control=None,
         )
 
     @stub_request(url + 'test@example.com/', 'delete')

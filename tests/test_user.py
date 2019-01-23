@@ -41,7 +41,8 @@ class UserAPIClientTest(TestCase):
             method='GET',
             params=params,
             url='api/v1/last-login/',
-            authenticator=None
+            authenticator=None,
+            cache_control=None
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -54,6 +55,7 @@ class UserAPIClientTest(TestCase):
             params=None,
             url='api/v1/last-login/',
             authenticator=None,
+            cache_control=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -69,4 +71,37 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/password-check/',
             authenticator=None,
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_create_verification_code(
+        self, mocked_request, mocked_authenticator,
+    ):
+
+        self.client.create_verification_code(sso_session_id=123)
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{}',
+            method='POST',
+            url='api/v1/verification-code/',
+            authenticator=mocked_authenticator(),
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_verify_verification_code(
+        self, mocked_request, mocked_authenticator
+    ):
+
+        self.client.verify_verification_code(sso_session_id=123)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{}',
+            method='POST',
+            url='api/v1/verification-code/verify/',
+            authenticator=mocked_authenticator(),
         )
