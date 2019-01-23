@@ -14,7 +14,7 @@ class UserAPIClient(AbstractAPIClient):
         'last_login': 'api/v1/last-login/',
         'check_password': 'api/v1/password-check/',
         'verification': 'api/v1/verification-code/',
-        'verify-verification': 'api/v1/verification-code/verify/'
+        'verify_verification': 'api/v1/verification-code/verify/'
     }
     version = __version__
 
