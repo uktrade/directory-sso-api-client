@@ -96,11 +96,11 @@ class UserAPIClientTest(TestCase):
         self, mocked_request, mocked_authenticator
     ):
 
-        self.client.verify_verification_code(sso_session_id=123)
+        self.client.verify_verification_code(sso_session_id=123, code='12345')
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{}',
+            data='{"code": "12345"}',
             method='POST',
             url='api/v1/verification-code/verify/',
             authenticator=mocked_authenticator(),
