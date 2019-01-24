@@ -40,13 +40,10 @@ class UserAPIClient(AbstractAPIClient):
         )
 
     def verify_verification_code(self, sso_session_id, code):
-        authenticator = AuthenticatorNegotiator(
-            sso_session_id=sso_session_id,
-        )
-        data = {"code": code}
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         return self.post(
             url=self.endpoints['verify_verification'],
-            data=data,
+            data={"code": code},
             authenticator=authenticator
         )
 
