@@ -14,7 +14,8 @@ class UserAPIClient(AbstractAPIClient):
         'last_login': 'api/v1/last-login/',
         'check_password': 'api/v1/password-check/',
         'verification': 'api/v1/verification-code/',
-        'verify_verification': 'api/v1/verification-code/verify/'
+        'verify_verification': 'api/v1/verification-code/verify/',
+        'user_create': 'api/v1/user/',
     }
     version = __version__
 
@@ -66,3 +67,10 @@ class UserAPIClient(AbstractAPIClient):
             url=self.endpoints['last_login'],
             params=params
         )
+
+    def create_user(self, email, password):
+        url = self.endpoints['user_create']
+        data = OrderedDict(
+            [('email', email), ('password', password)]
+        )
+        return self.post(url, data)
