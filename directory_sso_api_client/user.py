@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from directory_client_core.base import AbstractAPIClient
-from directory_client_core.authentication import BearerAuthenticator
+from directory_client_core.authentication import AuthenticatorNegotiator
 
 from directory_sso_api_client.version import __version__
 
@@ -12,7 +12,9 @@ class UserAPIClient(AbstractAPIClient):
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'api/v1/last-login/',
-        'check_password': 'api/v1/password-check/'
+        'check_password': 'api/v1/password-check/',
+        'verification': 'api/v1/verification-code/',
+        'verify_verification': 'api/v1/verification-code/verify/'
     }
     version = __version__
 
@@ -25,7 +27,24 @@ class UserAPIClient(AbstractAPIClient):
     def get_oauth2_user_profile(self, bearer_token):
         return self.get(
             url=self.endpoints['oauth2_user_profile'],
-            authenticator=BearerAuthenticator(bearer_token)
+            authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
+        )
+
+    def create_verification_code(self, sso_session_id):
+        authenticator = AuthenticatorNegotiator(
+            sso_session_id=sso_session_id,
+        )
+        return self.post(
+            url=self.endpoints['verification'],
+            authenticator=authenticator
+        )
+
+    def verify_verification_code(self, sso_session_id, code):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        return self.post(
+            url=self.endpoints['verify_verification'],
+            data={"code": code},
+            authenticator=authenticator
         )
 
     def check_password(self, session_id, password):
