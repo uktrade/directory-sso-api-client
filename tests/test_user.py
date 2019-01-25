@@ -105,3 +105,19 @@ class UserAPIClientTest(TestCase):
             url='api/v1/verification-code/verify/',
             authenticator=mocked_authenticator(),
         )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_create_user(self, mocked_request):
+        self.client.create_user(
+            email='test@testuser.com',
+            password='mypassword'
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"email": "test@testuser.com", "password": "mypassword"}',
+            method='POST',
+            url='api/v1/user/',
+            authenticator=None,
+        )
