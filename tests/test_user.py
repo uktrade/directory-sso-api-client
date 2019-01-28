@@ -143,7 +143,6 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
             method='POST',
-            data=json.dumps(user_profile_data),
             url='api/v1/user/create-profile/',
             authenticator=mocked_authenticator(),
         )
