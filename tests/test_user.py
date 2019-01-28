@@ -134,7 +134,7 @@ class UserAPIClientTest(TestCase):
         }
 
         self.client.create_user_profile(
-            sso_session_id=123,
+            sso_session_id=999,
             first_name=user_profile_data['first_name'],
             last_name=user_profile_data['last_name'],
             job_title=user_profile_data['job_title'],
