@@ -127,10 +127,10 @@ class UserAPIClientTest(TestCase):
     def test_create_user_profile(self, mocked_request, mocked_authenticator):
 
         user_profile_data = {
-            "first_name": "john",
-            "last_name": "smith",
-            "job_title": "director",
-            "mobile_phone_number": "0788712738738",
+            'first_name': 'john',
+            'last_name': 'smith',
+            'job_title': 'director',
+            'mobile_phone_number': '0788712738738',
         }
 
         self.client.create_user_profile(
@@ -140,6 +140,8 @@ class UserAPIClientTest(TestCase):
             job_title=user_profile_data['job_title'],
             mobile_phone_number=user_profile_data['mobile_phone_number']
         )
+        import pdb
+        pdb.set_trace()
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
