@@ -1,7 +1,6 @@
-from unittest import TestCase, mock
-
-from tests import stub_request
 import json
+from unittest import TestCase, mock
+from tests import stub_request
 from directory_sso_api_client.user import UserAPIClient
 
 
