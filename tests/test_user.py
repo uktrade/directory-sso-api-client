@@ -142,8 +142,8 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{}'.format(json.dumps(user_profile_data)),
             method='POST',
-            url='api/v1/user/create-profile',
+            data=json.dumps(user_profile_data),
+            url='api/v1/user/create-profile/',
             authenticator=mocked_authenticator(),
         )

@@ -16,7 +16,7 @@ class UserAPIClient(AbstractAPIClient):
         'verification': 'api/v1/verification-code/',
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
-        'user_create_profile': 'api/v1/user/create-profile',
+        'user_create_profile': 'api/v1/user/create-profile/',
     }
     version = __version__
 
@@ -81,15 +81,14 @@ class UserAPIClient(AbstractAPIClient):
             first_name,
             last_name,
             job_title,
-            mobile_phone_number
-    ):
+            mobile_phone_number):
+
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_create_profile']
-        data = OrderedDict(
-            [('first_name', first_name),
-             ('last_name', last_name),
-             ('job_title', job_title),
-             ('mobile_phone_number', mobile_phone_number)
-             ]
-        )
+        data = OrderedDict([
+            ('first_name', first_name),
+            ('last_name', last_name),
+            ('job_title', job_title),
+            ('mobile_phone_number', mobile_phone_number)
+        ])
         return self.post(url, data, authenticator=authenticator)
