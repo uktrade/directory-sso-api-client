@@ -16,6 +16,7 @@ class UserAPIClient(AbstractAPIClient):
         'verification': 'api/v1/verification-code/',
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
+        'user_create_profile': 'api/v1/user/profile/',
     }
     version = __version__
 
@@ -74,3 +75,8 @@ class UserAPIClient(AbstractAPIClient):
             [('email', email), ('password', password)]
         )
         return self.post(url, data)
+
+    def create_user_profile(self, sso_session_id, data):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_create_profile']
+        return self.post(url, data, authenticator=authenticator)

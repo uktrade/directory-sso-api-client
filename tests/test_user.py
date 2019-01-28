@@ -1,7 +1,6 @@
+import json
 from unittest import TestCase, mock
-
 from tests import stub_request
-
 from directory_sso_api_client.user import UserAPIClient
 
 
@@ -120,4 +119,28 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/user/',
             authenticator=None,
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_create_user_profile(self, mocked_request, mocked_authenticator):
+
+        user_profile_data = {
+            'first_name': 'john',
+            'last_name': 'smith',
+            'job_title': 'director',
+            'mobile_phone_number': '0788712738738',
+        }
+
+        self.client.create_user_profile(
+            sso_session_id=999,
+            data=user_profile_data
+        )
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            method='POST',
+            data=json.dumps(user_profile_data),
+            url='api/v1/user/profile/',
+            authenticator=mocked_authenticator(),
         )

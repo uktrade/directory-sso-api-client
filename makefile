@@ -11,7 +11,7 @@ flake8:
 	flake8 . --exclude=.venv
 
 pytest:
-	pytest . --cov=. $(pytest_args) --capture=no
+	pytest . --cov=. $(pytest_args) --capture=no -vv
 
 CODECOV := \
 	if [ "$$CODECOV_REPO_TOKEN" != "" ]; then \
