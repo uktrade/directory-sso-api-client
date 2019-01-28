@@ -134,16 +134,13 @@ class UserAPIClientTest(TestCase):
 
         self.client.create_user_profile(
             sso_session_id=999,
-            first_name=user_profile_data['first_name'],
-            last_name=user_profile_data['last_name'],
-            job_title=user_profile_data['job_title'],
-            mobile_phone_number=user_profile_data['mobile_phone_number']
+            data=user_profile_data
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
             method='POST',
             data=json.dumps(user_profile_data),
-            url='api/v1/user/create-profile/',
+            url='api/v1/user/profile/',
             authenticator=mocked_authenticator(),
         )
