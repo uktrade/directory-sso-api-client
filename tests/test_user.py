@@ -140,8 +140,6 @@ class UserAPIClientTest(TestCase):
             job_title=user_profile_data['job_title'],
             mobile_phone_number=user_profile_data['mobile_phone_number']
         )
-        import pdb
-        pdb.set_trace()
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
