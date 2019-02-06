@@ -1,7 +1,10 @@
+from collections import OrderedDict
 import json
 from unittest import TestCase, mock
-from tests import stub_request
+
 from directory_sso_api_client.user import UserAPIClient
+
+from tests import stub_request
 
 
 class UserAPIClientTest(TestCase):
@@ -94,15 +97,19 @@ class UserAPIClientTest(TestCase):
     def test_verify_verification_code(
         self, mocked_request, mocked_authenticator
     ):
+        data = OrderedDict([
+            ('code', '12345'),
+            ('email', 'test@example.com'),
+        ])
 
-        self.client.verify_verification_code(sso_session_id=123, code='12345')
+        self.client.verify_verification_code(data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"code": "12345"}',
+            data='{"code": "12345", "email": "test@example.com"}',
             method='POST',
             url='api/v1/verification-code/verify/',
-            authenticator=mocked_authenticator(),
+            authenticator=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
