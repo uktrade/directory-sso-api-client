@@ -83,7 +83,7 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"email": "test@test1234.com"}',
+            data='"test@test1234.com"',
             method='POST',
             url='api/v1/verification-code/regenerate/',
             authenticator=None,
