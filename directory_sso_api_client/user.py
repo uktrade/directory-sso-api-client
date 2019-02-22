@@ -34,7 +34,7 @@ class UserAPIClient(AbstractAPIClient):
 
     def regenerate_verification_code(self, email):
         return self.post(
-            url= self.endpoints['regenerate_verification'],
+            url=self.endpoints['regenerate_verification'],
             data={'email': email},
         )
 
