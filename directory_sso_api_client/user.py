@@ -13,7 +13,7 @@ class UserAPIClient(AbstractAPIClient):
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
         'last_login': 'api/v1/last-login/',
         'check_password': 'api/v1/password-check/',
-        'verification': 'api/v1/verification-code/',
+        'regenerate_verification': 'api/v1/verification-code/regenerate/',
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
         'user_create_profile': 'api/v1/user/profile/',
@@ -32,13 +32,10 @@ class UserAPIClient(AbstractAPIClient):
             authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
         )
 
-    def create_verification_code(self, sso_session_id):
-        authenticator = AuthenticatorNegotiator(
-            sso_session_id=sso_session_id,
-        )
+    def regenerate_verification_code(self, email):
         return self.post(
-            url=self.endpoints['verification'],
-            authenticator=authenticator
+            url=self.endpoints['regenerate_verification'],
+            data={'email': email},
         )
 
     def verify_verification_code(self, data):
