@@ -75,21 +75,18 @@ class UserAPIClientTest(TestCase):
             authenticator=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_create_verification_code(
-        self, mocked_request, mocked_authenticator,
-    ):
+    def test_regenerate_verification_code(self, mocked_request):
 
-        self.client.create_verification_code(sso_session_id=123)
+        self.client.regenerate_verification_code('test@test1234.com')
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{}',
+            data='{"email": "test@test1234.com"}',
             method='POST',
-            url='api/v1/verification-code/',
-            authenticator=mocked_authenticator(),
+            url='api/v1/verification-code/regenerate/',
+            authenticator=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
