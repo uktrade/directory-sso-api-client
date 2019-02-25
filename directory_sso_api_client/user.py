@@ -32,10 +32,10 @@ class UserAPIClient(AbstractAPIClient):
             authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
         )
 
-    def regenerate_verification_code(self, email):
+    def regenerate_verification_code(self, data):
         return self.post(
             url=self.endpoints['regenerate_verification'],
-            data=email,
+            data=data,
         )
 
     def verify_verification_code(self, data):
