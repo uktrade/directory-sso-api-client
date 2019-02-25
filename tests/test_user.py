@@ -78,12 +78,14 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_regenerate_verification_code(self, mocked_request):
 
-        self.client.regenerate_verification_code('test@test1234.com')
+        self.client.regenerate_verification_code(
+            {"email": "test@test1234.com"}
+        )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='"test@test1234.com"',
+            data='{"email": "test@test1234.com"}',
             method='POST',
             url='api/v1/verification-code/regenerate/',
             authenticator=None,
