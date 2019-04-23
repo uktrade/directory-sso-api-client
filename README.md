@@ -1,8 +1,10 @@
 # directory-sso-api-client
 
+[![code-climate-image]][code-climate]
 [![circle-ci-image]][circle-ci]
 [![codecov-image]][codecov]
 [![pypi-image]][pypi]
+[![semver-image]][semver]
 
 **[Directory SSO API client](https://great.gov.uk/)**
 
@@ -53,6 +55,9 @@ Then run the following command:
 ```
 
 
+[code-climate-image]: https://codeclimate.com/github/uktrade/directory-sso-api-client/badges/issue_count.svg
+[code-climate]: https://codeclimate.com/github/uktrade/directory-sso-api-client
+
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-sso-api-client/tree/master
 
@@ -61,3 +66,6 @@ Then run the following command:
 
 [pypi-image]: https://badge.fury.io/py/directory-sso-api-client.svg
 [pypi]: https://badge.fury.io/py/directory-sso-api-client
+
+[semver-image]: https://img.shields.io/badge/Versioning%20strategy-SemVer-5FBB1C.svg
+[semver]: https://semver.org
