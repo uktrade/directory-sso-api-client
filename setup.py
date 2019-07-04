@@ -1,23 +1,9 @@
-"""
-Directory SSO API client
-"""
-import ast
-import re
 from setuptools import setup, find_packages
-
-
-def get_version():
-    pattern = re.compile(r'__version__\s+=\s+(.*)')
-
-    with open('directory_sso_api_client/version.py', 'rb') as src:
-        return str(ast.literal_eval(
-            pattern.search(src.read().decode('utf-8')).group(1)
-        ))
 
 
 setup(
     name='directory_sso_api_client',
-    version=get_version(),
+    version='5.0.1',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -31,7 +17,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'django>=1.11.20,<2.0a1',
+            'django>=1.11.22,<2.0a1',
             'requests>=2.18.4,<3.0.0',
             'pytest==3.0.2',
             'pytest-cov==2.3.1',
