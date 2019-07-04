@@ -1,9 +1,8 @@
 from collections import OrderedDict
+import pkg_resources
 
 from directory_client_core.base import AbstractAPIClient
 from directory_client_core.authentication import AuthenticatorNegotiator
-
-from directory_sso_api_client.version import __version__
 
 
 class UserAPIClient(AbstractAPIClient):
@@ -18,7 +17,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_create': 'api/v1/user/',
         'user_create_profile': 'api/v1/user/profile/',
     }
-    version = __version__
+    version = pkg_resources.get_distribution(__package__).version
 
     def get_session_user(self, session_id):
         return self.get(

@@ -1,9 +1,10 @@
+import pkg_resources
+
 from directory_client_core.base import AbstractAPIClient
 
 from django.conf import settings
 
 from directory_sso_api_client.user import UserAPIClient
-from directory_sso_api_client.version import __version__
 
 
 class DirectorySSOAPIClient(AbstractAPIClient):
@@ -11,7 +12,7 @@ class DirectorySSOAPIClient(AbstractAPIClient):
     endpoints = {
         'ping': 'api/v1/healthcheck/ping/',
     }
-    version = __version__
+    version = pkg_resources.get_distribution(__package__).version
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
