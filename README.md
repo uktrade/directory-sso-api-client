@@ -31,6 +31,22 @@ Once that is done the API client can be used:
 from directory_sso_api_client.client import sso_api_client
 ```
 
+## Authentication backend
+
+Add the following to your settings
+
+```
+AUTHENTICATION_BACKENDS = ['directory_sso_api_client.backends.RemoveSSOBackend']
+
+MIDDLEWARE_CLASSES = [
+    ...
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    ...
+```
+
+That will result in the user being authenticate via their sso session cookie and then attached to `request.user`.
+
 ## Development
 
 ```shell
