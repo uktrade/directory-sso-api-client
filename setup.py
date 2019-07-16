@@ -17,7 +17,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'django>=1.11.22,<2.0a1',
+            'django>=2.2,<3.0a1',
             'requests>=2.18.4,<3.0.0',
             'pytest==3.6.0',
             'pytest-cov==2.3.1',
