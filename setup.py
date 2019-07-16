@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_sso_api_client',
-    version='5.0.1',
+    version='5.1.0',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -19,7 +19,7 @@ setup(
         'test': [
             'django>=1.11.22,<2.0a1',
             'requests>=2.18.4,<3.0.0',
-            'pytest==3.0.2',
+            'pytest==3.6.0',
             'pytest-cov==2.3.1',
             'flake8==3.0.4',
             'requests_mock==1.1.0',
@@ -27,6 +27,8 @@ setup(
             'twine>=1.11.0,<2.0.0',
             'wheel>=0.31.0,<1.0.0',
             'setuptools>=38.6.0,<39.0.0',
+            'pytest-django>=3.2.1,<4.0.0',
+            'pytest-sugar>=0.9.1,<1.0.0',
         ]
     },
     classifiers=[

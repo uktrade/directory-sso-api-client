@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://pypi.org/project/directory-sso-api-client/5.1.0/) (2019-07-14)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/37/files)
+
+### Implemented enhancements
+
+- Added authentication backend
+
 ## [5.0.1](https://pypi.org/project/directory-sso-api-client/5.0.1/) (2019-07-04)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/36/files)
 
