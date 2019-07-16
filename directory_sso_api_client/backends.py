@@ -16,7 +16,7 @@ class SSOUserBackend:
         'SSO did not return JSON. A 502 may have occurred so SSO nginx '
         'redirected to http://sorry.great.gov.uk (see ED-2114)'
     )
-    MESSAGE_SSO_UNREACHABLE = 'Unable to reach SSO'
+    MESSAGE_NOT_SUCCESSFUL = 'SSO did not return a 200 response'
 
     def authenticate(self, request):
         session_id = request.COOKIES.get(settings.SSO_SESSION_COOKIE)
@@ -24,7 +24,7 @@ class SSOUserBackend:
             try:
                 return self.get_user(session_id)
             except RequestException:
-                logger.error(self.MESSAGE_SSO_UNREACHABLE, exc_info=True)
+                logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
             except json.JSONDecodeError:
                 raise ValueError(self.MESSAGE_INVALID_JSON)
 

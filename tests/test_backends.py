@@ -78,7 +78,7 @@ def test_remote_sso_backend_timeout(sso_request, caplog, excpetion_class):
 
     log = caplog.records[0]
     assert log.levelname == 'ERROR'
-    assert log.msg == backends.SSOUserBackend.MESSAGE_SSO_UNREACHABLE
+    assert log.msg == backends.SSOUserBackend.MESSAGE_NOT_SUCCESSFUL
 
 
 def test_end_to_end(client, settings):

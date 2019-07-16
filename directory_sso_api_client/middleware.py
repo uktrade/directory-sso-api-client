@@ -1,5 +1,6 @@
 from django.utils.deprecation import MiddlewareMixin
 from django.contrib import auth
+from django.contrib.auth.models import AnonymousUser
 
 
 class AuthenticationMiddleware(MiddlewareMixin):
@@ -10,4 +11,4 @@ class AuthenticationMiddleware(MiddlewareMixin):
             request.user = user
             auth.login(request, user)
         else:
-            request.user = None
+            request.user = AnonymousUser()
