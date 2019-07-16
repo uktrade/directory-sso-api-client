@@ -38,10 +38,12 @@ Add the following to your settings
 ```
 AUTHENTICATION_BACKENDS = ['directory_sso_api_client.backends.RemoveSSOBackend']
 
+AUTH_USER_MODEL='directory_sso_api_client.SSOUser',
+
 MIDDLEWARE_CLASSES = [
     ...
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     ...
 ```
 
