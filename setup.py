@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_sso_api_client',
-    version='5.1.0',
+    version='6.0.0',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -13,7 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     include_package_data=True,
     install_requires=[
-        'directory_client_core>=5.0.0,<6.0.0',
+        'directory_client_core>=6.0.0,<7.0.0',
     ],
     extras_require={
         'test': [

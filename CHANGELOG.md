@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.0](https://pypi.org/project/directory-sso-api-client/6.0.0/) (2019-07-16)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
+
+### Implemented enhancements
+
+- No ticket - update to be > 6.0.0
+
+
 ## [5.1.0](https://pypi.org/project/directory-sso-api-client/5.1.0/) (2019-07-14)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/37/files)
 
