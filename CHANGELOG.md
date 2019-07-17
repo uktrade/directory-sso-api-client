@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.1.1](https://pypi.org/project/directory-sso-api-client/5.1.1/) (2019-07-16)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
+
+### Bugs fixed
+
+- Allow user model to be pluggable
+
+
 ## [5.1.0](https://pypi.org/project/directory-sso-api-client/5.1.0/) (2019-07-14)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/37/files)
 
