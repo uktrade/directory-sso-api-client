@@ -12,7 +12,7 @@ def test_authenticcated(client, settings):
         response = client.get('/')
 
     request = response.wsgi_request
-    
+
     assert request.user.is_authenticated is True
     assert request.user.pk == 1
     assert request.user.email == 'jim@example.com'
