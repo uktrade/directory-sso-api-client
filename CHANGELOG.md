@@ -5,7 +5,7 @@
 
 ### Breaking change
 
-- No ticket - update to directory_client_core > 6.0.0 which requires django 2.2 
+- No ticket - update directory_client_core > 6.0.0 which requires django 2.2 
 
 
 ## [5.1.0](https://pypi.org/project/directory-sso-api-client/5.1.0/) (2019-07-14)
