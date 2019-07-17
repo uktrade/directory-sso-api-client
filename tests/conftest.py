@@ -16,7 +16,7 @@ def pytest_configure():
             'directory_sso_api_client.backends.SSOUserBackend',
         ],
         AUTH_USER_MODEL='directory_sso_api_client.SSOUser',
-        MIDDLEWARE_CLASSES=[
+        MIDDLEWARE=[
             'django.contrib.sessions.middleware.SessionMiddleware',
             'directory_sso_api_client.middleware.AuthenticationMiddleware',
         ],
