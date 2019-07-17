@@ -4,8 +4,9 @@ import logging
 from requests.exceptions import RequestException
 
 from django.conf import settings
+from django.contrib import auth
 
-from directory_sso_api_client import models, sso_api_client
+from directory_sso_api_client import sso_api_client
 
 
 logger = logging.getLogger(__name__)
@@ -31,10 +32,13 @@ class SSOUserBackend:
     def get_user(self, session_id):
         response = sso_api_client.user.get_session_user(session_id)
         response.raise_for_status()
-        parsed = response.json()
-        return models.SSOUser(
-            pk=parsed['id'],
-            email=parsed['email'],
+        return self.build_user(session_id=session_id, parsed=response.json())
+
+    def build_user(self, session_id, parsed):
+        SSOUser = auth.get_user_model()
+        return SSOUser(
+            id=parsed['id'],
             session_id=session_id,
-            hashed_uuid=parsed['hashed_uuid']
+            hashed_uuid=parsed['hashed_uuid'],
+            email=parsed['email'],
         )

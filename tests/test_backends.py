@@ -39,6 +39,7 @@ def test_remote_sso_backend_api_response_ok(
         )
         user = authenticate(sso_request)
         assert user.pk == 1
+        assert user.id == 1
         assert user.email == 'jim@example.com'
         assert user.hashed_uuid == 'thing'
 
@@ -92,6 +93,7 @@ def test_end_to_end(client, settings):
         response = client.get('/')
 
     request = response.wsgi_request
+    assert request.user.id == 1
     assert request.user.pk == 1
     assert request.user.email == 'jim@example.com'
     assert request.user.hashed_uuid == 'thing'
