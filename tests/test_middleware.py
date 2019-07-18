@@ -1,7 +1,7 @@
 import requests_mock
 
 
-def test_authenticcated(client, settings):
+def test_authenticated(client, settings):
     client.cookies[settings.SSO_SESSION_COOKIE] = '123'
 
     with requests_mock.mock() as m:
@@ -13,13 +13,14 @@ def test_authenticcated(client, settings):
 
     request = response.wsgi_request
 
-    assert request.user.is_authenticated is True
+    assert request.user.is_authenticated
+    assert request.user.id == 1
     assert request.user.pk == 1
     assert request.user.email == 'jim@example.com'
     assert request.user.hashed_uuid == 'thing'
 
 
-def test_not_authenticcated(client, settings):
+def test_not_authenticated(client, settings):
     client.cookies[settings.SSO_SESSION_COOKIE] = '123'
 
     with requests_mock.mock() as m:
@@ -27,4 +28,4 @@ def test_not_authenticcated(client, settings):
         response = client.get('/')
 
     request = response.wsgi_request
-    assert request.user.is_authenticated is False
+    assert not request.user.is_authenticated

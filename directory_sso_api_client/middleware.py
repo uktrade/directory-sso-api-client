@@ -9,6 +9,7 @@ class AuthenticationMiddleware(MiddlewareMixin):
         user = auth.authenticate(request)
         if user:
             request.user = user
-            auth.login(request, user)
+            if user.is_anonymous:
+                auth.login(request, user)
         else:
             request.user = AnonymousUser()
