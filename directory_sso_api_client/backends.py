@@ -22,23 +22,30 @@ class SSOUserBackend:
     def authenticate(self, request):
         session_id = request.COOKIES.get(settings.SSO_SESSION_COOKIE)
         if session_id:
-            try:
-                return self.get_user(session_id)
-            except RequestException:
-                logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
-            except json.JSONDecodeError:
-                raise ValueError(self.MESSAGE_INVALID_JSON)
+            return self.get_user(session_id)
 
     def get_user(self, session_id):
-        response = sso_api_client.user.get_session_user(session_id)
-        response.raise_for_status()
-        return self.build_user(session_id=session_id, parsed=response.json())
+        try:
+            response = sso_api_client.user.get_session_user(session_id)
+            response.raise_for_status()
+        except RequestException:
+            logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
+        except json.JSONDecodeError:
+            raise ValueError(self.MESSAGE_INVALID_JSON)
+        else:
+            return self.build_user(session_id=session_id, response=response)
 
-    def build_user(self, session_id, parsed):
+    def build_user(self, session_id, response):
+        parsed = response.json()
+        user_kwargs = self.user_kwargs(session_id=session_id, parsed=parsed)
         SSOUser = auth.get_user_model()
-        return SSOUser(
-            id=parsed['id'],
-            session_id=session_id,
-            hashed_uuid=parsed['hashed_uuid'],
-            email=parsed['email'],
-        )
+        return SSOUser(**user_kwargs)
+
+    def user_kwargs(self, session_id, parsed):
+        return {
+            'id': parsed['id'],
+            'pk': parsed['id'],
+            'session_id': session_id,
+            'hashed_uuid': parsed['hashed_uuid'],
+            'email': parsed['email'],
+        }

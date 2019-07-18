@@ -1,5 +1,11 @@
 # Changelog
 
+## [6.0.1](https://pypi.org/project/directory-sso-api-client/6.0.1/) (2019-07-18)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
+
+## Bugs fixed
+- No ticket - Prevent unnecessary session cycling
+
 ## [6.0.0](https://pypi.org/project/directory-sso-api-client/6.0.0/) (2019-07-16)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
 
