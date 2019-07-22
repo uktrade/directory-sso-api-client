@@ -36,7 +36,7 @@ from directory_sso_api_client.client import sso_api_client
 Add the following to your settings
 
 ```
-AUTHENTICATION_BACKENDS = ['directory_sso_api_client.backends.RemoveSSOBackend']
+AUTHENTICATION_BACKENDS = ['directory_sso_api_client.backends.SSOUserBackend']
 
 AUTH_USER_MODEL='directory_sso_api_client.SSOUser',
 
