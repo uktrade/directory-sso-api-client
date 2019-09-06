@@ -150,3 +150,27 @@ class UserAPIClientTest(TestCase):
             url='api/v1/user/profile/',
             authenticator=mocked_authenticator(),
         )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_update_user_profile(self, mocked_request, mocked_authenticator):
+
+        user_profile_data = {
+            'first_name': 'john',
+            'last_name': 'smith',
+            'job_title': 'director',
+            'mobile_phone_number': '0788712738738',
+        }
+
+        self.client.update_user_profile(
+            sso_session_id=999,
+            data=user_profile_data
+        )
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            method='PATCH',
+            data=json.dumps(user_profile_data),
+            url='api/v1/user/profile/update/',
+            authenticator=mocked_authenticator(),
+        )

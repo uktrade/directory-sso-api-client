@@ -16,6 +16,7 @@ class UserAPIClient(AbstractAPIClient):
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
         'user_create_profile': 'api/v1/user/profile/',
+        'user_update_profile': 'api/v1/user/profile/update/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -74,3 +75,8 @@ class UserAPIClient(AbstractAPIClient):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_create_profile']
         return self.post(url, data, authenticator=authenticator)
+
+    def update_user_profile(self, sso_session_id, data):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_update_profile']
+        return self.patch(url, data, authenticator=authenticator)
