@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.1.0](https://pypi.org/project/directory-sso-api-client/6.1.0/) (2019-09-06)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/48/files)
+
+TT-1760 - added user profile update
+
 ## [6.0.1](https://pypi.org/project/directory-sso-api-client/6.0.1/) (2019-07-18)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
 
