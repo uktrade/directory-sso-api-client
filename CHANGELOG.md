@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- No ticket - added user profile to SSOUser
+
 ## [6.1.0](https://pypi.org/project/directory-sso-api-client/6.1.0/) (2019-09-06)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/48/files)
 

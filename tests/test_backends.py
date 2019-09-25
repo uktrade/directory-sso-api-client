@@ -35,13 +35,27 @@ def test_remote_sso_backend_api_response_ok(
     with requests_mock.mock() as m:
         m.get(
             'https://sso.com/api/v1/session-user/',
-            json={'id': 1, 'email': 'jim@example.com', 'hashed_uuid': 'thing'}
+            json={'id': 1,
+                  'email': 'jim@example.com',
+                  'hashed_uuid': 'thing',
+                  'user_profile': {
+                      'first_name': 'Jim',
+                      'last_name': 'Bloggs',
+                      'job_title': 'Dev',
+                      'mobile_phone_number': '555'
+                  }
+                  }
         )
         user = authenticate(sso_request)
         assert user.pk == 1
         assert user.id == 1
         assert user.email == 'jim@example.com'
         assert user.hashed_uuid == 'thing'
+        assert user.has_user_profile is True
+        assert user.first_name == 'Jim'
+        assert user.last_name == 'Bloggs'
+        assert user.job_title == 'Dev'
+        assert user.mobile_phone_number == '555'
 
     assert mock_get_session_user.call_count == 1
     assert mock_get_session_user.call_args == mock.call('123')

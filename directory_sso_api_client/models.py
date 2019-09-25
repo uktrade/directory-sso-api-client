@@ -8,6 +8,9 @@ from directory_sso_api_client import sso_api_client
 class SSOUser(AbstractUser):
     session_id = models.TextField()
     hashed_uuid = models.CharField(max_length=200)
+    has_user_profile = models.BooleanField()
+    job_title = models.CharField(max_length=123)
+    mobile_phone_number = models.CharField(max_length=128)
 
     def check_password(self, raw_password):
         response = sso_api_client.usercheck_password(

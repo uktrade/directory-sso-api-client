@@ -42,10 +42,16 @@ class SSOUserBackend:
         return SSOUser(**user_kwargs)
 
     def user_kwargs(self, session_id, parsed):
+        user_profile = parsed.get('user_profile') or {}
         return {
             'id': parsed['id'],
             'pk': parsed['id'],
             'session_id': session_id,
             'hashed_uuid': parsed['hashed_uuid'],
             'email': parsed['email'],
+            'has_user_profile': bool(user_profile),
+            'first_name': user_profile.get('first_name'),
+            'last_name': user_profile.get('last_name'),
+            'job_title': user_profile.get('job_title'),
+            'mobile_phone_number': user_profile.get('mobile_phone_number')
         }
