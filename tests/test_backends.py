@@ -35,16 +35,17 @@ def test_remote_sso_backend_api_response_ok(
     with requests_mock.mock() as m:
         m.get(
             'https://sso.com/api/v1/session-user/',
-            json={'id': 1,
-                  'email': 'jim@example.com',
-                  'hashed_uuid': 'thing',
-                  'user_profile': {
-                      'first_name': 'Jim',
-                      'last_name': 'Bloggs',
-                      'job_title': 'Dev',
-                      'mobile_phone_number': '555'
-                  }
-                  }
+            json={
+                'id': 1,
+                'email': 'jim@example.com',
+                'hashed_uuid': 'thing',
+                'user_profile': {
+                    'first_name': 'Jim',
+                    'last_name': 'Bloggs',
+                    'job_title': 'Dev',
+                    'mobile_phone_number': '555'
+                }
+            }
         )
         user = authenticate(sso_request)
         assert user.pk == 1
@@ -59,6 +60,68 @@ def test_remote_sso_backend_api_response_ok(
 
     assert mock_get_session_user.call_count == 1
     assert mock_get_session_user.call_args == mock.call('123')
+
+
+@mock.patch.object(
+    sso_api_client.user, 'get_session_user',
+    wraps=sso_api_client.user.get_session_user
+)
+def test_remote_sso_backend_api_response_no_user_profile_ok(
+    mock_get_session_user, sso_request
+):
+    with requests_mock.mock() as m:
+        m.get(
+            'https://sso.com/api/v1/session-user/',
+            json={
+                'id': 1,
+                'email': 'jim@example.com',
+                'hashed_uuid': 'thing'
+            }
+        )
+        user = authenticate(sso_request)
+        assert user.pk == 1
+        assert user.id == 1
+        assert user.email == 'jim@example.com'
+        assert user.hashed_uuid == 'thing'
+        assert user.has_user_profile is False
+        assert user.first_name is None
+        assert user.last_name is None
+        assert user.job_title is None
+        assert user.mobile_phone_number is None
+
+
+@mock.patch.object(
+    sso_api_client.user, 'get_session_user',
+    wraps=sso_api_client.user.get_session_user
+)
+def test_remote_sso_backend_api_response_no_job_or_phone_ok(
+    mock_get_session_user, sso_request
+):
+    with requests_mock.mock() as m:
+        m.get(
+            'https://sso.com/api/v1/session-user/',
+            json={
+                'id': 1,
+                'email': 'jim@example.com',
+                'hashed_uuid': 'thing',
+                'user_profile': {
+                    'first_name': 'Jim',
+                    'last_name': 'Bloggs',
+                    'job_title': '',
+                    'mobile_phone_number': ''
+                }
+            }
+        )
+        user = authenticate(sso_request)
+        assert user.pk == 1
+        assert user.id == 1
+        assert user.email == 'jim@example.com'
+        assert user.hashed_uuid == 'thing'
+        assert user.has_user_profile is True
+        assert user.first_name == 'Jim'
+        assert user.last_name == 'Bloggs'
+        assert user.job_title == ''
+        assert user.mobile_phone_number == ''
 
 
 def test_remote_sso_backend_bad_response(sso_request):
