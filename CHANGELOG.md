@@ -1,8 +1,7 @@
 # Changelog
 
-## Pre-release
-
-### Implemented enhancements
+## [6.2.0](https://pypi.org/project/directory-sso-api-client/6.2.0/) (2019-09-27)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/49/files)
 
 - No ticket - added user profile to SSOUser
 
