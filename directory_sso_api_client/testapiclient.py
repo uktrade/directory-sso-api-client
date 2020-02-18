@@ -2,6 +2,8 @@ import pkg_resources
 
 from directory_client_core.base import AbstractAPIClient
 
+from directory_sso_api_client.user import UserAPIClient
+
 
 class DirectorySSOTestAPIClient(AbstractAPIClient):
 
@@ -9,6 +11,10 @@ class DirectorySSOTestAPIClient(AbstractAPIClient):
         'user_by_email': 'testapi/user-by-email/{email}/'
     }
     version = pkg_resources.get_distribution(__package__).version
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = UserAPIClient(*args, **kwargs)
 
     def get_user_by_email(self, email, authenticator=None):
         url = self.endpoints['user_by_email'].format(email=email)
