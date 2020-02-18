@@ -10,15 +10,15 @@ class DirectorySSOTestAPIClient(AbstractAPIClient):
     }
     version = pkg_resources.get_distribution(__package__).version
 
-    def get_user_by_email(self, email):
+    def get_user_by_email(self, email, authenticator=None):
         url = self.endpoints['user_by_email'].format(email=email)
-        return self.get(url=url)
+        return self.get(url=url, authenticator=authenticator)
 
-    def delete_user_by_email(self, email):
+    def delete_user_by_email(self, email, authenticator=None):
         url = self.endpoints['user_by_email'].format(email=email)
-        return self.delete(url=url)
+        return self.delete(url=url, authenticator=authenticator)
 
-    def flag_user_email_as_verified_or_not(self, email, verified):
+    def flag_user_email_as_verified_or_not(self, email, verified, authenticator=None):
         url = self.endpoints['user_by_email'].format(email=email)
         data = {"is_verified": verified}
-        return self.patch(url=url, data=data)
+        return self.patch(url=url, data=data, authenticator=authenticator)
