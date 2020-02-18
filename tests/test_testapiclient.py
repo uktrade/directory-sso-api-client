@@ -2,7 +2,7 @@ from unittest import TestCase, mock
 
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
-from tests import stub_request
+from tests import basic_authenticator, stub_request
 
 
 class DirectorySSOTestAPIClientTest(TestCase):
@@ -152,3 +152,29 @@ class DirectorySSOTestAPIClientTest(TestCase):
             content_type='application/json',
             authenticator=None,
         )
+
+    @stub_request(url + 'test@example.com/', 'get')
+    def test_get_user_by_email_with_authenticator(self, stub):
+        email = 'test@example.com'
+        self.client.get_user_by_email(email=email, authenticator=basic_authenticator)
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')
+
+    @stub_request(url + 'test@example.com/', 'delete')
+    def test_delete_user_by_email_with_authenticator(self, stub):
+        email = 'test@example.com'
+        self.client.delete_user_by_email(email=email, authenticator=basic_authenticator)
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')
+
+    @stub_request(url + 'test@example.com/', 'patch')
+    def test_flag_user_email_as_verified_or_not_with_authenticator(self, stub):
+        email = 'test@example.com'
+        self.client.flag_user_email_as_verified_or_not(
+            email, True, authenticator=basic_authenticator
+        )
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')

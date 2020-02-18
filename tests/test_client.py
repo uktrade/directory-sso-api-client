@@ -3,7 +3,7 @@ from unittest import TestCase
 from directory_sso_api_client.client import DirectorySSOAPIClient
 from directory_sso_api_client.user import UserAPIClient
 
-from tests import stub_request
+from tests import basic_authenticator, stub_request
 
 
 class DirectorySSOAPIClientTest(TestCase):
@@ -34,3 +34,10 @@ class DirectorySSOAPIClientTest(TestCase):
 
         request = stub.request_history[0]
         assert request
+
+    @stub_request('https://example.com/api/v1/healthcheck/ping/', 'get')
+    def test_health_check_with_authenticator(self, stub):
+        self.client.ping(authenticator=basic_authenticator)
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')
