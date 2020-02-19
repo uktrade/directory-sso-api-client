@@ -27,13 +27,10 @@ class UserAPIClient(AbstractAPIClient):
             authenticator=authenticator,
         )
 
-    def get_oauth2_user_profile(self, bearer_token, authenticator=None):
-        authenticator = authenticator or AuthenticatorNegotiator(
-            bearer_token=bearer_token
-        )
+    def get_oauth2_user_profile(self, bearer_token):
         return self.get(
             url=self.endpoints['oauth2_user_profile'],
-            authenticator=authenticator,
+            authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
         )
 
     def regenerate_verification_code(self, data, authenticator=None):
@@ -86,16 +83,12 @@ class UserAPIClient(AbstractAPIClient):
             authenticator=authenticator,
         )
 
-    def create_user_profile(self, sso_session_id, data, authenticator=None):
-        authenticator = authenticator or AuthenticatorNegotiator(
-            sso_session_id=sso_session_id
-        )
+    def create_user_profile(self, sso_session_id, data):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_create_profile']
         return self.post(url, data, authenticator=authenticator)
 
-    def update_user_profile(self, sso_session_id, data, authenticator=None):
-        authenticator = authenticator or AuthenticatorNegotiator(
-            sso_session_id=sso_session_id
-        )
+    def update_user_profile(self, sso_session_id, data):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_update_profile']
         return self.patch(url, data, authenticator=authenticator)
