@@ -183,14 +183,6 @@ class UserAPIClientTest(TestCase):
         assert 'Authorization' in request.headers
         assert request.headers['Authorization'].startswith('Basic ')
 
-    @stub_request('https://example.com/oauth2/user-profile/v1/', 'get')
-    def test_get_oauth2_user_profile_with_authenticator(self, stub):
-        self.client.get_oauth2_user_profile('123', authenticator=basic_authenticator)
-
-        request = stub.request_history[0]
-        assert 'Authorization' in request.headers
-        assert request.headers['Authorization'].startswith('Basic ')
-
     @stub_request('https://example.com/api/v1/last-login/', 'get')
     def test_get_last_login_with_authenticator(self, stub):
         self.client.get_last_login(authenticator=basic_authenticator)
@@ -295,53 +287,5 @@ class UserAPIClientTest(TestCase):
             data='{"email": "test@testuser.com", "password": "mypassword"}',
             method='POST',
             url='api/v1/user/',
-            authenticator=basic_authenticator,
-        )
-
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_create_user_profile_with_authenticator(self, mocked_request):
-
-        user_profile_data = {
-            'first_name': 'john',
-            'last_name': 'smith',
-            'job_title': 'director',
-            'mobile_phone_number': '0788712738738',
-        }
-
-        self.client.create_user_profile(
-            sso_session_id=999,
-            data=user_profile_data,
-            authenticator=basic_authenticator,
-        )
-        assert mocked_request.call_count == 1
-        assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
-            data=json.dumps(user_profile_data),
-            url='api/v1/user/profile/',
-            authenticator=basic_authenticator,
-        )
-
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_update_user_profile_with_authenticator(self, mocked_request):
-
-        user_profile_data = {
-            'first_name': 'john',
-            'last_name': 'smith',
-            'job_title': 'director',
-            'mobile_phone_number': '0788712738738',
-        }
-
-        self.client.update_user_profile(
-            sso_session_id=999,
-            data=user_profile_data,
-            authenticator=basic_authenticator,
-        )
-        assert mocked_request.call_count == 1
-        assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='PATCH',
-            data=json.dumps(user_profile_data),
-            url='api/v1/user/profile/update/',
             authenticator=basic_authenticator,
         )
