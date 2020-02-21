@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.3.0](https://pypi.org/project/directory-sso-api-client/6.3.0/)(2020-02-21)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/50/files)
+
+- TT-2288 - add support for custom authenticators
+
 ## [6.2.0](https://pypi.org/project/directory-sso-api-client/6.2.0/) (2019-09-27)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/49/files)
 

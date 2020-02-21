@@ -1,10 +1,11 @@
-from collections import OrderedDict
 import json
+from collections import OrderedDict
+
 from unittest import TestCase, mock
 
 from directory_sso_api_client.user import UserAPIClient
 
-from tests import stub_request
+from tests import basic_authenticator, stub_request
 
 
 class UserAPIClientTest(TestCase):
@@ -173,4 +174,118 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(user_profile_data),
             url='api/v1/user/profile/update/',
             authenticator=mocked_authenticator(),
+        )
+
+    @stub_request('https://example.com/api/v1/session-user/', 'get')
+    def test_get_session_user_with_authenticator(self, stub):
+        self.client.get_session_user(session_id=1, authenticator=basic_authenticator)
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')
+
+    @stub_request('https://example.com/api/v1/last-login/', 'get')
+    def test_get_last_login_with_authenticator(self, stub):
+        self.client.get_last_login(authenticator=basic_authenticator)
+        request = stub.request_history[0]
+        assert 'Authorization' in request.headers
+        assert request.headers['Authorization'].startswith('Basic ')
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_last_login_with_params_and_authenticator(self, mocked_request):
+        params = {'start': '2016-11-01', 'end': '2016-11-11'}
+
+        self.client.get_last_login(**params, authenticator=basic_authenticator)
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET',
+            params=params,
+            url='api/v1/last-login/',
+            cache_control=None,
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_last_login_without_params_but_with_authenticator(self, mocked_request):
+        self.client.get_last_login(authenticator=basic_authenticator)
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET',
+            params=None,
+            url='api/v1/last-login/',
+            cache_control=None,
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_check_password_with_authenticator(self, mocked_request):
+        self.client.check_password(
+            session_id=123, password='my password', authenticator=basic_authenticator
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"session_key": 123, "password": "my password"}',
+            method='POST',
+            url='api/v1/password-check/',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_regenerate_verification_code_with_authenticator(self, mocked_request):
+
+        self.client.regenerate_verification_code(
+            {"email": "test@test1234.com"},
+            authenticator=basic_authenticator,
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"email": "test@test1234.com"}',
+            method='POST',
+            url='api/v1/verification-code/regenerate/',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_verify_verification_code_with_authenticator(
+            self, mocked_request, mocked_authenticator
+    ):
+        data = OrderedDict([
+            ('code', '12345'),
+            ('email', 'test@example.com'),
+        ])
+
+        self.client.verify_verification_code(
+            data,
+            authenticator=basic_authenticator,
+        )
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"code": "12345", "email": "test@example.com"}',
+            method='POST',
+            url='api/v1/verification-code/verify/',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_create_user_with_authenticator(self, mocked_request):
+        self.client.create_user(
+            email='test@testuser.com',
+            password='mypassword',
+            authenticator=basic_authenticator,
+        )
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"email": "test@testuser.com", "password": "mypassword"}',
+            method='POST',
+            url='api/v1/user/',
+            authenticator=basic_authenticator,
         )

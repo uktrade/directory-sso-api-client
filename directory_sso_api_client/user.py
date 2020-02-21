@@ -20,10 +20,11 @@ class UserAPIClient(AbstractAPIClient):
     }
     version = pkg_resources.get_distribution(__package__).version
 
-    def get_session_user(self, session_id):
+    def get_session_user(self, session_id, authenticator=None):
         return self.get(
             url=self.endpoints['session_user'],
-            params={'session_key': session_id}
+            params={'session_key': session_id},
+            authenticator=authenticator,
         )
 
     def get_oauth2_user_profile(self, bearer_token):
@@ -32,26 +33,32 @@ class UserAPIClient(AbstractAPIClient):
             authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
         )
 
-    def regenerate_verification_code(self, data):
+    def regenerate_verification_code(self, data, authenticator=None):
         return self.post(
             url=self.endpoints['regenerate_verification'],
             data=data,
+            authenticator=authenticator,
         )
 
-    def verify_verification_code(self, data):
+    def verify_verification_code(self, data, authenticator=None):
         return self.post(
             url=self.endpoints['verify_verification'],
             data=data,
+            authenticator=authenticator,
         )
 
-    def check_password(self, session_id, password):
+    def check_password(self, session_id, password, authenticator=None):
         url = self.endpoints['check_password']
         data = OrderedDict(
             [('session_key', session_id), ('password', password)]
         )
-        return self.post(url, data)
+        return self.post(
+            url,
+            data,
+            authenticator=authenticator,
+        )
 
-    def get_last_login(self, start=None, end=None):
+    def get_last_login(self, start=None, end=None, authenticator=None):
         params = {}
         if start is not None:
             params['start'] = start
@@ -61,15 +68,20 @@ class UserAPIClient(AbstractAPIClient):
 
         return self.get(
             url=self.endpoints['last_login'],
-            params=params
+            params=params,
+            authenticator=authenticator,
         )
 
-    def create_user(self, email, password):
+    def create_user(self, email, password, authenticator=None):
         url = self.endpoints['user_create']
         data = OrderedDict(
             [('email', email), ('password', password)]
         )
-        return self.post(url, data)
+        return self.post(
+            url,
+            data,
+            authenticator=authenticator,
+        )
 
     def create_user_profile(self, sso_session_id, data):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)

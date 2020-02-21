@@ -18,8 +18,8 @@ class DirectorySSOAPIClient(AbstractAPIClient):
         super().__init__(*args, **kwargs)
         self.user = UserAPIClient(*args, **kwargs)
 
-    def ping(self):
-        return self.get(url=self.endpoints['ping'])
+    def ping(self, authenticator=None):
+        return self.get(url=self.endpoints['ping'], authenticator=authenticator)
 
 
 sso_api_client = DirectorySSOAPIClient(
