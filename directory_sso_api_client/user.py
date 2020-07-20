@@ -17,6 +17,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_create': 'api/v1/user/',
         'user_create_profile': 'api/v1/user/profile/',
         'user_update_profile': 'api/v1/user/profile/update/',
+        'user_page_views': 'api/v1/user/page-view/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -92,3 +93,13 @@ class UserAPIClient(AbstractAPIClient):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_update_profile']
         return self.patch(url, data, authenticator=authenticator)
+
+    def set_user_page_view(self, sso_session_id, service, page):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_page_views']
+        return self.post(url, {'service': service, 'page': page}, authenticator=authenticator)
+
+    def get_user_page_views(self, sso_session_id, service, page):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_page_views']
+        return self.get(url, {'service': service, 'page': page}, authenticator=authenticator)
