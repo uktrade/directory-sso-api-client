@@ -184,7 +184,6 @@ class UserAPIClientTest(TestCase):
             'service': 'great',
             'page': 'dashboard'
         }
-
         self.client.set_user_page_view(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
@@ -202,9 +201,7 @@ class UserAPIClientTest(TestCase):
             'service': 'great',
             'page': 'dashboard'
         }
-
         self.client.get_user_page_views(sso_session_id=1, **data)
-        request = stub.request_history[0]
 
     @stub_request('https://example.com/api/v1/session-user/', 'get')
     def test_get_session_user_with_authenticator(self, stub):
