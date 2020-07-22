@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='directory_sso_api_client',
-    version='6.3.0',
+    version='6.2.0',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -17,7 +17,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'codecov==2.0.15',
+            'codecov==2.1.7',
             'django>=2.2.10,<3.0a1',
             'flake8==3.7.9',
             'pytest-cov==2.8.1',
