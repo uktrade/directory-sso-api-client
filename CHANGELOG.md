@@ -1,6 +1,6 @@
 # Changelog
 
-- GP2-239 - user page views
+- GP2-239 - User page views
 
 ## [6.3.0](https://pypi.org/project/directory-sso-api-client/6.3.0/)(2020-02-21)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/50/files)
