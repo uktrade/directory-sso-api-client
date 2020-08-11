@@ -203,6 +203,36 @@ class UserAPIClientTest(TestCase):
         }
         self.client.get_user_page_views(sso_session_id=1, **data)
 
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_set_user_lesson_completed(self, mocked_request, mocked_authenticator):
+
+        data = {
+            'service': 'great',
+            'lesson_page': 'dashboard',
+            'lesson': 12,
+            "module": 1,
+            "topic": 1,
+        }
+        self.client.set_user_lesson_completed(sso_session_id=999, **data)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            method='POST',
+            data=json.dumps(data),
+            url='api/v1/user/lesson-complete/',
+            authenticator=mocked_authenticator(),
+        )
+
+    @stub_request('https://example.com/api/v1/user/lesson-complete/', 'get')
+    def test_get_user_lesson_completed(self, stub):
+
+        data = {
+            'service': 'great',
+            'lesson_page': 'dashboard'
+        }
+        self.client.get_user_lesson_completed(sso_session_id=999, **data)
+
     @stub_request('https://example.com/api/v1/session-user/', 'get')
     def test_get_session_user_with_authenticator(self, stub):
         self.client.get_session_user(session_id=1, authenticator=basic_authenticator)

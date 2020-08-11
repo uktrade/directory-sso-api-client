@@ -18,6 +18,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_create_profile': 'api/v1/user/profile/',
         'user_update_profile': 'api/v1/user/profile/update/',
         'user_page_views': 'api/v1/user/page-view/',
+        'user_lesson_complete': 'api/v1/user/lesson-complete/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -103,3 +104,19 @@ class UserAPIClient(AbstractAPIClient):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_page_views']
         return self.get(url, {'service': service, 'page': page}, authenticator=authenticator)
+
+    def set_user_lesson_completed(self, sso_session_id, service, lesson_page, lesson, module, topic):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_lesson_complete']
+        return self.post(url, {
+            'service': service,
+            'lesson_page': lesson_page,
+            'lesson': lesson,
+            'module': module,
+            'topic': topic
+        }, authenticator=authenticator)
+
+    def get_user_lesson_completed(self, sso_session_id, service, lesson_page):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_lesson_complete']
+        return self.get(url, {'service': service, 'lesson-page': lesson_page}, authenticator=authenticator)
