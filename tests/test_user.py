@@ -212,7 +212,6 @@ class UserAPIClientTest(TestCase):
             'lesson_page': 'dashboard',
             'lesson': 12,
             "module": 1,
-            "topic": 1,
         }
         self.client.set_user_lesson_completed(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
@@ -220,11 +219,11 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             method='POST',
             data=json.dumps(data),
-            url='api/v1/user/lesson-complete/',
+            url='api/v1/user/lesson-completed/',
             authenticator=mocked_authenticator(),
         )
 
-    @stub_request('https://example.com/api/v1/user/lesson-complete/', 'get')
+    @stub_request('https://example.com/api/v1/user/lesson-completed/', 'get')
     def test_get_user_lesson_completed(self, stub):
 
         data = {
