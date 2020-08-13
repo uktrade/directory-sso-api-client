@@ -232,6 +232,22 @@ class UserAPIClientTest(TestCase):
         }
         self.client.get_user_lesson_completed(sso_session_id=999, **data)
 
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_delete_user_lesson_completed(self, mocked_request, mocked_authenticator):
+
+        data = {
+            'service': 'great',
+            'lesson': '11'
+        }
+        self.client.delete_user_lesson_completed(sso_session_id=999, **data)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='DELETE',
+            url='api/v1/user/lesson-completed/',
+            authenticator=mocked_authenticator(),
+        )
+
     @stub_request('https://example.com/api/v1/session-user/', 'get')
     def test_get_session_user_with_authenticator(self, stub):
         self.client.get_session_user(session_id=1, authenticator=basic_authenticator)

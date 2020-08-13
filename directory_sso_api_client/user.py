@@ -105,6 +105,11 @@ class UserAPIClient(AbstractAPIClient):
         url = self.endpoints['user_page_views']
         return self.get(url, {'service': service, 'page': page}, authenticator=authenticator)
 
+    def get_user_lesson_completed(self, sso_session_id, service, lesson_page):
+        authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        url = self.endpoints['user_lesson_completed']
+        return self.get(url, {'service': service, 'lesson': lesson_page}, authenticator=authenticator)
+
     def set_user_lesson_completed(self, sso_session_id, service, lesson_page, lesson, module):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_lesson_completed']
@@ -115,7 +120,7 @@ class UserAPIClient(AbstractAPIClient):
             'module': module,
         }, authenticator=authenticator)
 
-    def get_user_lesson_completed(self, sso_session_id, service, lesson_page):
+    def delete_user_lesson_completed(self, sso_session_id, service, lesson):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_lesson_completed']
-        return self.get(url, {'service': service, 'lesson': lesson_page}, authenticator=authenticator)
+        return self.delete(url, {'service': service, 'lesson': lesson}, authenticator=authenticator)
