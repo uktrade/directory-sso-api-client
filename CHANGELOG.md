@@ -1,9 +1,14 @@
 # Changelog
 
+## [6.5.2](https://pypi.org/project/directory-sso-api-client/6.5.2/)(2020-08-10)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/53/files)
+
+- GP2-36 - delete endpoint for lesson completed model
+
 ## [6.5.1](https://pypi.org/project/directory-sso-api-client/6.5.1/)(2020-08-10)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/53/files)
 
-- GP2-36 - Remove topic field as per model changes
+- GP2-36 - Remove topic field as per model change
 
 ## [6.5.0](https://pypi.org/project/directory-sso-api-client/6.5.0/)(2020-08-10)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/53/files)
