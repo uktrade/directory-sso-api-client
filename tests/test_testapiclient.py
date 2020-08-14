@@ -104,6 +104,7 @@ class DirectorySSOTestAPIClientTest(TestCase):
             method='DELETE',
             url='testapi/user-by-email/{}/'.format(email),
             authenticator=None,
+            data=None,
         )
 
     @stub_request(url + 'test@example.com/', 'patch')

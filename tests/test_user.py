@@ -246,6 +246,7 @@ class UserAPIClientTest(TestCase):
             method='DELETE',
             url='api/v1/user/lesson-completed/',
             authenticator=mocked_authenticator(),
+            data=data,
         )
 
     @stub_request('https://example.com/api/v1/session-user/', 'get')
