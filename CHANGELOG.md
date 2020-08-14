@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.5.3](https://pypi.org/project/directory-sso-api-client/6.5.3/)(2020-08-10)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/54/files)
+
+- No ticket - Upgraded directory-client-core package
+
 ## [6.5.2](https://pypi.org/project/directory-sso-api-client/6.5.2/)(2020-08-10)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/53/files)
 
