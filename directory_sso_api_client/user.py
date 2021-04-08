@@ -19,6 +19,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_update_profile': 'api/v1/user/profile/update/',
         'user_page_views': 'api/v1/user/page-view/',
         'user_lesson_completed': 'api/v1/user/lesson-completed/',
+        'user_questionnaire': 'api/v1/user/questionnaire/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -123,3 +124,7 @@ class UserAPIClient(AbstractAPIClient):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_lesson_completed']
         return self.delete(url, {'service': service, 'lesson': lesson}, authenticator=authenticator)
+
+    def get_user_questionnaire(self, sso_session_id, service):
+        url = self.endpoints['user_questionnaire']
+        return self.get(url, {'service': service}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
