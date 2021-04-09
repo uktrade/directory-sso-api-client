@@ -128,3 +128,11 @@ class UserAPIClient(AbstractAPIClient):
     def get_user_questionnaire(self, sso_session_id, service):
         url = self.endpoints['user_questionnaire']
         return self.get(url, {'service': service}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
+
+    def set_user_questionnaire_answer(self, sso_session_id, service, question_id, answer):
+        url = self.endpoints['user_questionnaire']
+        return self.post(
+            url,
+            {'service': service, 'question_id': question_id, 'answer': answer},
+            authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id),
+        )
