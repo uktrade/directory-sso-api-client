@@ -6,8 +6,7 @@ def test_authenticated(client, settings):
 
     with requests_mock.mock() as m:
         m.get(
-            'https://sso.com/api/v1/session-user/',
-            json={'id': 1, 'email': 'jim@example.com', 'hashed_uuid': 'thing'}
+            'https://sso.com/api/v1/session-user/', json={'id': 1, 'email': 'jim@example.com', 'hashed_uuid': 'thing'}
         )
         response = client.get('/')
 

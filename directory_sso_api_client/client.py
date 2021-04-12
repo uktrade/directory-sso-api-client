@@ -1,7 +1,5 @@
 import pkg_resources
-
 from directory_client_core.base import AbstractAPIClient
-
 from django.conf import settings
 
 from directory_sso_api_client.user import UserAPIClient

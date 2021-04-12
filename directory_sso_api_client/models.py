@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-
 from django.db import models
 
 from directory_sso_api_client import sso_api_client
@@ -13,9 +12,7 @@ class SSOUser(AbstractUser):
     mobile_phone_number = models.TextField()
 
     def check_password(self, raw_password):
-        response = sso_api_client.usercheck_password(
-            session_id=self.session_id, password=raw_password
-        )
+        response = sso_api_client.usercheck_password(session_id=self.session_id, password=raw_password)
         return response.ok
 
     def get_username(self):

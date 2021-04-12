@@ -1,10 +1,9 @@
-from django.utils.deprecation import MiddlewareMixin
 from django.contrib import auth
 from django.contrib.auth.models import AnonymousUser
+from django.utils.deprecation import MiddlewareMixin
 
 
 class AuthenticationMiddleware(MiddlewareMixin):
-
     def process_request(self, request):
         user = auth.authenticate(request)
         if user:

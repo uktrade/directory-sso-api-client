@@ -1,13 +1,11 @@
 import json
 import logging
 
-from requests.exceptions import RequestException
-
 from django.conf import settings
 from django.contrib import auth
+from requests.exceptions import RequestException
 
 from directory_sso_api_client import sso_api_client
-
 
 logger = logging.getLogger(__name__)
 
@@ -53,5 +51,5 @@ class SSOUserBackend:
             'first_name': user_profile.get('first_name'),
             'last_name': user_profile.get('last_name'),
             'job_title': user_profile.get('job_title'),
-            'mobile_phone_number': user_profile.get('mobile_phone_number')
+            'mobile_phone_number': user_profile.get('mobile_phone_number'),
         }
