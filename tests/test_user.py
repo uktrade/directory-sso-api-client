@@ -328,3 +328,31 @@ class UserAPIClientTest(TestCase):
             url='api/v1/user/',
             authenticator=basic_authenticator,
         )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_user_questionnaire(self, mocked_request, mocked_authenticator):
+        params = {'service': 'great'}
+        self.client.get_user_questionnaire(sso_session_id=999, **params)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET',
+            params=params,
+            url='api/v1/user/questionnaire/',
+            cache_control=None,
+            authenticator=mocked_authenticator(),
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_set_user_questionnaire_answer(self, mocked_request, mocked_authenticator):
+        data = {'service': 'great', 'question_id': 1, 'answer': 'answer'}
+        self.client.set_user_questionnaire_answer(sso_session_id=999, **data)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            method='POST',
+            data=json.dumps(data),
+            url='api/v1/user/questionnaire/',
+            authenticator=mocked_authenticator(),
+        )
