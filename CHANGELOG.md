@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.5.4](https://pypi.org/project/directory-sso-api-client/6.5.4/)(2021-04-12)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/57/files)
+
+- No ticket - Value for Money backend
+
 ## [6.5.3](https://pypi.org/project/directory-sso-api-client/6.5.3/)(2020-08-10)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/54/files)
 

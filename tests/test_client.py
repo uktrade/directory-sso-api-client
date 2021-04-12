@@ -2,12 +2,10 @@ from unittest import TestCase
 
 from directory_sso_api_client.client import DirectorySSOAPIClient
 from directory_sso_api_client.user import UserAPIClient
-
 from tests import basic_authenticator, stub_request
 
 
 class DirectorySSOAPIClientTest(TestCase):
-
     def setUp(self):
         self.base_url = 'https://example.com'
         self.api_key = 'test'

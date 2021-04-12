@@ -1,9 +1,8 @@
 from setuptools import find_packages, setup
 
-
 setup(
     name='directory_sso_api_client',
-    version='6.5.3',
+    version='6.5.4',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -19,7 +18,9 @@ setup(
         'test': [
             'codecov==2.1.7',
             'django>=2.2.10,<3.0a1',
-            'flake8==3.7.9',
+            'black==20.8b1',
+            'flake8==3.8.4',
+            'isort==5.6.4',
             'pytest-cov==2.8.1',
             'pytest-django>=3.8.0,<4.0.0',
             'pytest-sugar>=0.9.2,<1.0.0',
@@ -42,5 +43,5 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ]
+    ],
 )

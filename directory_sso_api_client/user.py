@@ -1,8 +1,8 @@
 from collections import OrderedDict
-import pkg_resources
 
-from directory_client_core.base import AbstractAPIClient
+import pkg_resources
 from directory_client_core.authentication import AuthenticatorNegotiator
+from directory_client_core.base import AbstractAPIClient
 
 
 class UserAPIClient(AbstractAPIClient):
@@ -19,6 +19,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_update_profile': 'api/v1/user/profile/update/',
         'user_page_views': 'api/v1/user/page-view/',
         'user_lesson_completed': 'api/v1/user/lesson-completed/',
+        'user_questionnaire': 'api/v1/user/questionnaire/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -31,8 +32,7 @@ class UserAPIClient(AbstractAPIClient):
 
     def get_oauth2_user_profile(self, bearer_token):
         return self.get(
-            url=self.endpoints['oauth2_user_profile'],
-            authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
+            url=self.endpoints['oauth2_user_profile'], authenticator=AuthenticatorNegotiator(bearer_token=bearer_token)
         )
 
     def regenerate_verification_code(self, data, authenticator=None):
@@ -51,9 +51,7 @@ class UserAPIClient(AbstractAPIClient):
 
     def check_password(self, session_id, password, authenticator=None):
         url = self.endpoints['check_password']
-        data = OrderedDict(
-            [('session_key', session_id), ('password', password)]
-        )
+        data = OrderedDict([('session_key', session_id), ('password', password)])
         return self.post(
             url,
             data,
@@ -76,9 +74,7 @@ class UserAPIClient(AbstractAPIClient):
 
     def create_user(self, email, password, authenticator=None):
         url = self.endpoints['user_create']
-        data = OrderedDict(
-            [('email', email), ('password', password)]
-        )
+        data = OrderedDict([('email', email), ('password', password)])
         return self.post(
             url,
             data,
@@ -113,14 +109,30 @@ class UserAPIClient(AbstractAPIClient):
     def set_user_lesson_completed(self, sso_session_id, service, lesson_page, lesson, module):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_lesson_completed']
-        return self.post(url, {
-            'service': service,
-            'lesson_page': lesson_page,
-            'lesson': lesson,
-            'module': module,
-        }, authenticator=authenticator)
+        return self.post(
+            url,
+            {
+                'service': service,
+                'lesson_page': lesson_page,
+                'lesson': lesson,
+                'module': module,
+            },
+            authenticator=authenticator,
+        )
 
     def delete_user_lesson_completed(self, sso_session_id, service, lesson):
         authenticator = AuthenticatorNegotiator(sso_session_id=sso_session_id)
         url = self.endpoints['user_lesson_completed']
         return self.delete(url, {'service': service, 'lesson': lesson}, authenticator=authenticator)
+
+    def get_user_questionnaire(self, sso_session_id, service):
+        url = self.endpoints['user_questionnaire']
+        return self.get(url, {'service': service}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
+
+    def set_user_questionnaire_answer(self, sso_session_id, service, question_id, answer):
+        url = self.endpoints['user_questionnaire']
+        return self.post(
+            url,
+            {'service': service, 'question_id': question_id, 'answer': answer},
+            authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id),
+        )

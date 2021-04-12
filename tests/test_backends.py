@@ -3,7 +3,6 @@ from unittest import mock
 import pytest
 import requests
 import requests_mock
-
 from django.contrib.auth import authenticate
 
 from directory_sso_api_client import backends, sso_api_client
@@ -25,13 +24,8 @@ def test_remote_sso_backend_no_cookie(mock_get_session_user, rf):
     assert mock_get_session_user.call_count == 0
 
 
-@mock.patch.object(
-    sso_api_client.user, 'get_session_user',
-    wraps=sso_api_client.user.get_session_user
-)
-def test_remote_sso_backend_api_response_ok(
-    mock_get_session_user, sso_request
-):
+@mock.patch.object(sso_api_client.user, 'get_session_user', wraps=sso_api_client.user.get_session_user)
+def test_remote_sso_backend_api_response_ok(mock_get_session_user, sso_request):
     with requests_mock.mock() as m:
         m.get(
             'https://sso.com/api/v1/session-user/',
@@ -43,9 +37,9 @@ def test_remote_sso_backend_api_response_ok(
                     'first_name': 'Jim',
                     'last_name': 'Bloggs',
                     'job_title': 'Dev',
-                    'mobile_phone_number': '555'
-                }
-            }
+                    'mobile_phone_number': '555',
+                },
+            },
         )
         user = authenticate(sso_request)
         assert user.pk == 1
@@ -62,21 +56,11 @@ def test_remote_sso_backend_api_response_ok(
     assert mock_get_session_user.call_args == mock.call('123')
 
 
-@mock.patch.object(
-    sso_api_client.user, 'get_session_user',
-    wraps=sso_api_client.user.get_session_user
-)
-def test_remote_sso_backend_api_response_no_user_profile_ok(
-    mock_get_session_user, sso_request
-):
+@mock.patch.object(sso_api_client.user, 'get_session_user', wraps=sso_api_client.user.get_session_user)
+def test_remote_sso_backend_api_response_no_user_profile_ok(mock_get_session_user, sso_request):
     with requests_mock.mock() as m:
         m.get(
-            'https://sso.com/api/v1/session-user/',
-            json={
-                'id': 1,
-                'email': 'jim@example.com',
-                'hashed_uuid': 'thing'
-            }
+            'https://sso.com/api/v1/session-user/', json={'id': 1, 'email': 'jim@example.com', 'hashed_uuid': 'thing'}
         )
         user = authenticate(sso_request)
         assert user.pk == 1
@@ -90,13 +74,8 @@ def test_remote_sso_backend_api_response_no_user_profile_ok(
         assert user.mobile_phone_number is None
 
 
-@mock.patch.object(
-    sso_api_client.user, 'get_session_user',
-    wraps=sso_api_client.user.get_session_user
-)
-def test_remote_sso_backend_api_response_no_job_or_phone_ok(
-    mock_get_session_user, sso_request
-):
+@mock.patch.object(sso_api_client.user, 'get_session_user', wraps=sso_api_client.user.get_session_user)
+def test_remote_sso_backend_api_response_no_job_or_phone_ok(mock_get_session_user, sso_request):
     with requests_mock.mock() as m:
         m.get(
             'https://sso.com/api/v1/session-user/',
@@ -108,9 +87,9 @@ def test_remote_sso_backend_api_response_no_job_or_phone_ok(
                     'first_name': 'Jim',
                     'last_name': 'Bloggs',
                     'job_title': '',
-                    'mobile_phone_number': ''
-                }
-            }
+                    'mobile_phone_number': '',
+                },
+            },
         )
         user = authenticate(sso_request)
         assert user.pk == 1
@@ -135,23 +114,15 @@ def test_remote_sso_backend_bad_response(sso_request):
 
 def test_remote_sso_backend_not_josn_response(sso_request):
     with requests_mock.mock() as m:
-        m.get(
-            'https://sso.com/api/v1/session-user/',
-            text='<html></html>'
-        )
+        m.get('https://sso.com/api/v1/session-user/', text='<html></html>')
         with pytest.raises(ValueError):
             assert authenticate(sso_request) is None
 
 
-@pytest.mark.parametrize(
-    'excpetion_class', requests.exceptions.RequestException.__subclasses__()
-)
+@pytest.mark.parametrize('excpetion_class', requests.exceptions.RequestException.__subclasses__())
 def test_remote_sso_backend_timeout(sso_request, caplog, excpetion_class):
     with requests_mock.mock() as m:
-        m.get(
-            'https://sso.com/api/v1/session-user/',
-            exc=excpetion_class
-        )
+        m.get('https://sso.com/api/v1/session-user/', exc=excpetion_class)
         assert authenticate(sso_request) is None
 
     log = caplog.records[0]

@@ -1,5 +1,6 @@
 def pytest_configure():
     from django.conf import settings
+
     settings.configure(
         INSTALLED_APPS=[
             'django.contrib.auth',

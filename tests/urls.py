@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from django.views import View
 from django.http import HttpResponse
+from django.views import View
 
 
 class TestView(View):
