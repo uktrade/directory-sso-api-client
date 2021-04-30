@@ -359,7 +359,7 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_get_user_questionnaire(self, mocked_request, mocked_authenticator):
+    def test_get_user_data(self, mocked_request, mocked_authenticator):
         params = {'name': 'data_name'}
         self.client.get_user_data(sso_session_id=999, **params)
         assert mocked_request.call_count == 1
@@ -373,7 +373,7 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_set_user_questionnaire_answer(self, mocked_request, mocked_authenticator):
+    def test_set_user_data(self, mocked_request, mocked_authenticator):
         data = {'data': {'key': 'value'}, 'name': 'data_name'}
         self.client.set_user_data(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
