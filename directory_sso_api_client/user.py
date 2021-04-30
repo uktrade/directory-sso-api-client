@@ -144,4 +144,6 @@ class UserAPIClient(AbstractAPIClient):
 
     def set_user_data(self, sso_session_id, data, name):
         url = self.endpoints['user_data']
-        return self.post(url, {'data': data, 'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
+        return self.post(
+            url, {'data': data, 'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id)
+        )
