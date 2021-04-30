@@ -20,6 +20,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_page_views': 'api/v1/user/page-view/',
         'user_lesson_completed': 'api/v1/user/lesson-completed/',
         'user_questionnaire': 'api/v1/user/questionnaire/',
+        'user_data': 'api/v1/user/data/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -136,3 +137,11 @@ class UserAPIClient(AbstractAPIClient):
             {'service': service, 'question_id': question_id, 'answer': answer},
             authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id),
         )
+
+    def get_user_data(self, sso_session_id, name):
+        url = self.endpoints['user_data']
+        return self.get(url, {'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
+
+    def set_user_data(self, sso_session_id, data, name):
+        url = self.endpoints['user_data']
+        return self.post(url, {'data': data, 'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
