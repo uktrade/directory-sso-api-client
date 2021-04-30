@@ -19,7 +19,7 @@ class DirectorySSOTestAPIClientTest(TestCase):
         )
 
     def test_endpoints_urljoin(self):
-        """urljoin replaces base_url's path if endpoints start with with / """
+        """urljoin replaces base_url's path if endpoints start with with /"""
         for endpoint in self.client.endpoints.values():
             assert not endpoint.startswith('/')
 

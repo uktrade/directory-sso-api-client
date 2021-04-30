@@ -22,7 +22,7 @@ class DirectorySSOAPIClientTest(TestCase):
         assert self.client.user.request_signer.secret == self.api_key
 
     def test_endpoints_urljoin(self):
-        """urljoin replaces base_url's path if endpoints start with with / """
+        """urljoin replaces base_url's path if endpoints start with with /"""
         for endpoint in self.client.user.endpoints.values():
             assert not endpoint.startswith('/')
 

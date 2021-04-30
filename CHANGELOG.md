@@ -1,5 +1,8 @@
 # Changelog
 
+
+- GP2-2135 - User data endpoints
+
 ## [6.5.4](https://pypi.org/project/directory-sso-api-client/6.5.4/)(2021-04-12)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/57/files)
 
