@@ -13,6 +13,7 @@ class UserAPIClient(AbstractAPIClient):
         'last_login': 'api/v1/last-login/',
         'check_password': 'api/v1/password-check/',
         'regenerate_verification': 'api/v1/verification-code/regenerate/',
+        'verification_token': 'api/v1/verification-token/',
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
         'user_create_profile': 'api/v1/user/profile/',
@@ -40,6 +41,12 @@ class UserAPIClient(AbstractAPIClient):
         return self.post(
             url=self.endpoints['regenerate_verification'],
             data=data,
+            authenticator=authenticator,
+        )
+
+    def get_verification_token(self, authenticator=None):
+        return self.get(
+            url=self.endpoints['verification_token'],
             authenticator=authenticator,
         )
 

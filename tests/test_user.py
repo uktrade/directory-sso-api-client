@@ -81,6 +81,20 @@ class UserAPIClientTest(TestCase):
             authenticator=None,
         )
 
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_verification_token(self, mocked_request):
+
+        self.client.get_verification_token()
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            cache_control=None,
+            params=None,
+            method='GET',
+            url='api/v1/verification-token/',
+            authenticator=None,
+        )
+
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_verify_verification_code(self, mocked_request, mocked_authenticator):
@@ -286,6 +300,20 @@ class UserAPIClientTest(TestCase):
             data='{"email": "test@test1234.com"}',
             method='POST',
             url='api/v1/verification-code/regenerate/',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_verification_token_with_authenticator(self, mocked_request):
+
+        self.client.get_verification_token(authenticator=basic_authenticator)
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            cache_control=None,
+            params=None,
+            method='GET',
+            url='api/v1/verification-token/',
             authenticator=basic_authenticator,
         )
 

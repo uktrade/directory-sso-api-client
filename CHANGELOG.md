@@ -1,5 +1,10 @@
 # Changelog
 
+## [6.5.6](https://pypi.org/project/directory-sso-api-client/6.5.6/)(2021-09-02)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/60/files)
+
+- GP2-3344 - Account verification token endpoint
+
 ## [6.5.5](https://pypi.org/project/directory-sso-api-client/6.5.5/)(2021-04-30)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/58/files)
 
