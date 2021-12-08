@@ -317,7 +317,7 @@ class UserAPIClientTest(TestCase):
         self.client.create_user(
             email='test@testuser.com',
             password='mypassword',
-            mobile_phone_number= "07111176523",
+            mobile_phone_number="07111176523",
             authenticator=basic_authenticator,
         )
 
