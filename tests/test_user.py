@@ -103,12 +103,12 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_create_user(self, mocked_request):
-        self.client.create_user(email='test@testuser.com', password='mypassword')
+        self.client.create_user(email='test@testuser.com', password='mypassword', mobile_phone_number='07111176523')
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword"}',
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523"}',
             method='POST',
             url='api/v1/user/',
             authenticator=None,
@@ -317,13 +317,14 @@ class UserAPIClientTest(TestCase):
         self.client.create_user(
             email='test@testuser.com',
             password='mypassword',
+            mobile_phone_number= "07111176523",
             authenticator=basic_authenticator,
         )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword"}',
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523"}',
             method='POST',
             url='api/v1/user/',
             authenticator=basic_authenticator,
