@@ -76,7 +76,7 @@ class UserAPIClient(AbstractAPIClient):
     def create_user(self, email, password, authenticator=None, **kwargs):
         url = self.endpoints['user_create']
         data = OrderedDict(
-            [('email', email), ('password', password), ('mobile_phone_number', kwargs.get("mobile_phone_number"))]
+            [('email', email), ('password', password), ('mobile_phone_number', kwargs.get('mobile_phone_number'))]
         )
         return self.post(
             url,

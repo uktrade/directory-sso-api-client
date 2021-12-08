@@ -96,3 +96,6 @@ Temporary Items
 
 # Docker
 .env
+
+# Virtual env
+.venv
