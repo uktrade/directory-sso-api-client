@@ -1,4 +1,5 @@
 # Changelog
+- GP2-3859 - Create Profile with optional Phone Number
 
 ## [6.5.5](https://pypi.org/project/directory-sso-api-client/6.5.5/)(2021-04-30)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/58/files)
