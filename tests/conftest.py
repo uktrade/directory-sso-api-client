@@ -24,4 +24,5 @@ def pytest_configure():
         SSO_SESSION_COOKIE='sso_session_cookie',
         SESSION_ENGINE='django.contrib.sessions.backends.signed_cookies',
         ROOT_URLCONF='tests.urls',
+        SECRET_KEY='debug',
     )

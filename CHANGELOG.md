@@ -1,4 +1,9 @@
 # Changelog
+
+## [7.0.0](https://pypi.org/project/directory-sso-api-client/7.0.0/)(2022-08-19)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/58/files)
+
+- GLS-385 - Update for Django 3.2 compatability
 - GP2-3859 - Create Profile with optional Phone Number
 
 ## [6.5.5](https://pypi.org/project/directory-sso-api-client/6.5.5/)(2021-04-30)
@@ -62,7 +67,7 @@
 
  ### Breaking change
 
- - No ticket - update directory_client_core > 6.0.0 which requires django 2.2 
+ - No ticket - update directory_client_core > 6.0.0 which requires django 2.2
 
 ## [5.1.1](https://pypi.org/project/directory-sso-api-client/5.1.1/) (2019-07-16)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/38/files)
