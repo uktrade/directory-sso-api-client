@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## [7.1.0](https://pypi.org/project/directory-sso-api-client/7.1.0/)(2022-08-24)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/64/files)
 
