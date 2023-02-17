@@ -5,7 +5,6 @@ from directory_sso_api_client.user import UserAPIClient
 
 
 class DirectorySSOTestAPIClient(AbstractAPIClient):
-
     endpoints = {'user_by_email': 'testapi/user-by-email/{email}/'}
     version = pkg_resources.get_distribution(__package__).version
 

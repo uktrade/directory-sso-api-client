@@ -6,7 +6,6 @@ from directory_client_core.base import AbstractAPIClient
 
 
 class UserAPIClient(AbstractAPIClient):
-
     endpoints = {
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',

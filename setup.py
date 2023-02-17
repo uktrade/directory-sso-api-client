@@ -18,7 +18,7 @@ setup(
         'test': [
             'codecov==2.1.7',
             'django>=2.2.10,<3.2.15',
-            'black==20.8b1',
+            'black==23.1.0',
             'flake8==3.8.4',
             'isort==5.6.4',
             'pytest-cov==2.8.1',
