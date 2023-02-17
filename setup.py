@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='directory_sso_api_client',
-    version='7.1.0',
+    version='7.1.1',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -12,7 +12,7 @@ setup(
     long_description_content_type='text/markdown',
     include_package_data=True,
     install_requires=[
-        'directory_client_core>=6.2.0,<=7.1.0',
+        'directory_client_core>=6.2.0,<=7.1.1',
     ],
     extras_require={
         'test': [
