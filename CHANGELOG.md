@@ -1,5 +1,10 @@
 # Changelog
 
+## [7.1.1](https://pypi.org/project/directory-sso-api-client/7.1.1/)(2023-02-17)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/66/files)
+
+- KLS-408 - Update directory_client_core requirement for Django 3.2.18
+
 ## [7.1.0](https://pypi.org/project/directory-sso-api-client/7.1.0/)(2022-08-24)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/64/files)
 

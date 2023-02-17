@@ -69,7 +69,6 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_regenerate_verification_code(self, mocked_request):
-
         self.client.regenerate_verification_code({"email": "test@test1234.com"})
 
         assert mocked_request.call_count == 1
@@ -117,7 +116,6 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_create_user_profile(self, mocked_request, mocked_authenticator):
-
         user_profile_data = {
             'first_name': 'john',
             'last_name': 'smith',
@@ -138,7 +136,6 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_update_user_profile(self, mocked_request, mocked_authenticator):
-
         user_profile_data = {
             'first_name': 'john',
             'last_name': 'smith',
@@ -159,7 +156,6 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_set_user_page_view(self, mocked_request, mocked_authenticator):
-
         data = {'service': 'great', 'page': 'dashboard'}
         self.client.set_user_page_view(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
@@ -173,14 +169,12 @@ class UserAPIClientTest(TestCase):
 
     @stub_request('https://example.com/api/v1/user/page-view/', 'get')
     def test_get_user_page_views(self, stub):
-
         data = {'service': 'great', 'page': 'dashboard'}
         self.client.get_user_page_views(sso_session_id=1, **data)
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_set_user_lesson_completed(self, mocked_request, mocked_authenticator):
-
         data = {
             'service': 'great',
             'lesson_page': 'dashboard',
@@ -199,14 +193,12 @@ class UserAPIClientTest(TestCase):
 
     @stub_request('https://example.com/api/v1/user/lesson-completed/', 'get')
     def test_get_user_lesson_completed(self, stub):
-
         data = {'service': 'great', 'lesson_page': 'dashboard'}
         self.client.get_user_lesson_completed(sso_session_id=999, **data)
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_delete_user_lesson_completed(self, mocked_request, mocked_authenticator):
-
         data = {'service': 'great', 'lesson': '11'}
         self.client.delete_user_lesson_completed(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
@@ -274,7 +266,6 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_regenerate_verification_code_with_authenticator(self, mocked_request):
-
         self.client.regenerate_verification_code(
             {"email": "test@test1234.com"},
             authenticator=basic_authenticator,

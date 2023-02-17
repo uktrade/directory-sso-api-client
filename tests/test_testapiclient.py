@@ -5,7 +5,6 @@ from tests import basic_authenticator, stub_request
 
 
 class DirectorySSOTestAPIClientTest(TestCase):
-
     url = 'https://example.com/testapi/user-by-email/'
 
     def setUp(self):
