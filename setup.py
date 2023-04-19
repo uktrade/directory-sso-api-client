@@ -16,15 +16,15 @@ setup(
     ],
     extras_require={
         'test': [
-            'codecov==2.1.7',
             'django>=2.2.10,<3.2.15',
             'black==23.1.0',
             'flake8==3.8.4',
             'isort==5.6.4',
-            'pytest-cov==2.8.1',
+            'pytest-cov',
             'pytest-django>=3.8.0,<4.0.0',
             'pytest-sugar>=0.9.2,<1.0.0',
             'pytest==5.3.5',
+            'pytest-codecov',
             'requests>=2.22.0,<3.0.0',
             'requests_mock==1.7.0',
             'setuptools>=45.2.0,<50.0.0',
