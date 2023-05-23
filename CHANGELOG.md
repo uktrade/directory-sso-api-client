@@ -3,7 +3,7 @@
 ## [7.2.0](https://pypi.org/project/directory-sso-api-client/7.2.0/)(2023-05-23)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/70)
 
-- KLS-408 - Update Django to 4.2
+- KLS-622 - Update Django to 4.2
 
 ## [7.1.1](https://pypi.org/project/directory-sso-api-client/7.1.1/)(2023-02-17)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/66/files)
