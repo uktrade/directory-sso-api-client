@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='directory_sso_api_client',
-    version='7.1.2',
+    version='7.2.0',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
     author='Department for International Trade',
@@ -16,7 +16,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'django>=2.2.10,<3.2.15',
+            'django>=2.2.10,<=4.2',
             'black==23.1.0',
             'flake8==3.8.4',
             'isort==5.6.4',
@@ -39,6 +39,7 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
