@@ -1,7 +1,7 @@
 # Changelog
 
 ## [7.2.1](https://pypi.org/project/directory-sso-api-client/7.2.1/)(2023-05-24)
-[Full Changelog]()
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/71)
 
 - KLS-622 - Update directory_client_core  to 7.2.2
 
