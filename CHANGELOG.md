@@ -1,5 +1,10 @@
 # Changelog
 
+## [7.2.2](https://pypi.org/project/directory-sso-api-client/7.2.2/)(2023-07-05)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/72)
+
+- KLS-822 - Update directory_client_core  to 7.2.4 and django to 4.2.3
+
 ## [7.2.1](https://pypi.org/project/directory-sso-api-client/7.2.1/)(2023-05-24)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/71)
 
