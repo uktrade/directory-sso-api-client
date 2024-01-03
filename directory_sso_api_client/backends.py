@@ -24,6 +24,7 @@ class SSOUserBackend:
         logger.error(f'SESSION_ID: {session_id}')
         if session_id:
             u = self.get_user(session_id)
+            logger.error(f'USER: {u}')
             return u
 
     def get_user(self, session_id):
