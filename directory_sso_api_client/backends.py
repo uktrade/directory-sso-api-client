@@ -18,13 +18,13 @@ class SSOUserBackend:
     MESSAGE_NOT_SUCCESSFUL = 'SSO did not return a 200 response'
 
     def authenticate(self, request):
-        logger.error("IN AUTHENTICATE")
-        logger.error(f'SSO_SESSION_COOKIE: {settings.SSO_SESSION_COOKIE}')
+        logger.info("IN AUTHENTICATE")
+        logger.info(f'SSO_SESSION_COOKIE: {settings.SSO_SESSION_COOKIE}')
         session_id = request.COOKIES.get(settings.SSO_SESSION_COOKIE)
-        logger.error(f'SESSION_ID: {session_id}')
+        logger.info(f'SESSION_ID: {session_id}')
         if session_id:
             u = self.get_user(session_id)
-            logger.error(f'USER: {u}')
+            logger.info(f'USER: {u}')
             return u
 
     def get_user(self, session_id):
