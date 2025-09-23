@@ -1,5 +1,9 @@
 # Changelog
 
+## [7.2.8](https://pypi.org/project/directory-sso-api-client/7.2.7/)(2025-09-23)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/80)
+- PLOPS-2750 Bumped python
+
 ## [7.2.7](https://pypi.org/project/directory-sso-api-client/7.2.7/)(2024-02-20)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/79)
 

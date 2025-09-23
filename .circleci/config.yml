@@ -1,13 +1,14 @@
-version: 2
+version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/python:3.9.5
+      - image: cimg/python:3.13.7
     steps:
       - checkout
+      - configure_ssh_key_for_private_repos
       - run:
           command: |
-            python3 -m venv .venv
+            ~/.pyenv/versions/3.13.7/bin/python3 -m venv .venv
             . .venv/bin/activate
             pip install --upgrade pip
             make test_requirements
@@ -15,41 +16,59 @@ jobs:
 
   flake8:
     docker:
-      - image: cimg/python:3.9.5
+      - image: cimg/python:3.13.7
     steps:
       - checkout
+      - configure_ssh_key_for_private_repos
       - run:
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
+            ~/.pyenv/versions/3.13.7/bin/python3 -m venv .venv
+            . .venv/bin/activate
             pip install flake8
             flake8
 
   black:
     docker:
-      - image: cimg/python:3.9.5
+      - image: cimg/python:3.13.7
     steps:
       - checkout
+      - configure_ssh_key_for_private_repos
       - run:
           name: Run Black in check mode
           command: |
-            python3 -m venv .venv
+            ~/.pyenv/versions/3.13.7/bin/python3 -m venv .venv
             . .venv/bin/activate
             pip install black
             black ./ --check
 
   publish_to_pypi:
     docker:
-      - image: cimg/python:3.9.5
+      - image: cimg/python:3.13.7
     steps:
       - checkout
+      - configure_ssh_key_for_private_repos
       - run:
           command: |
-            python3 -m venv .venv
+            ~/.pyenv/versions/3.13.7/bin/python3 -m venv .venv
             . .venv/bin/activate
             pip install --upgrade pip
             make test_requirements
             make publish
+
+commands:
+  configure_ssh_key_for_private_repos:
+    description: Configure SSH key to fetch private repos
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:eYF2ykLm9ydVp/MvrIrChz8owWvSTRBrduD4SMGl+ok"
+      - run:
+          name: Force use of new SSH key
+          command: |
+            ssh-add -D
+            rm ~/.ssh/id_rsa
+            rm ~/.ssh/id_rsa.pub
+            ssh-add ~/.ssh/id_*
 
 workflows:
   version: 2
