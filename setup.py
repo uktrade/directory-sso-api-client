@@ -29,7 +29,7 @@ setup(
             'requests>=2.22.0,<3.0.0',
             'requests_mock==1.7.0',
             'setuptools',
-            'twine>=3.1.1,<4.0.0',
+            'twine',
             'wheel>=0.34.2,<1.0.0',
         ]
     },
