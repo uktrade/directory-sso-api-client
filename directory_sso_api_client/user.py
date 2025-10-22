@@ -14,7 +14,7 @@ class UserAPIClient(AbstractAPIClient):
         'regenerate_verification': 'api/v1/verification-code/regenerate/',
         'verify_verification': 'api/v1/verification-code/verify/',
         'user_create': 'api/v1/user/',
-        'account_create': 'api/v2/account',
+        'account_create': 'api/v2/account/',
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
         'user_create_profile': 'api/v1/user/profile/',
@@ -152,13 +152,18 @@ class UserAPIClient(AbstractAPIClient):
 
     def create_account(self, email, password, authenticator=None):
         url = self.endpoints['account_create']
-        data = OrderedDict([('email', email), ('password', password),])
+        data = OrderedDict(
+            [
+                ('email', email),
+                ('password', password),
+            ]
+        )
         return self.post(
             url,
             data,
             authenticator=authenticator,
         )
-    
+
     def regenerate_account_verification_code(self, data, authenticator=None):
         return self.post(
             url=self.endpoints['regenerate_account_verification_code'],
