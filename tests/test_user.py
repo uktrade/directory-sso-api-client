@@ -273,10 +273,10 @@ class UserAPIClientTest(TestCase):
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            data="{'email': 'test@test1234.com'}",
-            method='POST',
             url='api/v1/verification-code/regenerate/',
+            method='POST',
+            content_type='application/json',
+            data='{"email": "test@test1234.com"}',
             authenticator=basic_authenticator,
         )
 
@@ -404,5 +404,75 @@ class UserAPIClientTest(TestCase):
             data='{"email": "test@testuser.com", "password": "mypassword"}',
             method='POST',
             url='api/v2/account/',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_regenerate_account_verification_code(self, mocked_request):
+        self.client.regenerate_account_verification_code({'email': 'test@test1234.com'})
+
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            data='{"email": "test@test1234.com"}',
+            method='POST',
+            url='api/v2/verification-code/regenerate/',
+            authenticator=None,
+        )
+
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_regenerate_account_verification_code_with_authenticator(self, mocked_request):
+        self.client.regenerate_account_verification_code(
+            {'email': 'test@test1234.com'},
+            authenticator=basic_authenticator,
+        )
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            url='api/v2/verification-code/regenerate/',
+            method='POST',
+            content_type='application/json',
+            data='{"email": "test@test1234.com"}',
+            authenticator=basic_authenticator,
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_verify_account_verification_code(self, mocked_request, mocked_authenticator):
+        data = OrderedDict(
+            [
+                ('code', '12345'),
+                ('email', 'test@example.com'),
+            ]
+        )
+
+        self.client.verify_account_verification_code(data)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            url='api/v2/verification-code/verify/',
+            method='POST',
+            content_type='application/json',
+            data='{"code": "12345", "email": "test@example.com"}',
+            authenticator=None,
+        )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_verify_account_verification_code_with_authenticator(self, mocked_request, mocked_authenticator):
+        data = OrderedDict(
+            [
+                ('code', '12345'),
+                ('email', 'test@example.com'),
+            ]
+        )
+        self.client.verify_account_verification_code(
+            data,
+            authenticator=basic_authenticator,
+        )
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            url='api/v2/verification-code/verify/',
+            method='POST',
+            content_type='application/json',
+            data='{"code": "12345", "email": "test@example.com"}',
             authenticator=basic_authenticator,
         )
