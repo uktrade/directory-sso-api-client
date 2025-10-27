@@ -102,12 +102,14 @@ class UserAPIClientTest(TestCase):
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_create_user(self, mocked_request):
-        self.client.create_user(email='test@testuser.com', password='mypassword', mobile_phone_number='07111176523')
+        self.client.create_user(
+            email='test@testuser.com', password='mypassword', mobile_phone_number='07111176523', is_eyb_user='True'
+        )  # NOQA:E501
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523"}',
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "True"}',  # NOQA:E501
             method='POST',
             url='api/v1/user/',
             authenticator=None,
@@ -309,13 +311,14 @@ class UserAPIClientTest(TestCase):
             email='test@testuser.com',
             password='mypassword',
             mobile_phone_number='07111176523',
+            is_eyb_user='False',
             authenticator=basic_authenticator,
         )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523"}',
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "False"}',  # NOQA:E501
             method='POST',
             url='api/v1/user/',
             authenticator=basic_authenticator,
