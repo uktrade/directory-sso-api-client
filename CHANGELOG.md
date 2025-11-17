@@ -1,4 +1,7 @@
 # Changelog
+## [7.3.2](https://pypi.org/project/directory-sso-api-client/7.3.0/)(2025-12-17)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/84)
+- PLOPS-2928 Added new account user endpoint
 
 ## [7.3.0](https://pypi.org/project/directory-sso-api-client/7.3.0/)(2025-10-21)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/82)
