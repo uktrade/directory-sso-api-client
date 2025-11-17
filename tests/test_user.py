@@ -479,3 +479,18 @@ class UserAPIClientTest(TestCase):
             data='{"code": "12345", "email": "test@example.com"}',
             authenticator=basic_authenticator,
         )
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_get_user_account(self, mocked_request, mocked_authenticator):
+        params = {'hashed_uuid': 'blahblah'}
+
+        self.client.get_account_user(**params)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            method='GET',
+            params=params,
+            url='api/v2/account-user/',
+            cache_control=None,
+            authenticator=None,
+        )
