@@ -1,6 +1,6 @@
 # Changelog
 ## [7.3.3](https://pypi.org/project/directory-sso-api-client/7.3.3/)(2025-11-19)
-[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/84)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/85)
 - PLOPS-2930 Added new password reset endpoint
 
 ## [7.3.2](https://pypi.org/project/directory-sso-api-client/7.3.2/)(2025-12-17)
