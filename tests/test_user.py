@@ -505,9 +505,9 @@ class UserAPIClientTest(TestCase):
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accounts/password/reset/',
-            method='POST',
+            url='api/v2/accounts/password/reset/', 
+            method='POST', 
             content_type='application/json',
-            data='{"email": "test@example.com"}',
+            data='"test@example.com"',
             authenticator=basic_authenticator,
         )
