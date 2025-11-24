@@ -18,7 +18,8 @@ class UserAPIClient(AbstractAPIClient):
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
         'get_account_user': 'api/v2/account-user/',
-        'reset_password': 'api/v2/accounts/password/reset/',
+        'reset_password_invitation': 'api/v2/accounts/password/reset/',
+        'reset_password_change': 'api/v2/accounts/password/reset/change',
         'user_create_profile': 'api/v1/user/profile/',
         'user_update_profile': 'api/v1/user/profile/update/',
         'user_page_views': 'api/v1/user/page-view/',
@@ -192,5 +193,9 @@ class UserAPIClient(AbstractAPIClient):
         return self.get(url, {'hashed_uuid': hashed_uuid}, authenticator=authenticator)
 
     def send_password_reset_email(self, data, authenticator=None):
-        url = self.endpoints['reset_password']
+        url = self.endpoints['reset_password_invitation']
+        return self.post(url, data, authenticator=authenticator)
+
+    def send_password_reset_change(self, data, authenticator=None):
+        url = self.endpoints['reset_password_change']
         return self.post(url, data, authenticator=authenticator)
