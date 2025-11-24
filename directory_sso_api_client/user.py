@@ -191,6 +191,6 @@ class UserAPIClient(AbstractAPIClient):
         url = self.endpoints['get_account_user']
         return self.get(url, {'hashed_uuid': hashed_uuid}, authenticator=authenticator)
 
-    def send_password_reset_email(self, email, authenticator=None):
+    def send_password_reset_email(self, data, authenticator=None):
         url = self.endpoints['reset_password']
-        return self.post(url, {'email': email}, authenticator=authenticator)
+        return self.post(url, data, authenticator=authenticator)

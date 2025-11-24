@@ -508,6 +508,6 @@ class UserAPIClientTest(TestCase):
             url='api/v2/accounts/password/reset/',
             method='POST',
             content_type='application/json',
-            data='{"email": "test@example.com"}',
+            data='"test@example.com"',
             authenticator=basic_authenticator,
         )
