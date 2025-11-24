@@ -512,14 +512,13 @@ class UserAPIClientTest(TestCase):
             authenticator=basic_authenticator,
         )
 
-
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_reset_email(self, mocked_request, mocked_authenticator):
 
         data = {
             'email': 'test@example.com',
-            'password': 'newpassword', 
+            'password': 'newpassword',
         }
         self.client.send_password_reset_change(
             data,
@@ -527,9 +526,9 @@ class UserAPIClientTest(TestCase):
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accounts/password/reset/change', 
-            method='POST', 
-            content_type='application/json', 
+            url='api/v2/accounts/password/reset/change',
+            method='POST',
+            content_type='application/json',
             data='{"email": "test@example.com", "password": "newpassword"}',
             authenticator=basic_authenticator,
         )

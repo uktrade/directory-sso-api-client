@@ -195,7 +195,7 @@ class UserAPIClient(AbstractAPIClient):
     def send_password_reset_email(self, data, authenticator=None):
         url = self.endpoints['reset_password_invitation']
         return self.post(url, data, authenticator=authenticator)
-    
+
     def send_password_reset_change(self, data, authenticator=None):
         url = self.endpoints['reset_password_change']
         return self.post(url, data, authenticator=authenticator)
