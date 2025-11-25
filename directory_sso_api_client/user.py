@@ -19,7 +19,7 @@ class UserAPIClient(AbstractAPIClient):
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
         'get_account_user': 'api/v2/account-user/',
         'reset_password_invitation': 'api/v2/accounts/password/reset/',
-        'reset_password_change': 'api/v2/accounts/password/reset/change',
+        'reset_password_change': 'api/v2/accounts/password/reset/change/',
         'user_create_profile': 'api/v1/user/profile/',
         'user_update_profile': 'api/v1/user/profile/update/',
         'user_page_views': 'api/v1/user/page-view/',
