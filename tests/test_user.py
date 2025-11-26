@@ -549,8 +549,8 @@ class UserAPIClientTest(TestCase):
 
         assert mocked_request.call_args == mock.call(
             url='api/v2/accounts/password/reset/validate/token/',
-            method='POST', 
-            content_type='application/json', 
+            method='POST',
+            content_type='application/json',
             data='{"email": "david@gmail.com", "token": "abcccccccc123"}',
             authenticator=basic_authenticator,
         )
