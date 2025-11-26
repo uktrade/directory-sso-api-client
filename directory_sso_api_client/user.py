@@ -21,6 +21,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_lesson_completed': 'api/v1/user/lesson-completed/',
         'user_questionnaire': 'api/v1/user/questionnaire/',
         'user_data': 'api/v1/user/data/',
+        'user_login': 'accounts/login/',
         'account_create': 'api/v2/account/',
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
@@ -161,6 +162,9 @@ class UserAPIClient(AbstractAPIClient):
         return self.post(
             url, {'data': data, 'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id)
         )
+
+    def user_login(self, data):
+        return self.post(self.endpoints['user_login'], data=data)
 
     """
     Account v2 APIs with exponential backoff
