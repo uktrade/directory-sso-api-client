@@ -1,4 +1,20 @@
 # Changelog
+## [7.3.7](https://pypi.org/project/directory-sso-api-client/7.3.7/)(2025-11-26)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/89)
+- PLOPS-2930 Added new account check token endpoint
+
+## [7.3.6](https://pypi.org/project/directory-sso-api-client/7.3.6/)(2025-11-19)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/88)
+- PLOPS-2930 Added new account endpoint
+
+## [7.3.5](https://pypi.org/project/directory-sso-api-client/7.3.5/)(2025-11-19)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/87)
+- PLOPS-2930 Added new account endpoint
+
+## [7.3.4](https://pypi.org/project/directory-sso-api-client/7.3.4/)(2025-11-19)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/86)
+- PLOPS-2930 Added new account endpoint
+
 ## [7.3.3](https://pypi.org/project/directory-sso-api-client/7.3.3/)(2025-11-19)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/85)
 - PLOPS-2930 Added new password reset endpoint
