@@ -163,6 +163,7 @@ class UserAPIClient(AbstractAPIClient):
             url, {'data': data, 'name': name}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id)
         )
 
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
     def user_login(self, data):
         return self.post(self.endpoints['user_login'], data=data)
 
