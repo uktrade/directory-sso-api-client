@@ -65,6 +65,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/password-check/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -78,6 +81,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/verification-code/regenerate/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -98,6 +104,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/verification-code/verify/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -113,6 +122,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/user/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -133,6 +145,9 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(user_profile_data),
             url='api/v1/user/profile/',
             authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -167,6 +182,9 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(data),
             url='api/v1/user/page-view/',
             authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @stub_request('https://example.com/api/v1/user/page-view/', 'get')
@@ -191,6 +209,9 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(data),
             url='api/v1/user/lesson-completed/',
             authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @stub_request('https://example.com/api/v1/user/lesson-completed/', 'get')
@@ -264,6 +285,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/password-check/',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -280,6 +304,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"email": "test@test1234.com"}',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -303,6 +330,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/verification-code/verify/',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -322,6 +352,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v1/user/',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -350,6 +383,9 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(data),
             url='api/v1/user/questionnaire/',
             authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -378,6 +414,9 @@ class UserAPIClientTest(TestCase):
             data=json.dumps(data),
             url='api/v1/user/data/',
             authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -391,6 +430,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v2/account/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -408,6 +450,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v2/account/',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -421,6 +466,9 @@ class UserAPIClientTest(TestCase):
             method='POST',
             url='api/v2/verification-code/regenerate/',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -436,6 +484,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"email": "test@test1234.com"}',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -456,6 +507,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"code": "12345", "email": "test@example.com"}',
             authenticator=None,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -478,6 +532,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"code": "12345", "email": "test@example.com"}',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -509,6 +566,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='"test@example.com"',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -529,6 +589,9 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"email": "test@example.com", "password": "newpassword"}',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -550,10 +613,15 @@ class UserAPIClientTest(TestCase):
             content_type='application/json',
             data='{"email": "david@gmail.com", "token": "abcccccccc123"}',
             authenticator=basic_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
         )
 
+    @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_user_login(self, mocked_request):
+    def test_user_login(self, mocked_request, mock_csrf_token_request):
+        mock_csrf_token = mock_csrf_token_request()
         self.client.user_login(
             {
                 'email': 'test@testuser.com',
@@ -566,7 +634,10 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_args == mock.call(
             url='accounts/login/',
             method='POST',
-            content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword"}',
+            content_type='application/x-www-form-urlencoded',
+            data={'email': 'test@testuser.com', 'password': 'mypassword', 'csrfmiddlewaretoken': mock_csrf_token},
             authenticator=None,
+            csrf_token=mock_csrf_token,
+            cookies={'csrftoken': mock_csrf_token},
+            allow_redirects=False,
         )

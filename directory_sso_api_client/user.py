@@ -1,6 +1,5 @@
 import json
 from collections import OrderedDict
-from urllib.parse import urlencode
 
 import pkg_resources
 import urllib3
@@ -177,6 +176,7 @@ class UserAPIClient(AbstractAPIClient):
             cookies={'csrftoken': csrf_token},
             convert_data_to_json=False,
             content_type='application/x-www-form-urlencoded',
+            allow_redirects=False,
         )
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
