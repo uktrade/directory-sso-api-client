@@ -641,3 +641,24 @@ class UserAPIClientTest(TestCase):
             cookies={'csrftoken': mock_csrf_token},
             allow_redirects=False,
         )
+
+    @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_user_logout(self, mocked_request, mock_csrf_token_request):
+        mock_csrf_token = mock_csrf_token_request()
+        session_key = '12345'
+
+        self.client.user_logout(cookies={'session_key': session_key})
+
+        assert mocked_request.call_count == 1
+
+        assert mocked_request.call_args == mock.call(
+            url='accounts/logout/',
+            method='POST',
+            content_type='text/plain',
+            data='{}',
+            authenticator=None,
+            csrf_token=mock_csrf_token,
+            cookies={'csrftoken': mock_csrf_token, 'session_key': session_key},
+            allow_redirects=False,
+        )

@@ -24,6 +24,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_questionnaire': 'api/v1/user/questionnaire/',
         'user_data': 'api/v1/user/data/',
         'user_login': 'accounts/login/',
+        'user_logout': 'accounts/logout/',
         'account_create': 'api/v2/account/',
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
@@ -176,6 +177,17 @@ class UserAPIClient(AbstractAPIClient):
             cookies={'csrftoken': csrf_token},
             convert_data_to_json=False,
             content_type='application/x-www-form-urlencoded',
+            allow_redirects=False,
+        )
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
+    def user_logout(self, cookies={}):
+        csrf_token = self.get_csrf_token()
+        return self.post(
+            self.endpoints['user_logout'],
+            csrf_token=csrf_token,
+            cookies={'csrftoken': csrf_token, **cookies},
+            content_type='text/plain',
             allow_redirects=False,
         )
 
