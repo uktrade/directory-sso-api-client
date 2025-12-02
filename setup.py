@@ -2,17 +2,17 @@ from setuptools import find_packages, setup
 
 setup(
     name='directory_sso_api_client',
-    version='7.4.0',
+    version='7.5.0',
     url='https://github.com/uktrade/directory-sso-api-client',
     license='MIT',
-    author='Department for International Trade',
+    author='Department for Business and Trade',
     description='Python API client for Export Directory.',
     packages=find_packages(exclude=["tests.*", "tests"]),
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     include_package_data=True,
     install_requires=[
-        'directory_client_core>=7.2.12,<=8.0.0',
+        'directory_client_core>=7.3.0,<=8.0.0',
         'tenacity==9.1.2',
     ],
     extras_require={

@@ -1,6 +1,8 @@
+import json
 from collections import OrderedDict
 
 import pkg_resources
+import urllib3
 from directory_client_core.authentication import AuthenticatorNegotiator
 from directory_client_core.base import AbstractAPIClient
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -22,6 +24,7 @@ class UserAPIClient(AbstractAPIClient):
         'user_questionnaire': 'api/v1/user/questionnaire/',
         'user_data': 'api/v1/user/data/',
         'user_login': 'accounts/login/',
+        'user_logout': 'accounts/logout/',
         'account_create': 'api/v2/account/',
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
@@ -164,8 +167,43 @@ class UserAPIClient(AbstractAPIClient):
         )
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
-    def user_login(self, data):
-        return self.post(self.endpoints['user_login'], data=data)
+    def user_login(self, data, csrf_token=None):
+        csrf_token = self.get_csrf_token()
+        data['csrfmiddlewaretoken'] = csrf_token
+        return self.post(
+            self.endpoints['user_login'],
+            data=data,
+            csrf_token=csrf_token,
+            cookies={'csrftoken': csrf_token},
+            convert_data_to_json=False,
+            content_type='application/x-www-form-urlencoded',
+            allow_redirects=False,
+        )
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
+    def user_logout(self, cookies={}):
+        csrf_token = self.get_csrf_token()
+        return self.post(
+            self.endpoints['user_logout'],
+            csrf_token=csrf_token,
+            cookies={'csrftoken': csrf_token, **cookies},
+            content_type='text/plain',
+            allow_redirects=False,
+        )
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
+    def get_csrf_token(self):
+        url = '/csrf/'
+        response = self.get(url)
+        response.raise_for_status()
+
+        try:
+            json_object = json.loads(response.content.decode('utf-8'))
+        except ValueError:
+            raise urllib3.exceptions.HTTPError('Bad Request')
+        else:
+            csrf_token = json_object.get('csrftoken', None)
+            return csrf_token
 
     """
     Account v2 APIs with exponential backoff
