@@ -9,6 +9,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 
 class UserAPIClient(AbstractAPIClient):
+    site_root_url = ''
     endpoints = {
         'session_user': 'api/v1/session-user/',
         'oauth2_user_profile': 'oauth2/user-profile/v1/',
@@ -34,6 +35,10 @@ class UserAPIClient(AbstractAPIClient):
         'check_token': 'api/v2/accounts/password/reset/validate/token/',
     }
     version = pkg_resources.get_distribution(__package__).version
+
+    def __init__(self, site_root_url='', *args, **kwargs):
+        self.site_root_url = site_root_url
+        super().__init__(*args, **kwargs)
 
     def get_session_user(self, session_id, authenticator=None):
         return self.get(
@@ -178,6 +183,8 @@ class UserAPIClient(AbstractAPIClient):
             convert_data_to_json=False,
             content_type='application/x-www-form-urlencoded',
             allow_redirects=False,
+            header_origin=self.site_root_url,
+            header_referer=self.site_root_url,
         )
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
@@ -189,6 +196,8 @@ class UserAPIClient(AbstractAPIClient):
             cookies={'csrftoken': csrf_token, **cookies},
             content_type='text/plain',
             allow_redirects=False,
+            header_origin=self.site_root_url,
+            header_referer=self.site_root_url,
         )
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))

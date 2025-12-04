@@ -25,4 +25,5 @@ def pytest_configure():
         SESSION_ENGINE='django.contrib.sessions.backends.signed_cookies',
         ROOT_URLCONF='tests.urls',
         SECRET_KEY='debug',
+        ROOT_URL='http://greatcms.trade.bgs',
     )
