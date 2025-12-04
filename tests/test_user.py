@@ -68,6 +68,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -84,6 +86,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -107,6 +111,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -125,6 +131,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -148,6 +156,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -185,6 +195,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @stub_request('https://example.com/api/v1/user/page-view/', 'get')
@@ -212,6 +224,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @stub_request('https://example.com/api/v1/user/lesson-completed/', 'get')
@@ -288,6 +302,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -307,6 +323,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -333,6 +351,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -355,6 +375,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -386,6 +408,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -417,6 +441,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -433,6 +459,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -453,6 +481,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -469,6 +499,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
@@ -487,6 +519,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -510,6 +544,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -535,6 +571,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -569,6 +607,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -592,6 +632,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
@@ -616,6 +658,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=None,
             cookies=None,
             allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
         )
 
     @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
@@ -640,6 +684,8 @@ class UserAPIClientTest(TestCase):
             csrf_token=mock_csrf_token,
             cookies={'csrftoken': mock_csrf_token},
             allow_redirects=False,
+            header_origin='',
+            header_referer='',
         )
 
     @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
@@ -661,4 +707,6 @@ class UserAPIClientTest(TestCase):
             csrf_token=mock_csrf_token,
             cookies={'csrftoken': mock_csrf_token, 'session_key': session_key},
             allow_redirects=False,
+            header_origin='',
+            header_referer='',
         )

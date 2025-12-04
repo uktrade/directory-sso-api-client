@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from django.conf import settings
+
 from directory_sso_api_client.client import DirectorySSOAPIClient
 from directory_sso_api_client.user import UserAPIClient
 from tests import basic_authenticator, stub_request
@@ -10,10 +12,7 @@ class DirectorySSOAPIClientTest(TestCase):
         self.base_url = 'https://example.com'
         self.api_key = 'test'
         self.client = DirectorySSOAPIClient(
-            base_url=self.base_url,
-            api_key=self.api_key,
-            sender_id='test',
-            timeout=5,
+            base_url=self.base_url, api_key=self.api_key, sender_id='test', timeout=5, site_root_url=settings.ROOT_URL
         )
 
     def test_user(self):

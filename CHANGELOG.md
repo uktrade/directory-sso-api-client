@@ -1,4 +1,17 @@
 # Changelog
+
+## [7.5.1](https://pypi.org/project/directory-sso-api-client/7.5.0/)(2025-12-04)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/92)
+- PLOPS-3080 Send origin/referer headers
+
+## [7.5.0](https://pypi.org/project/directory-sso-api-client/7.5.0/)(2025-12-02)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/91)
+- PLOPS-3080 Get/send csrf token and add logout endpoint
+
+## [7.4.0](https://pypi.org/project/directory-sso-api-client/7.4.0/)(2025-11-28)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/90)
+- PLOPS-3080 Add user login function to directory-sso-api-client
+
 ## [7.3.7](https://pypi.org/project/directory-sso-api-client/7.3.7/)(2025-11-26)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/89)
 - PLOPS-2930 Added new account check token endpoint
