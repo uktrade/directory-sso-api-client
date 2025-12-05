@@ -1,6 +1,10 @@
 # Changelog
 
-## [7.5.1](https://pypi.org/project/directory-sso-api-client/7.5.0/)(2025-12-04)
+## [7.5.2](https://pypi.org/project/directory-sso-api-client/7.5.2/)(2025-12-05)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/93)
+- PLOPS-3080 remove trailing slash from site root to align with parameter store pattern
+
+## [7.5.1](https://pypi.org/project/directory-sso-api-client/7.5.1/)(2025-12-04)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/92)
 - PLOPS-3080 Send origin/referer headers
 
