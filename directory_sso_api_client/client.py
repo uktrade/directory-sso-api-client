@@ -12,7 +12,7 @@ class DirectorySSOAPIClient(AbstractAPIClient):
     version = pkg_resources.get_distribution(__package__).version
 
     def __init__(self, *args, **kwargs):
-        site_root_url = kwargs.pop('site_root_url', '')
+        site_root_url = kwargs.pop('site_root_url', '').rstrip('/')
         super().__init__(*args, **kwargs)
         self.user = UserAPIClient(site_root_url=site_root_url, *args, **kwargs)
 
