@@ -269,7 +269,6 @@ class UserAPIClient(AbstractAPIClient):
     def check_reset_password_token(self, data, authenticator=None):
         url = self.endpoints['check_token']
         return self.post(url, data, authenticator=authenticator)
-    
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
     def get_account_details(self, data, authenticator=None):
