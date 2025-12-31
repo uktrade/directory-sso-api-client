@@ -711,7 +711,6 @@ class UserAPIClientTest(TestCase):
             header_referer='',
         )
 
-
     @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_get_account_details(self, mocked_request, mock_csrf_token_request):
@@ -723,9 +722,9 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accountdetails', 
-            method='GET', 
-            params='12345', 
-            authenticator=None, 
+            url='api/v2/accountdetails',
+            method='GET',
+            params='12345',
+            authenticator=None,
             cache_control=None,
         )
