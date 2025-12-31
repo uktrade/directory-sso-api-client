@@ -711,10 +711,8 @@ class UserAPIClientTest(TestCase):
             header_referer='',
         )
 
-    @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_get_account_details(self, mocked_request, mock_csrf_token_request):
-        mock_csrf_token = mock_csrf_token_request()
+    def test_get_account_details(self, mocked_request):
         session_key = '12345'
 
         self.client.get_account_details(session_key)
