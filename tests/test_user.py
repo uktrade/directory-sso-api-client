@@ -722,7 +722,7 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_args == mock.call(
             url='api/v2/accountdetails/',
             method='GET',
-            params='12345',
+            params={'session_key': '12345'},
             authenticator=None,
             cache_control=None,
         )
