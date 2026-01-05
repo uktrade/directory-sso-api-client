@@ -271,6 +271,9 @@ class UserAPIClient(AbstractAPIClient):
         return self.post(url, data, authenticator=authenticator)
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
-    def get_account_details(self, data, authenticator=None):
-        url = self.endpoints['account_details']
-        return self.get(url, data, authenticator=authenticator)
+    def get_account_details(self, session_key, authenticator=None):
+        return self.get(
+            url=self.endpoints['account_details'],
+            params={'session_key': session_key},
+            authenticator=authenticator,
+        )
