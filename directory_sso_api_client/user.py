@@ -33,7 +33,7 @@ class UserAPIClient(AbstractAPIClient):
         'reset_password_invitation': 'api/v2/accounts/password/reset/',
         'reset_password_change': 'api/v2/accounts/password/reset/change/',
         'check_token': 'api/v2/accounts/password/reset/validate/token/',
-        'account_details': 'api/v2/accountdetails',
+        'account_details': 'api/v2/accountdetails/',
     }
     version = pkg_resources.get_distribution(__package__).version
 

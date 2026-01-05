@@ -720,7 +720,7 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accountdetails',
+            url='api/v2/accountdetails/',
             method='GET',
             params='12345',
             authenticator=None,
