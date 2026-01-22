@@ -233,6 +233,38 @@ class UserAPIClientTest(TestCase):
         data = {'service': 'great', 'lesson_page': 'dashboard'}
         self.client.get_user_lesson_completed(sso_session_id=999, **data)
 
+    @stub_request('https://example.com/api/v1/vod-activity/latest/?video_id=1', 'get')
+    def test_get_latest_user_vod_activity(self, stub):
+        self.client.get_latest_user_vod_activity(sso_session_id=999, video_id=1)
+
+    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
+    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    def test_create_user_vod_activity(self, mocked_request, mocked_authenticator):
+        vod_activity = {
+            'activity_type': 'play',
+            'activity_timestamp': 'not-a-datetime',
+            'video_id': 1,
+            'video_title': 'A test video',
+            'video_current_time_s': 60,
+            'video_duration_s': 120,
+            'video_percentage': 50,
+            'event_id': "a-test-uuid",
+        }
+        self.client.create_user_vod_activity(sso_session_id=999, vod_activity=vod_activity)
+        assert mocked_request.call_count == 1
+        assert mocked_request.call_args == mock.call(
+            content_type='application/json',
+            method='POST',
+            data=json.dumps(vod_activity),
+            url='api/v1/vod-activity/',
+            authenticator=mocked_authenticator(),
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
+        )
+
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_delete_user_lesson_completed(self, mocked_request, mocked_authenticator):

@@ -34,6 +34,8 @@ class UserAPIClient(AbstractAPIClient):
         'reset_password_change': 'api/v2/accounts/password/reset/change/',
         'check_token': 'api/v2/accounts/password/reset/validate/token/',
         'account_details': 'api/v2/accountdetails/',
+        'create-vod-activity': 'api/v1/vod-activity/',
+        'get-latest-vod-activity': 'api/v1/vod-activity/latest/',
     }
     version = pkg_resources.get_distribution(__package__).version
 
@@ -160,6 +162,16 @@ class UserAPIClient(AbstractAPIClient):
             url,
             {'service': service, 'question_id': question_id, 'answer': answer},
             authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id),
+        )
+
+    def create_user_vod_activity(self, sso_session_id, vod_activity):
+        url = self.endpoints['create-vod-activity']
+        return self.post(url, vod_activity, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id))
+
+    def get_latest_user_vod_activity(self, sso_session_id, video_id):
+        url = self.endpoints['get-latest-vod-activity']
+        return self.get(
+            url, params={"video_id": video_id}, authenticator=AuthenticatorNegotiator(sso_session_id=sso_session_id)
         )
 
     def get_user_data(self, sso_session_id, name):
