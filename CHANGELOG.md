@@ -1,5 +1,9 @@
 # Changelog
 
+## [7.6.0](https://pypi.org/project/directory-sso-api-client/7.6.0/)(2026-01-22)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/98)
+- BGST-813 add video on demand activity tracking endpoints.
+
 ## [7.5.4](https://pypi.org/project/directory-sso-api-client/7.5.3/)(2026-01-05)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/95)
 - PLOPS-3225 pass secret key to account details endpoint.
