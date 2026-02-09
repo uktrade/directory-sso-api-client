@@ -1,7 +1,7 @@
 import json
 from collections import OrderedDict
 
-import pkg_resources
+from directory_api_client import __version__
 import urllib3
 from directory_client_core.authentication import AuthenticatorNegotiator
 from directory_client_core.base import AbstractAPIClient
@@ -37,7 +37,7 @@ class UserAPIClient(AbstractAPIClient):
         'create-vod-activity': 'api/v1/vod-activity/',
         'get-latest-vod-activity': 'api/v1/vod-activity/latest/',
     }
-    version = pkg_resources.get_distribution(__package__).version
+    version = __version__
 
     def __init__(self, site_root_url='', *args, **kwargs):
         self.site_root_url = site_root_url

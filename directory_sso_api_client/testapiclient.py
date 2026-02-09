@@ -1,4 +1,4 @@
-import pkg_resources
+from directory_api_client import __version__
 from directory_client_core.base import AbstractAPIClient
 
 from directory_sso_api_client.user import UserAPIClient
@@ -6,7 +6,7 @@ from directory_sso_api_client.user import UserAPIClient
 
 class DirectorySSOTestAPIClient(AbstractAPIClient):
     endpoints = {'user_by_email': 'testapi/user-by-email/{email}/'}
-    version = pkg_resources.get_distribution(__package__).version
+    version = __version__
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
