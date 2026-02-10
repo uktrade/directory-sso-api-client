@@ -1,7 +1,7 @@
 import json
 from collections import OrderedDict
 
-from directory_api_client import __version__
+from directory_sso_api_client import __version__
 import urllib3
 from directory_client_core.authentication import AuthenticatorNegotiator
 from directory_client_core.base import AbstractAPIClient

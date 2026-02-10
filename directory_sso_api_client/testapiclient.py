@@ -1,4 +1,4 @@
-from directory_api_client import __version__
+from directory_sso_api_client import __version__
 from directory_client_core.base import AbstractAPIClient
 
 from directory_sso_api_client.user import UserAPIClient
