@@ -1,4 +1,4 @@
-import pkg_resources
+from directory_sso_api_client import __version__
 from directory_client_core.base import AbstractAPIClient
 from django.conf import settings
 
@@ -9,7 +9,7 @@ class DirectorySSOAPIClient(AbstractAPIClient):
     endpoints = {
         'ping': 'api/v1/healthcheck/ping/',
     }
-    version = pkg_resources.get_distribution(__package__).version
+    version = __version__
 
     def __init__(self, *args, **kwargs):
         site_root_url = kwargs.pop('site_root_url', '').rstrip('/')
