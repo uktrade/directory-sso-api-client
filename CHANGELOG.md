@@ -1,5 +1,9 @@
 # Changelog
 
+## [8.0.0](https://pypi.org/project/directory-sso-api-client/8.0.0/)(2026-04-17)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/101)
+- Bump django to 5.2 lts
+
 ## [7.6.0](https://pypi.org/project/directory-sso-api-client/7.6.0/)(2026-01-22)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/98)
 - BGST-813 add video on demand activity tracking endpoints.
