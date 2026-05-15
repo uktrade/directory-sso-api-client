@@ -30,6 +30,7 @@ class UserAPIClient(AbstractAPIClient):
         'regenerate_account_verification_code': 'api/v2/verification-code/regenerate/',
         'verify_account_verification_code': 'api/v2/verification-code/verify/',
         'get_account_user': 'api/v2/account-user/',
+        'get_bulk_account_user': 'api/v2/account-user/bulk/',
         'reset_password_invitation': 'api/v2/accounts/password/reset/',
         'reset_password_change': 'api/v2/accounts/password/reset/change/',
         'check_token': 'api/v2/accounts/password/reset/validate/token/',
@@ -266,6 +267,11 @@ class UserAPIClient(AbstractAPIClient):
     def get_account_user(self, hashed_uuid, authenticator=None):
         url = self.endpoints['get_account_user']
         return self.get(url, {'hashed_uuid': hashed_uuid}, authenticator=authenticator)
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
+    def bulk_get_account_user(self, hashed_uuids, authenticator=None):
+        url = self.endpoints['get_bulk_account_user']
+        return self.get(url, {'hashed_uuids': ','.join(hashed_uuids)}, authenticator=authenticator)
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
     def send_password_reset_email(self, data, authenticator=None):
