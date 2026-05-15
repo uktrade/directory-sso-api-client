@@ -269,7 +269,7 @@ class UserAPIClient(AbstractAPIClient):
         return self.get(url, {'hashed_uuid': hashed_uuid}, authenticator=authenticator)
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
-    def bulk_get_account_user(self, hashed_uuids, authenticator=None):
+    def get_bulk_account_user(self, hashed_uuids, authenticator=None):
         url = self.endpoints['get_bulk_account_user']
         return self.get(url, {'hashed_uuids': ','.join(hashed_uuids)}, authenticator=authenticator)
 
