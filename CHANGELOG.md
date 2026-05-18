@@ -1,5 +1,9 @@
 # Changelog
 
+## [8.0.1](https://pypi.org/project/directory-sso-api-client/8.0.1/)(2026-05-18)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/103)
+- Add get_bulk_account_user endpoint to receieve emails using profile bg_auth_id
+
 ## [8.0.0](https://pypi.org/project/directory-sso-api-client/8.0.0/)(2026-04-17)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/101)
 - Bump django to 5.2 lts
