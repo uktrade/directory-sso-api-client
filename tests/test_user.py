@@ -626,12 +626,13 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_bulk_get_user_account(self, mocked_request, mocked_authenticator):
         params = {'hashed_uuids': ['blahblah1', 'blahblah2']}
+        qs_params = {'hashed_uuids': 'blahblah1,blahblah2'}
 
         self.client.get_bulk_account_user(**params)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
             method='GET',
-            params=params,
+            params=qs_params,
             url='api/v2/account-user/bulk/',
             cache_control=None,
             authenticator=None,
