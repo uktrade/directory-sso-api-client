@@ -631,8 +631,8 @@ class UserAPIClientTest(TestCase):
         self.client.get_bulk_account_user(**params)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
-            params=qs_params,
+            method='POST',
+            data=qs_params,
             url='api/v2/account-user/bulk/',
             cache_control=None,
             authenticator=None,
