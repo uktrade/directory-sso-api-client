@@ -625,17 +625,21 @@ class UserAPIClientTest(TestCase):
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
     @mock.patch('directory_client_core.base.AbstractAPIClient.request')
     def test_bulk_get_user_account(self, mocked_request, mocked_authenticator):
-        params = {'hashed_uuids': ['blahblah1', 'blahblah2']}
-        qs_params = {'hashed_uuids': 'blahblah1,blahblah2'}
+        qs_params = '{"hashed_uuids": "blahblah1,blahblah2"}'
 
-        self.client.get_bulk_account_user(**params)
+        self.client.get_bulk_account_user(hashed_uuids=['blahblah1', 'blahblah2'], authenticator=mocked_authenticator)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
+            url='api/v2/account-user/bulk/',
             method='POST',
             data=qs_params,
-            url='api/v2/account-user/bulk/',
-            cache_control=None,
-            authenticator=None,
+            authenticator=mocked_authenticator,
+            csrf_token=None,
+            cookies=None,
+            allow_redirects=True,
+            header_origin=None,
+            header_referer=None,
+            content_type='application/json',
         )
 
     @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
