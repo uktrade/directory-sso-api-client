@@ -279,7 +279,9 @@ class UserAPIClient(AbstractAPIClient):
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
     def get_bulk_account_user(self, hashed_uuids, authenticator=None):
         url = self.endpoints['get_bulk_account_user']
-        return self.get(url, {'hashed_uuids': ','.join(hashed_uuids)}, authenticator=authenticator)
+        data = {'hashed_uuids': ','.join(hashed_uuids)}
+        # Post request or query params become too long and reach URI limit
+        return self.post(url, data, authenticator=authenticator)
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
     def send_password_reset_email(self, data, authenticator=None):
