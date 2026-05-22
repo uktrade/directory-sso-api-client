@@ -19,6 +19,10 @@ class UserAPIClientTest(TestCase):
     def test_get_session_user(self, stub):
         self.client.get_session_user(session_id=1)
 
+    @stub_request('https://example.com/api/v1/user/by-email/?email=test%40test1234.com', 'get')
+    def test_get_user_by_email(self, stub):
+        self.client.get_user_by_email(email='test@test1234.com')
+
     @stub_request('https://example.com/oauth2/user-profile/v1/', 'get')
     def test_get_oauth2_user_profile(self, stub):
         self.client.get_oauth2_user_profile('123')

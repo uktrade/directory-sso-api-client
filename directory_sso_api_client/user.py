@@ -37,12 +37,20 @@ class UserAPIClient(AbstractAPIClient):
         'account_details': 'api/v2/accountdetails/',
         'create-vod-activity': 'api/v1/vod-activity/',
         'get-latest-vod-activity': 'api/v1/vod-activity/latest/',
+        'get_user_by_email': 'api/v1/user/by-email/',
     }
     version = __version__
 
     def __init__(self, site_root_url='', *args, **kwargs):
         self.site_root_url = site_root_url
         super().__init__(*args, **kwargs)
+
+    def get_user_by_email(self, email, authenticator=None):
+        return self.get(
+            url=self.endpoints['get_user_by_email'],
+            params={'email': email},
+            authenticator=authenticator,
+        )
 
     def get_session_user(self, session_id, authenticator=None):
         return self.get(
