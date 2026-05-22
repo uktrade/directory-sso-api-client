@@ -236,7 +236,6 @@ class UserAPIClientTest(TestCase):
     def test_get_user_lesson_completed(self, stub):
         data = {'service': 'great', 'lesson_page': 'dashboard'}
         self.client.get_user_lesson_completed(sso_session_id=999, **data)
-    
 
     @stub_request('https://example.com/api/v1/vod-activity/latest/?video_id=1', 'get')
     def test_get_latest_user_vod_activity(self, stub):
