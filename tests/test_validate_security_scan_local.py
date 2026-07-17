@@ -7,6 +7,21 @@ from validate_security_scan_local import SIGNED_OFF_BY_TRAILER, main
 
 
 class ValidateSecurityScanLocalTest(TestCase):
+    def test_main_returns_error_when_commit_msg_path_argument_missing(self):
+        with patch('sys.argv', ['validate_security_scan_local.py']):
+            result = main()
+
+        assert result == 1
+
+    def test_main_returns_error_when_commit_msg_file_missing(self):
+        with TemporaryDirectory() as temp_dir:
+            missing_path = Path(temp_dir) / 'COMMIT_EDITMSG'
+
+            with patch('sys.argv', ['validate_security_scan_local.py', str(missing_path)]):
+                result = main()
+
+        assert result == 1
+
     def test_main_appends_signed_off_by_trailer(self):
         with TemporaryDirectory() as temp_dir:
             commit_msg_path = Path(temp_dir) / 'COMMIT_EDITMSG'
