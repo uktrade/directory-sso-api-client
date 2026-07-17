@@ -1,5 +1,9 @@
 # Changelog
 
+## [8.0.4](https://pypi.org/project/directory-sso-api-client/8.0.4/)(2026-07-17)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/108)
+- Bump Pytest and Black
+
 ## [8.0.3](https://pypi.org/project/directory-sso-api-client/8.0.3/)(2026-05-18)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/106)
 - Add get user by email endpoint
