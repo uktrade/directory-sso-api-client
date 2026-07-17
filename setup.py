@@ -18,13 +18,13 @@ setup(
     extras_require={
         'test': [
             'django>=4.2.10,<6.0',
-            'black==23.1.0',
+            'black==26.3.1',
             'flake8',
             'isort==5.6.4',
             'pytest-cov',
             'pytest-django>=3.8.0,<4.11.1',
-            'pytest-sugar>=0.9.2,<1.0.0',
-            'pytest==8.4.2',
+            'pytest-sugar>=1.1.1,<2.0.0',
+            'pytest==9.0.3',
             'pytest-codecov',
             'GitPython',
             'requests>=2.22.0,<3.0.0',
