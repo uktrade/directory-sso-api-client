@@ -55,7 +55,10 @@ That will result in the user being authenticate via their sso session cookie and
 $ git clone https://github.com/uktrade/directory-sso-api-client
 $ cd directory-sso-api-client
 $ [create virtual environment and activate]
-$ pip install -r requirements_test.txt
+$ pip install --upgrade pip
+$ pip install -e .
+$ pip install pre-commit
+$ pre-commit install --install-hooks --overwrite -t commit-msg -t pre-commit
 ```
 
 ## Publish to PyPI

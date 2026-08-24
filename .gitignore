@@ -99,4 +99,5 @@ Temporary Items
 
 # Virtual env
 .venv
+.venv/
 venv

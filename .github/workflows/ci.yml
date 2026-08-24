@@ -1,0 +1,63 @@
+
+name: Python Package
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+        fail-fast: false
+        matrix:
+            python-version:
+                - "3.13"
+
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v7.0.1
+          with:
+            persist-credentials: false
+        
+        - name: Set up Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v5
+          with:
+            python-version: ${{ matrix.python-version }}
+            cache: 'pip'
+
+        - name: Install dependencies
+          run: |
+            pip install --upgrade pip
+            pip install -e .[test]
+
+        - name: Lint with ruff
+          run: ruff check .
+        
+        - name: Run pytest
+          run: pytest --junitxml=test-reports/junit.xml --cov-config=.coveragerc --cov-report=xml --cov=.
+          env:
+            PYTHON_VERSION: ${{ matrix.python-version }}
+
+            
+  datadog:
+    name: publish coverage to datadog
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+
+      - name: Upload coverage to Datadog
+        uses: DataDog/coverage-upload-github-action@v1
+        with:
+          api_key: ${{ secrets.DATADOG_API_KEY }}
+          site: datadoghq.eu
