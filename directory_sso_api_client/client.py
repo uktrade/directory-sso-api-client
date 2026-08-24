@@ -1,23 +1,25 @@
-from directory_sso_api_client import __version__
+from typing import ClassVar
+
 from directory_client_core.base import AbstractAPIClient
 from django.conf import settings
 
+from directory_sso_api_client import __version__
 from directory_sso_api_client.user import UserAPIClient
 
 
 class DirectorySSOAPIClient(AbstractAPIClient):
-    endpoints = {
-        'ping': 'api/v1/healthcheck/ping/',
+    endpoints: ClassVar[dict[str, str]] = {
+        "ping": "api/v1/healthcheck/ping/",
     }
     version = __version__
 
     def __init__(self, *args, **kwargs):
-        site_root_url = kwargs.pop('site_root_url', '').rstrip('/')
+        site_root_url = kwargs.pop("site_root_url", "").rstrip("/")
         super().__init__(*args, **kwargs)
-        self.user = UserAPIClient(site_root_url=site_root_url, *args, **kwargs)
+        self.user = UserAPIClient(*args, site_root_url=site_root_url, **kwargs)
 
     def ping(self, authenticator=None):
-        return self.get(url=self.endpoints['ping'], authenticator=authenticator)
+        return self.get(url=self.endpoints["ping"], authenticator=authenticator)
 
 
 sso_api_client = DirectorySSOAPIClient(

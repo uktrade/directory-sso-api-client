@@ -1,5 +1,21 @@
 # Changelog
 
+## [8.0.4](https://pypi.org/project/directory-sso-api-client/8.0.4/)(2026-07-17)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/108)
+- Bump Pytest and Black
+
+## [8.0.3](https://pypi.org/project/directory-sso-api-client/8.0.3/)(2026-05-18)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/106)
+- Add get user by email endpoint
+
+## [8.0.2](https://pypi.org/project/directory-sso-api-client/8.0.2/)(2026-05-18)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/104)
+- Convert GET to POST to fix URI limit error
+
+## [8.0.1](https://pypi.org/project/directory-sso-api-client/8.0.1/)(2026-05-18)
+[Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/103)
+- Add get_bulk_account_user endpoint to receieve emails using profile bg_auth_id
+
 ## [8.0.0](https://pypi.org/project/directory-sso-api-client/8.0.0/)(2026-04-17)
 [Full Changelog](https://github.com/uktrade/directory-sso-api-client/pull/101)
 - Bump django to 5.2 lts

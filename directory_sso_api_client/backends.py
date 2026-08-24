@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 class SSOUserBackend:
     MESSAGE_INVALID_JSON = (
-        'SSO did not return JSON. A 502 may have occurred so SSO nginx '
-        'redirected to http://sorry.great.gov.uk (see ED-2114)'
+        "SSO did not return JSON. A 502 may have occurred so SSO nginx "
+        "redirected to http://sorry.great.gov.uk (see ED-2114)"
     )
-    MESSAGE_NOT_SUCCESSFUL = 'SSO did not return a 200 response'
+    MESSAGE_NOT_SUCCESSFUL = "SSO did not return a 200 response"
 
     def authenticate(self, request):
         session_id = request.COOKIES.get(settings.SSO_SESSION_COOKIE)
@@ -27,7 +27,7 @@ class SSOUserBackend:
             response = sso_api_client.user.get_session_user(session_id)
             response.raise_for_status()
         except RequestException:
-            logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
+            logger.exception(self.MESSAGE_NOT_SUCCESSFUL)
         except json.JSONDecodeError:
             raise ValueError(self.MESSAGE_INVALID_JSON)
         else:
@@ -40,16 +40,16 @@ class SSOUserBackend:
         return SSOUser(**user_kwargs)
 
     def user_kwargs(self, session_id, parsed):
-        user_profile = parsed.get('user_profile') or {}
+        user_profile = parsed.get("user_profile") or {}
         return {
-            'id': parsed['id'],
-            'pk': parsed['id'],
-            'session_id': session_id,
-            'hashed_uuid': parsed['hashed_uuid'],
-            'email': parsed['email'],
-            'has_user_profile': bool(user_profile),
-            'first_name': user_profile.get('first_name'),
-            'last_name': user_profile.get('last_name'),
-            'job_title': user_profile.get('job_title'),
-            'mobile_phone_number': user_profile.get('mobile_phone_number'),
+            "id": parsed["id"],
+            "pk": parsed["id"],
+            "session_id": session_id,
+            "hashed_uuid": parsed["hashed_uuid"],
+            "email": parsed["email"],
+            "has_user_profile": bool(user_profile),
+            "first_name": user_profile.get("first_name"),
+            "last_name": user_profile.get("last_name"),
+            "job_title": user_profile.get("job_title"),
+            "mobile_phone_number": user_profile.get("mobile_phone_number"),
         }
