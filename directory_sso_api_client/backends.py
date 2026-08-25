@@ -1,5 +1,6 @@
 import json
 import logging
+from http import HTTPStatus
 
 from django.conf import settings
 from django.contrib import auth
@@ -16,6 +17,7 @@ class SSOUserBackend:
         'redirected to http://sorry.great.gov.uk (see ED-2114)'
     )
     MESSAGE_NOT_SUCCESSFUL = 'SSO did not return a 200 response'
+    MESSAGE_SESSION_NOT_FOUND = 'SSO returned a 404 response (session not found)'
 
     def authenticate(self, request):
         session_id = request.COOKIES.get(settings.SSO_SESSION_COOKIE)
@@ -26,8 +28,11 @@ class SSOUserBackend:
         try:
             response = sso_api_client.user.get_session_user(session_id)
             response.raise_for_status()
-        except RequestException:
-            logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
+        except RequestException as exc:
+            if exc.response is not None and exc.response.status_code == HTTPStatus.NOT_FOUND:
+                logger.info(self.MESSAGE_SESSION_NOT_FOUND, exc_info=True)
+            else:
+                logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
         except json.JSONDecodeError:
             raise ValueError(self.MESSAGE_INVALID_JSON)
         else:
