@@ -29,7 +29,7 @@ class SSOUserBackend:
             response = sso_api_client.user.get_session_user(session_id)
             response.raise_for_status()
         except RequestException as exc:
-            if (exc.response is not None and exc.response.status_code == HTTPStatus.NOT_FOUND):
+            if exc.response is not None and exc.response.status_code == HTTPStatus.NOT_FOUND:
                 logger.info(self.MESSAGE_SESSION_NOT_FOUND, exc_info=True)
             else:
                 logger.error(self.MESSAGE_NOT_SUCCESSFUL, exc_info=True)
