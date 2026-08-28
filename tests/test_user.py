@@ -9,65 +9,71 @@ from tests import basic_authenticator, stub_request
 class UserAPIClientTest(TestCase):
     def setUp(self):
         self.client = UserAPIClient(
-            base_url='https://example.com',
-            api_key='test-api-key',
-            sender_id='test',
+            base_url="https://example.com",
+            api_key="test-api-key",
+            sender_id="test",
             timeout=5,
         )
 
-    @stub_request('https://example.com/api/v1/session-user/', 'get')
+    @stub_request("https://example.com/api/v1/session-user/", "get")
     def test_get_session_user(self, stub):
         self.client.get_session_user(session_id=1)
 
-    @stub_request('https://example.com/api/v1/user/by-email/?email=test%40test1234.com', 'get')
+    @stub_request(
+        "https://example.com/api/v1/user/by-email/?email=test%40test1234.com", "get"
+    )
     def test_get_user_by_email(self, stub):
-        self.client.get_user_by_email(email='test@test1234.com')
+        self.client.get_user_by_email(email="test@test1234.com")
 
-    @stub_request('https://example.com/oauth2/user-profile/v1/', 'get')
+    @stub_request("https://example.com/oauth2/user-profile/v1/", "get")
     def test_get_oauth2_user_profile(self, stub):
-        self.client.get_oauth2_user_profile('123')
+        self.client.get_oauth2_user_profile("123")
 
         request = stub.request_history[0]
-        assert request.headers['Authorization'] == 'Bearer 123'
+        assert request.headers["Authorization"] == "Bearer 123"
 
-    @stub_request('https://example.com/api/v1/last-login/', 'get')
+    @stub_request("https://example.com/api/v1/last-login/", "get")
     def test_get_last_login(self, stub):
         self.client.get_last_login()
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_last_login_with_params(self, mocked_request):
-        params = {'start': '2016-11-01', 'end': '2016-11-11'}
+        params = {"start": "2016-11-01", "end": "2016-11-11"}
 
         self.client.get_last_login(**params)
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET', params=params, url='api/v1/last-login/', authenticator=None, cache_control=None
+            method="GET",
+            params=params,
+            url="api/v1/last-login/",
+            authenticator=None,
+            cache_control=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_last_login_without_params(self, mocked_request):
         self.client.get_last_login()
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=None,
-            url='api/v1/last-login/',
+            url="api/v1/last-login/",
             authenticator=None,
             cache_control=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_check_password(self, mocked_request):
-        self.client.check_password(session_id=123, password='my password')
+        self.client.check_password(session_id=123, password="my password")
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"session_key": 123, "password": "my password"}',
-            method='POST',
-            url='api/v1/password-check/',
+            method="POST",
+            url="api/v1/password-check/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -76,16 +82,16 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_regenerate_verification_code(self, mocked_request):
-        self.client.regenerate_verification_code({'email': 'test@test1234.com'})
+        self.client.regenerate_verification_code({"email": "test@test1234.com"})
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"email": "test@test1234.com"}',
-            method='POST',
-            url='api/v1/verification-code/regenerate/',
+            method="POST",
+            url="api/v1/verification-code/regenerate/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -94,23 +100,23 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_verify_verification_code(self, mocked_request, mocked_authenticator):
         data = OrderedDict(
             [
-                ('code', '12345'),
-                ('email', 'test@example.com'),
+                ("code", "12345"),
+                ("email", "test@example.com"),
             ]
         )
 
         self.client.verify_verification_code(data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"code": "12345", "email": "test@example.com"}',
-            method='POST',
-            url='api/v1/verification-code/verify/',
+            method="POST",
+            url="api/v1/verification-code/verify/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -119,18 +125,21 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_user(self, mocked_request):
         self.client.create_user(
-            email='test@testuser.com', password='mypassword', mobile_phone_number='07111176523', is_eyb_user='True'
-        )  # NOQA:E501
+            email="test@testuser.com",
+            password="mypassword",
+            mobile_phone_number="07111176523",
+            is_eyb_user="True",
+        )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "True"}',  # NOQA:E501
-            method='POST',
-            url='api/v1/user/',
+            content_type="application/json",
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "True"}',
+            method="POST",
+            url="api/v1/user/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -139,23 +148,23 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_user_profile(self, mocked_request, mocked_authenticator):
         user_profile_data = {
-            'first_name': 'john',
-            'last_name': 'smith',
-            'job_title': 'director',
-            'mobile_phone_number': '0788712738738',
+            "first_name": "john",
+            "last_name": "smith",
+            "job_title": "director",
+            "mobile_phone_number": "0788712738738",
         }
 
         self.client.create_user_profile(sso_session_id=999, data=user_profile_data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(user_profile_data),
-            url='api/v1/user/profile/',
+            url="api/v1/user/profile/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -164,37 +173,37 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_update_user_profile(self, mocked_request, mocked_authenticator):
         user_profile_data = {
-            'first_name': 'john',
-            'last_name': 'smith',
-            'job_title': 'director',
-            'mobile_phone_number': '0788712738738',
+            "first_name": "john",
+            "last_name": "smith",
+            "job_title": "director",
+            "mobile_phone_number": "0788712738738",
         }
 
         self.client.update_user_profile(sso_session_id=999, data=user_profile_data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='PATCH',
+            content_type="application/json",
+            method="PATCH",
             data=json.dumps(user_profile_data),
-            url='api/v1/user/profile/update/',
+            url="api/v1/user/profile/update/",
             authenticator=mocked_authenticator(),
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_set_user_page_view(self, mocked_request, mocked_authenticator):
-        data = {'service': 'great', 'page': 'dashboard'}
+        data = {"service": "great", "page": "dashboard"}
         self.client.set_user_page_view(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(data),
-            url='api/v1/user/page-view/',
+            url="api/v1/user/page-view/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -203,27 +212,27 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @stub_request('https://example.com/api/v1/user/page-view/', 'get')
+    @stub_request("https://example.com/api/v1/user/page-view/", "get")
     def test_get_user_page_views(self, stub):
-        data = {'service': 'great', 'page': 'dashboard'}
+        data = {"service": "great", "page": "dashboard"}
         self.client.get_user_page_views(sso_session_id=1, **data)
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_set_user_lesson_completed(self, mocked_request, mocked_authenticator):
         data = {
-            'service': 'great',
-            'lesson_page': 'dashboard',
-            'lesson': 12,
-            'module': 1,
+            "service": "great",
+            "lesson_page": "dashboard",
+            "lesson": 12,
+            "module": 1,
         }
         self.client.set_user_lesson_completed(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(data),
-            url='api/v1/user/lesson-completed/',
+            url="api/v1/user/lesson-completed/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -232,35 +241,37 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @stub_request('https://example.com/api/v1/user/lesson-completed/', 'get')
+    @stub_request("https://example.com/api/v1/user/lesson-completed/", "get")
     def test_get_user_lesson_completed(self, stub):
-        data = {'service': 'great', 'lesson_page': 'dashboard'}
+        data = {"service": "great", "lesson_page": "dashboard"}
         self.client.get_user_lesson_completed(sso_session_id=999, **data)
 
-    @stub_request('https://example.com/api/v1/vod-activity/latest/?video_id=1', 'get')
+    @stub_request("https://example.com/api/v1/vod-activity/latest/?video_id=1", "get")
     def test_get_latest_user_vod_activity(self, stub):
         self.client.get_latest_user_vod_activity(sso_session_id=999, video_id=1)
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_user_vod_activity(self, mocked_request, mocked_authenticator):
         vod_activity = {
-            'activity_type': 'play',
-            'activity_timestamp': 'not-a-datetime',
-            'video_id': 1,
-            'video_title': 'A test video',
-            'video_current_time_s': 60,
-            'video_duration_s': 120,
-            'video_percentage': 50,
-            'event_id': "a-test-uuid",
+            "activity_type": "play",
+            "activity_timestamp": "not-a-datetime",
+            "video_id": 1,
+            "video_title": "A test video",
+            "video_current_time_s": 60,
+            "video_duration_s": 120,
+            "video_percentage": 50,
+            "event_id": "a-test-uuid",
         }
-        self.client.create_user_vod_activity(sso_session_id=999, vod_activity=vod_activity)
+        self.client.create_user_vod_activity(
+            sso_session_id=999, vod_activity=vod_activity
+        )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(vod_activity),
-            url='api/v1/vod-activity/',
+            url="api/v1/vod-activity/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -269,71 +280,73 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_delete_user_lesson_completed(self, mocked_request, mocked_authenticator):
-        data = {'service': 'great', 'lesson': '11'}
+        data = {"service": "great", "lesson": "11"}
         self.client.delete_user_lesson_completed(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='DELETE',
-            url='api/v1/user/lesson-completed/',
+            method="DELETE",
+            url="api/v1/user/lesson-completed/",
             authenticator=mocked_authenticator(),
             data=data,
         )
 
-    @stub_request('https://example.com/api/v1/session-user/', 'get')
+    @stub_request("https://example.com/api/v1/session-user/", "get")
     def test_get_session_user_with_authenticator(self, stub):
         self.client.get_session_user(session_id=1, authenticator=basic_authenticator)
         request = stub.request_history[0]
-        assert 'Authorization' in request.headers
-        assert request.headers['Authorization'].startswith('Basic ')
+        assert "Authorization" in request.headers
+        assert request.headers["Authorization"].startswith("Basic ")
 
-    @stub_request('https://example.com/api/v1/last-login/', 'get')
+    @stub_request("https://example.com/api/v1/last-login/", "get")
     def test_get_last_login_with_authenticator(self, stub):
         self.client.get_last_login(authenticator=basic_authenticator)
         request = stub.request_history[0]
-        assert 'Authorization' in request.headers
-        assert request.headers['Authorization'].startswith('Basic ')
+        assert "Authorization" in request.headers
+        assert request.headers["Authorization"].startswith("Basic ")
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_last_login_with_params_and_authenticator(self, mocked_request):
-        params = {'start': '2016-11-01', 'end': '2016-11-11'}
+        params = {"start": "2016-11-01", "end": "2016-11-11"}
 
         self.client.get_last_login(**params, authenticator=basic_authenticator)
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=params,
-            url='api/v1/last-login/',
+            url="api/v1/last-login/",
             cache_control=None,
             authenticator=basic_authenticator,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_last_login_without_params_but_with_authenticator(self, mocked_request):
         self.client.get_last_login(authenticator=basic_authenticator)
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=None,
-            url='api/v1/last-login/',
+            url="api/v1/last-login/",
             cache_control=None,
             authenticator=basic_authenticator,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_check_password_with_authenticator(self, mocked_request):
-        self.client.check_password(session_id=123, password='my password', authenticator=basic_authenticator)
+        self.client.check_password(
+            session_id=123, password="my password", authenticator=basic_authenticator
+        )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"session_key": 123, "password": "my password"}',
-            method='POST',
-            url='api/v1/password-check/',
+            method="POST",
+            url="api/v1/password-check/",
             authenticator=basic_authenticator,
             csrf_token=None,
             cookies=None,
@@ -342,18 +355,18 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_regenerate_verification_code_with_authenticator(self, mocked_request):
         self.client.regenerate_verification_code(
-            {'email': 'test@test1234.com'},
+            {"email": "test@test1234.com"},
             authenticator=basic_authenticator,
         )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v1/verification-code/regenerate/',
-            method='POST',
-            content_type='application/json',
+            url="api/v1/verification-code/regenerate/",
+            method="POST",
+            content_type="application/json",
             data='{"email": "test@test1234.com"}',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -363,13 +376,15 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_verify_verification_code_with_authenticator(self, mocked_request, mocked_authenticator):
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
+    def test_verify_verification_code_with_authenticator(
+        self, mocked_request, mocked_authenticator
+    ):
         data = OrderedDict(
             [
-                ('code', '12345'),
-                ('email', 'test@example.com'),
+                ("code", "12345"),
+                ("email", "test@example.com"),
             ]
         )
 
@@ -379,10 +394,10 @@ class UserAPIClientTest(TestCase):
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"code": "12345", "email": "test@example.com"}',
-            method='POST',
-            url='api/v1/verification-code/verify/',
+            method="POST",
+            url="api/v1/verification-code/verify/",
             authenticator=basic_authenticator,
             csrf_token=None,
             cookies=None,
@@ -391,22 +406,22 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_user_with_authenticator(self, mocked_request):
         self.client.create_user(
-            email='test@testuser.com',
-            password='mypassword',
-            mobile_phone_number='07111176523',
-            is_eyb_user='False',
+            email="test@testuser.com",
+            password="mypassword",
+            mobile_phone_number="07111176523",
+            is_eyb_user="False",
             authenticator=basic_authenticator,
         )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "False"}',  # NOQA:E501
-            method='POST',
-            url='api/v1/user/',
+            content_type="application/json",
+            data='{"email": "test@testuser.com", "password": "mypassword", "mobile_phone_number": "07111176523", "is_eyb_user": "False"}',
+            method="POST",
+            url="api/v1/user/",
             authenticator=basic_authenticator,
             csrf_token=None,
             cookies=None,
@@ -415,31 +430,31 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_user_questionnaire(self, mocked_request, mocked_authenticator):
-        params = {'service': 'great'}
+        params = {"service": "great"}
         self.client.get_user_questionnaire(sso_session_id=999, **params)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=params,
-            url='api/v1/user/questionnaire/',
+            url="api/v1/user/questionnaire/",
             cache_control=None,
             authenticator=mocked_authenticator(),
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_set_user_questionnaire_answer(self, mocked_request, mocked_authenticator):
-        data = {'service': 'great', 'question_id': 1, 'answer': 'answer'}
+        data = {"service": "great", "question_id": 1, "answer": "answer"}
         self.client.set_user_questionnaire_answer(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(data),
-            url='api/v1/user/questionnaire/',
+            url="api/v1/user/questionnaire/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -448,31 +463,31 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_user_data(self, mocked_request, mocked_authenticator):
-        params = {'name': 'data_name'}
+        params = {"name": "data_name"}
         self.client.get_user_data(sso_session_id=999, **params)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=params,
-            url='api/v1/user/data/',
+            url="api/v1/user/data/",
             cache_control=None,
             authenticator=mocked_authenticator(),
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_set_user_data(self, mocked_request, mocked_authenticator):
-        data = {'data': {'key': 'value'}, 'name': 'data_name'}
+        data = {"data": {"key": "value"}, "name": "data_name"}
         self.client.set_user_data(sso_session_id=999, **data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
-            method='POST',
+            content_type="application/json",
+            method="POST",
             data=json.dumps(data),
-            url='api/v1/user/data/',
+            url="api/v1/user/data/",
             authenticator=mocked_authenticator(),
             csrf_token=None,
             cookies=None,
@@ -481,16 +496,16 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_account(self, mocked_request):
-        self.client.create_account(email='test@testuser.com', password='mypassword')
+        self.client.create_account(email="test@testuser.com", password="mypassword")
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"email": "test@testuser.com", "password": "mypassword"}',
-            method='POST',
-            url='api/v2/account/',
+            method="POST",
+            url="api/v2/account/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -499,20 +514,20 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_create_account_with_authenticator(self, mocked_request):
         self.client.create_account(
-            email='test@testuser.com',
-            password='mypassword',
+            email="test@testuser.com",
+            password="mypassword",
             authenticator=basic_authenticator,
         )
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"email": "test@testuser.com", "password": "mypassword"}',
-            method='POST',
-            url='api/v2/account/',
+            method="POST",
+            url="api/v2/account/",
             authenticator=basic_authenticator,
             csrf_token=None,
             cookies=None,
@@ -521,16 +536,16 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_regenerate_account_verification_code(self, mocked_request):
-        self.client.regenerate_account_verification_code({'email': 'test@test1234.com'})
+        self.client.regenerate_account_verification_code({"email": "test@test1234.com"})
 
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            content_type='application/json',
+            content_type="application/json",
             data='{"email": "test@test1234.com"}',
-            method='POST',
-            url='api/v2/verification-code/regenerate/',
+            method="POST",
+            url="api/v2/verification-code/regenerate/",
             authenticator=None,
             csrf_token=None,
             cookies=None,
@@ -539,17 +554,19 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_regenerate_account_verification_code_with_authenticator(self, mocked_request):
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
+    def test_regenerate_account_verification_code_with_authenticator(
+        self, mocked_request
+    ):
         self.client.regenerate_account_verification_code(
-            {'email': 'test@test1234.com'},
+            {"email": "test@test1234.com"},
             authenticator=basic_authenticator,
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/verification-code/regenerate/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/verification-code/regenerate/",
+            method="POST",
+            content_type="application/json",
             data='{"email": "test@test1234.com"}',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -559,22 +576,24 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_verify_account_verification_code(self, mocked_request, mocked_authenticator):
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
+    def test_verify_account_verification_code(
+        self, mocked_request, mocked_authenticator
+    ):
         data = OrderedDict(
             [
-                ('code', '12345'),
-                ('email', 'test@example.com'),
+                ("code", "12345"),
+                ("email", "test@example.com"),
             ]
         )
 
         self.client.verify_account_verification_code(data)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/verification-code/verify/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/verification-code/verify/",
+            method="POST",
+            content_type="application/json",
             data='{"code": "12345", "email": "test@example.com"}',
             authenticator=None,
             csrf_token=None,
@@ -584,13 +603,15 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
-    def test_verify_account_verification_code_with_authenticator(self, mocked_request, mocked_authenticator):
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
+    def test_verify_account_verification_code_with_authenticator(
+        self, mocked_request, mocked_authenticator
+    ):
         data = OrderedDict(
             [
-                ('code', '12345'),
-                ('email', 'test@example.com'),
+                ("code", "12345"),
+                ("email", "test@example.com"),
             ]
         )
         self.client.verify_account_verification_code(
@@ -599,9 +620,9 @@ class UserAPIClientTest(TestCase):
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/verification-code/verify/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/verification-code/verify/",
+            method="POST",
+            content_type="application/json",
             data='{"code": "12345", "email": "test@example.com"}',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -611,31 +632,33 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_user_account(self, mocked_request, mocked_authenticator):
-        params = {'hashed_uuid': 'blahblah'}
+        params = {"hashed_uuid": "blahblah"}
 
         self.client.get_account_user(**params)
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            method='GET',
+            method="GET",
             params=params,
-            url='api/v2/account-user/',
+            url="api/v2/account-user/",
             cache_control=None,
             authenticator=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_bulk_get_user_account(self, mocked_request, mocked_authenticator):
         post_params = '{"hashed_uuids": "blahblah1,blahblah2"}'
 
-        self.client.get_bulk_account_user(hashed_uuids=['blahblah1', 'blahblah2'], authenticator=mocked_authenticator)
+        self.client.get_bulk_account_user(
+            hashed_uuids=["blahblah1", "blahblah2"], authenticator=mocked_authenticator
+        )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/account-user/bulk/',
-            method='POST',
+            url="api/v2/account-user/bulk/",
+            method="POST",
             data=post_params,
             authenticator=mocked_authenticator,
             csrf_token=None,
@@ -643,21 +666,21 @@ class UserAPIClientTest(TestCase):
             allow_redirects=True,
             header_origin=None,
             header_referer=None,
-            content_type='application/json',
+            content_type="application/json",
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_send_password_reset_email(self, mocked_request, mocked_authenticator):
         self.client.send_password_reset_email(
-            'test@example.com',
+            "test@example.com",
             authenticator=basic_authenticator,
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accounts/password/reset/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/accounts/password/reset/",
+            method="POST",
+            content_type="application/json",
             data='"test@example.com"',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -667,12 +690,12 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_reset_email(self, mocked_request, mocked_authenticator):
         data = {
-            'email': 'test@example.com',
-            'password': 'newpassword',
+            "email": "test@example.com",
+            "password": "newpassword",
         }
         self.client.send_password_reset_change(
             data,
@@ -680,9 +703,9 @@ class UserAPIClientTest(TestCase):
         )
         assert mocked_request.call_count == 1
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accounts/password/reset/change/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/accounts/password/reset/change/",
+            method="POST",
+            content_type="application/json",
             data='{"email": "test@example.com", "password": "newpassword"}',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -692,12 +715,12 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_client_core.authentication.SessionSSOAuthenticator')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.authentication.SessionSSOAuthenticator")
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_check_reset_link_token(self, mocked_request, mocked_authenticator):
         data = {
-            'email': 'david@gmail.com',
-            'token': 'abcccccccc123',
+            "email": "david@gmail.com",
+            "token": "abcccccccc123",
         }
         self.client.check_reset_password_token(
             data,
@@ -706,9 +729,9 @@ class UserAPIClientTest(TestCase):
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accounts/password/reset/validate/token/',
-            method='POST',
-            content_type='application/json',
+            url="api/v2/accounts/password/reset/validate/token/",
+            method="POST",
+            content_type="application/json",
             data='{"email": "david@gmail.com", "token": "abcccccccc123"}',
             authenticator=basic_authenticator,
             csrf_token=None,
@@ -718,67 +741,77 @@ class UserAPIClientTest(TestCase):
             header_referer=None,
         )
 
-    @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch(
+        "directory_sso_api_client.user.UserAPIClient.get_csrf_token",
+        return_value="1234",
+    )
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_user_login(self, mocked_request, mock_csrf_token_request):
         mock_csrf_token = mock_csrf_token_request()
         self.client.user_login(
             {
-                'email': 'test@testuser.com',
-                'password': 'mypassword',
+                "email": "test@testuser.com",
+                "password": "mypassword",
             }
         )
 
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='accounts/login/',
-            method='POST',
-            content_type='application/x-www-form-urlencoded',
-            data={'email': 'test@testuser.com', 'password': 'mypassword', 'csrfmiddlewaretoken': mock_csrf_token},
+            url="accounts/login/",
+            method="POST",
+            content_type="application/x-www-form-urlencoded",
+            data={
+                "email": "test@testuser.com",
+                "password": "mypassword",
+                "csrfmiddlewaretoken": mock_csrf_token,
+            },
             authenticator=None,
             csrf_token=mock_csrf_token,
-            cookies={'csrftoken': mock_csrf_token},
+            cookies={"csrftoken": mock_csrf_token},
             allow_redirects=False,
-            header_origin='',
-            header_referer='',
+            header_origin="",
+            header_referer="",
         )
 
-    @mock.patch('directory_sso_api_client.user.UserAPIClient.get_csrf_token', return_value='1234')
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch(
+        "directory_sso_api_client.user.UserAPIClient.get_csrf_token",
+        return_value="1234",
+    )
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_user_logout(self, mocked_request, mock_csrf_token_request):
         mock_csrf_token = mock_csrf_token_request()
-        session_key = '12345'
+        session_key = "12345"
 
-        self.client.user_logout(cookies={'session_key': session_key})
+        self.client.user_logout(cookies={"session_key": session_key})
 
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='accounts/logout/',
-            method='POST',
-            content_type='text/plain',
-            data='{}',
+            url="accounts/logout/",
+            method="POST",
+            content_type="text/plain",
+            data="{}",
             authenticator=None,
             csrf_token=mock_csrf_token,
-            cookies={'csrftoken': mock_csrf_token, 'session_key': session_key},
+            cookies={"csrftoken": mock_csrf_token, "session_key": session_key},
             allow_redirects=False,
-            header_origin='',
-            header_referer='',
+            header_origin="",
+            header_referer="",
         )
 
-    @mock.patch('directory_client_core.base.AbstractAPIClient.request')
+    @mock.patch("directory_client_core.base.AbstractAPIClient.request")
     def test_get_account_details(self, mocked_request):
-        session_key = '12345'
+        session_key = "12345"
 
         self.client.get_account_details(session_key)
 
         assert mocked_request.call_count == 1
 
         assert mocked_request.call_args == mock.call(
-            url='api/v2/accountdetails/',
-            method='GET',
-            params={'session_key': '12345'},
+            url="api/v2/accountdetails/",
+            method="GET",
+            params={"session_key": "12345"},
             authenticator=None,
             cache_control=None,
         )

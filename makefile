@@ -17,7 +17,7 @@ pytest_codecov:
 	pytest \
 		--junitxml=test-reports/junit.xml \
 		--cov-config=.coveragerc \
-		--cov-report=term \
+		--cov-report=xml \
 		--cov=. \
 		--codecov \
 		$(ARGUMENTS)

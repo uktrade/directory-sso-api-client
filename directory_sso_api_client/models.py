@@ -12,7 +12,9 @@ class SSOUser(AbstractUser):
     mobile_phone_number = models.TextField()
 
     def check_password(self, raw_password):
-        response = sso_api_client.usercheck_password(session_id=self.session_id, password=raw_password)
+        response = sso_api_client.usercheck_password(
+            session_id=self.session_id, password=raw_password
+        )
         return response.ok
 
     def get_username(self):

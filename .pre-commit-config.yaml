@@ -1,32 +1,21 @@
 repos:
-  - repo: https://github.com/uktrade/github-standards
-    rev: v1.4.1 # This should be the latest github released tag, see https://github.com/uktrade/github-standards/releases for the latest tag
-    hooks:
-      - id: validate-security-scan
-        stages: [manual]
-        verbose: true # This is helpful for debugging initial setup, it can be removed when the hooks are verified as working in your repository
-        args: [-v] # This is helpful for debugging the hook logic, the output is shown in the git output
-      - id: run-security-scan
-        entry: -e FORCE_HOOK_CHECKS=0 --pull always ghcr.io/uktrade/github-standards:latest run_scan
-        verbose: true
-        args: [--verbose, --excluded-scans, data]
-  - repo: local
-    hooks:
-      - id: validate-security-scan-local
-        name: Validate the security scan hook
-        entry: python3 validate_security_scan_local.py
-        language: system
-        stages: [commit-msg]
-        require_serial: true
-  - repo: https://github.com/psf/black
-    rev: 26.3.1
-    hooks:
-      - id: black
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      # Ruff version.
+      rev: v0.16.1
+      hooks:
+        # Run the linter.
+        - id: ruff-check
+        # Run the formatter.
+        - id: ruff-format
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v6.0.0  
+      hooks:
+      - id: check-toml
+      - id: no-commit-to-branch
+      - id: mixed-line-ending
+    - repo: https://github.com/uktrade/github-standards
+      rev: v1.4.2
+      hooks:
+        - id: validate-security-scan
+        - id: run-security-scan
+        - id: run-personal-data-scan

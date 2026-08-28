@@ -1,11 +1,15 @@
-from directory_sso_api_client import __version__
+from typing import ClassVar
+
 from directory_client_core.base import AbstractAPIClient
 
+from directory_sso_api_client import __version__
 from directory_sso_api_client.user import UserAPIClient
 
 
 class DirectorySSOTestAPIClient(AbstractAPIClient):
-    endpoints = {'user_by_email': 'testapi/user-by-email/{email}/'}
+    endpoints: ClassVar[dict[str, str]] = {
+        "user_by_email": "testapi/user-by-email/{email}/"
+    }
     version = __version__
 
     def __init__(self, *args, **kwargs):
@@ -13,14 +17,14 @@ class DirectorySSOTestAPIClient(AbstractAPIClient):
         self.user = UserAPIClient(*args, **kwargs)
 
     def get_user_by_email(self, email, authenticator=None):
-        url = self.endpoints['user_by_email'].format(email=email)
+        url = self.endpoints["user_by_email"].format(email=email)
         return self.get(url=url, authenticator=authenticator)
 
     def delete_user_by_email(self, email, authenticator=None):
-        url = self.endpoints['user_by_email'].format(email=email)
+        url = self.endpoints["user_by_email"].format(email=email)
         return self.delete(url=url, authenticator=authenticator)
 
     def flag_user_email_as_verified_or_not(self, email, verified, authenticator=None):
-        url = self.endpoints['user_by_email'].format(email=email)
+        url = self.endpoints["user_by_email"].format(email=email)
         data = {"is_verified": verified}
         return self.patch(url=url, data=data, authenticator=authenticator)
